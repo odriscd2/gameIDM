@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1> Image App </h1>
+
+<p>Welcome to your profile page {{name}} <br> </p>
+
+
+                   <!--Checks that there are images to display,
+                                    nested for loop returns only current users images with required descriptions-->
+{% for badge_id in badge_id %}
+        {% for row in badge_list %}
+            {% if badge_id == row[0] and name == row[1] %}
+                <figure>
+                    <img src="{{ url_for('static', filename = badge_id) }}" onmouseover="bigImg(this)" onmouseout="normalImg(this)" />
+                    <figcaption> <b>TITLE:</b> {{row[0]}}   <br>  <b>DATE:</b> {{row[2]}} <b>TIME:</b> {{row[3]}}
+                </figcaption>
+                </figure>
+            {% endif %}
+        {% endfor %}
+
+    {% endfor %}
+
+{% endif %}
+
+    <h2>Logout</h2>
+<form action="\logout" method="post">
+    <input type="submit" value="Logout">
+</form>
+
+</body>
+</html>

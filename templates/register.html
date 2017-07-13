@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+        <link rel="stylesheet" href="mystyle.css"/>
+    <title>Register</title>
+</head>
+<body>
+
+<h1>Register</h1>
+<h2>Fill in your details</h2>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+
+<form name="regForm" method=post onsubmit="return validateForm()">
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Register</h1>
+			</div>
+
+			<div class="login-form">
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="username" name="username" required>
+				<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+
+
+
+				<div class="control-group">
+				<input type="password" class="login-field" value="" placeholder="password" name="password" required>
+				<label class="login-field-icon fui-lock" for="login-pass"></label>
+				</div>
+
+				<div class="control-group">
+				<input type="email" class="login-field" value="" placeholder="email" name="email" required>
+				<label class="login-field-icon fui-lock" for="login-pass"></label>
+				</div>
+
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="name" name="name" required>
+				<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+
+				<div class="control-group">
+					<p>Select your role:</p>
+					<select name="role">
+						<option value="Teacher">Teacher</option>
+						<option value="Student">Student</option>
+					</select>
+
+				</div>
+
+                <input type="submit" value="Register" class="btn btn-primary btn-large btn-block" >
+			    <br>
+			</div>
+		</div>
+	</div>
+</form>
+</body>
+</html>

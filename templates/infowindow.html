@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../static/css/style.css">
+	<script src="../static/js/map.js"></script>
+    <Title>Homepage</Title>
+</head>
+<body>
+
+
+
+    <h1>Welcome to the page</h1>
+
+    <a class="buttono" href="{{ url_for('login') }}">Login</a>
+ <a class="buttono" href="{{ url_for('register') }}">Register</a>
+
+    <h2>Logout</h2>
+<form action="\logout" method="post">
+    <input type="submit" value="Logout">
+</form>
+
+
+    <div id="map">
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWdCRYR6k-5WVxvZodvqOIAUwBFVfuvno&callback=initMap">
+	</script>
+	</div>
+</body>
+</html>
