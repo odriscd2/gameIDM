@@ -32,13 +32,28 @@ mail = Mail(app)
 ts = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
 
-
 def check_email(hashed_email, user_email):
     return hashed_email == hashlib.md5(user_email.encode()).hexdigest()
 
 
 def check_password(hashed_password, user_password):
     return hashed_password == hashlib.md5(user_password.encode()).hexdigest()
+
+def check_confirmed():
+    db=sqlite3.connect('mydb.db')
+    confirmed=False
+    with db:
+        cur=db.cursor()
+        cur.execute("SELECT username, email_confirmed FROM users")
+        rows=cur.fetchall()
+        for row in rows:
+            dbUsername=row[0]
+            dbEmail_confirmed=row[1]
+            print(row[0], row[1])
+            if dbEmail_confirmed== 'TRUE':
+                print('Its true')
+                confirmed=True
+    return confirmed
 
 
 def validate(username, password):
@@ -102,6 +117,7 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     error = None
+
     if flask.request.method == 'POST':
         username = flask.request.form['username']
         password = flask.request.form['password']
@@ -122,7 +138,8 @@ def register():
             error = 'An account with this email address already exists'
 
         else:
-            cur.execute("INSERT INTO users( username, password, name,email, role) VALUES('%s','%s', '%s', '%s', '%s')"
+            cur.execute("INSERT INTO users( username, password, name,email, role, email_confirmed) "
+                        "VALUES('%s','%s', '%s', '%s', '%s', 'FALSE')"
                         % (username, hash_password, name, hash_email, role))
             db.commit()
             subject = "Confirm your email"
@@ -139,6 +156,8 @@ def register():
                                    confirm_url=confirm_url)
 
             send_email(email, subject, html)
+
+
             if role == 'Student':
                 cur.execute("INSERT INTO badges (username, badge_id) VALUES('%s', 'Local Activist')"
                             % username)
@@ -164,32 +183,39 @@ def register():
 
 @app.route('/confirm/<token>')
 def confirm_email(token):
-    confirm_email=False
+    request.args.get('username')
     try:
         email = ts.loads(token, salt=app.config['EMAIL_CONFIRM_KEY'], max_age=86400)
-        confirm_email=True
+
+
     except:
         abort(404)
 
-
-    print("This far", confirm_email)
+    db = sqlite3.connect('mydb.db')
+    with db:
+        cur = db.cursor()
+        cur.execute("SELECT username, email_confirmed FROM users")
+        cur.execute("UPDATE users SET email_confirmed = 'TRUE' WHERE username = username ")
 
 
     return redirect(url_for('login'))
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
-
     if flask.request.method == 'POST':
         username = flask.request.form['username']
         password = flask.request.form['password']
         completion = validate(username, password)
+        confirmed= check_confirmed()
+        print(confirm_email)
+
         if completion == False:
             error = "Your login details are incorrect"
-        if confirm_email==False:
-            error="Please confirm your registration and email by clicking on the link sent to your inbox"
 
+        elif confirmed == False:
+            error="You must confirm your email address"
         else:
             print("Log in successful")
             return flask.redirect(flask.url_for('index'))
