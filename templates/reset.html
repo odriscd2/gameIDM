@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+{% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+
+<form action="/reset" method="post">
+
+<p> Username: <input type="text" name="username" required> </p>
+    <p> Email: <input type="text" name="email" required> </p>
+    <p><input type="submit" value="Reset"> </p>
+</form>
+<span>
+    <a href="/register"> Register here</a>
+</span>
+
+</body>
+</html>

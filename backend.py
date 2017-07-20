@@ -3,7 +3,6 @@ import sqlite3
 import os
 import hashlib
 import datetime
-import flask_mail
 from flask_mail import Mail, Message
 from flask import send_from_directory, render_template, redirect, url_for, request, g
 from itsdangerous import URLSafeTimedSerializer
@@ -25,7 +24,8 @@ app.config.update(
     SECURITY_PASSWORD_SALT='westlandsquare',
     MAIL_DEFAULT_SENDER='activismapp@gmail.com',
     SECRET_KEY="3BC237B64244579DF4829313861D8",
-    EMAIL_CONFIRM_KEY=" "
+    EMAIL_CONFIRM_KEY="westlandsquare",
+    RECOVER_KEY = "recoverkey"
 )
 mail = Mail(app)
 
@@ -38,6 +38,21 @@ def check_email(hashed_email, user_email):
 
 def check_password(hashed_password, user_password):
     return hashed_password == hashlib.md5(user_password.encode()).hexdigest()
+
+def email_match(username, email):
+    db=sqlite3.connect('mydb.db')
+    match=False
+    with db:
+        cur=db.cursor()
+        cur.execute("SELECT username, email FROM users")
+        rows=cur.fetchall()
+        for row in rows:
+            dbUS=row[0]
+            dbEM=row[1]
+            print (row[0], row[1])
+            if dbUS == username:
+                match=check_email(dbEM, email)
+    return match
 
 def check_confirmed():
     db=sqlite3.connect('mydb.db')
@@ -196,7 +211,7 @@ def confirm_email(token):
         cur = db.cursor()
         cur.execute("SELECT username, email_confirmed FROM users")
         cur.execute("UPDATE users SET email_confirmed = 'TRUE' WHERE username = username ")
-
+        db.commit()
 
     return redirect(url_for('login'))
 
@@ -228,6 +243,61 @@ def logout():
     flask.session.pop('username', None)
     print("Log out successful")
     return flask.redirect(flask.url_for('index'))
+
+
+@app.route ('/reset', methods=['GET','POST'])
+def reset():
+    error= None
+    if flask.request.method== 'POST':
+        email=flask.request.form['email']
+        username=flask.request.form['username']
+        match=email_match(username, email)
+
+        if match == True:
+            subject = "Password reset requested"
+
+            token= ts.dumps(email, salt=app.config['RECOVER_KEY'])
+
+            recover_url= url_for(
+                'reset_with_token',
+                token=token,
+                _external=True
+            )
+
+            html = render_template('email/recover.html', recover_url=recover_url)
+
+            send_email(email, subject, html)
+
+            return redirect(url_for('index'))
+
+        else:
+            error= "This username and password do not match"
+    return render_template('reset.html', error=error)
+
+
+@app.route('/reset/<token>', methods=['GET', 'POST'])
+def reset_with_token(token):
+    request.args.get('username')
+    try:
+        email=ts.loads(token, salt=app.config['RECOVER_KEY'], max_age=86400)
+
+    except:
+        abort(404)
+
+    if flask.request.method == 'POST':
+        newpassword=flask.request.form['newpassword']
+        hash_newPassword = hashlib.md5(newpassword.encode()).hexdigest()
+
+        db =sqlite3.connect('mydb.db')
+        with db:
+            cur=db.cursor()
+            cur.execute("SELECT username, password FROM users")
+            cur.execute("UPDATE users SET password = '%s' WHERE username= username " %hash_newPassword)
+
+            return redirect(url_for('login'))
+    return render_template('reset_with_token.html', token=token)
+
+
 
 
 app.secret_key = "RQuo1HhBvjsxQj0StcNYhQ6zoYyGYUVX"
