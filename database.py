@@ -1,23 +1,16 @@
 import sqlite3
 db = sqlite3.connect('mydb.db')
 cur = db.cursor()
-cur.execute('''CREATE TABLE IF NOT EXISTS users
-(
-username varchar(20)	unique	not	null,
-password	varchar(100),
-name varchhar(50),
-email varchar(60),
-role varchar (50)
-)''')
+
+cur.execute('''
+INSERT INTO badges (username, points)
+     VALUES ('jazzi','700')
+ ''')
+
+cur.execute('''
+INSERT INTO badges (username, points)
+     VALUES ('user2','500')
+ ''')
 
 db.commit()
-
-cur.execute('''CREATE TABLE	IF NOT EXISTS badges
-(
-username varchar(20),
-badge_id varchar (50)
-)''')
-
-db.commit()
-
 

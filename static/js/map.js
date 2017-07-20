@@ -1,4 +1,5 @@
-      function initMap() {
+
+function initMap() {
           //Humanitarian crisis
         var yemen = {lat: 15.35472, lng: 44.20667};
         var sudan = {lat: 9.53342, lng: 31.66049};
@@ -102,7 +103,116 @@
           ]
         });
 
+//begin gamification add on code
+       var lock = '..static/images/padlock.png';
+       function marker1 (level){
+      //Marker style humanitarian crisis
+            var circlehumcrisis = {
+              path: google.maps.SymbolPath.CIRCLE,
+              fillColor: 'orange',
+              fillOpacity: 0.4,
+              scale: 10,
+              strokeColor: 'orange',
+              strokeWeight: 14,
+              strokeOpacity: 0.4,
+            };
+            //marker style locked ****
+           var lock = '..static/images/padlock.png';
 
+            if (level=="level1"){
+                return lock
+            }
+            else if (level=="level2"){
+                return circlehumcrisis
+            }
+            else if (level=="level3"){
+                return circlehumcrisis
+            }
+
+        }
+
+        function marker2 (level){
+              return "level1"
+        }
+
+        function marker1_popup(level){
+            if (level=="level1") {
+                var contentString_yemen = '<div id="div-main-infoWindow">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">Yemen</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>You do not have enough points to access this story. Keep exploring, unlock badges and gain access! </b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+
+                var infowindow_yemen = new google.maps.InfoWindow({
+                  content: contentString_yemen,
+                });
+                }
+            else {
+                var contentString_yemen = '<div id="div-main-infoWindow">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">Yemen</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>Yemen</b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+
+               var infowindow_yemen = new google.maps.InfoWindow({
+                  content: contentString_yemen,
+                });
+                }
+            }
+
+        function marker2_popup(level){
+            if (level=="level1") {
+                var contentString_sudan = '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">South Sudan</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>You do not have enough points to access this story. Keep exploring, unlock badges and gain access! </b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+                  var infowindow_sudan = new google.maps.InfoWindow({
+                  content: contentString_sudan,
+                });
+                }
+              else{
+                var contentString_sudan = '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">South Sudan</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>South Sudan</b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+
+                var infowindow_sudan = new google.maps.InfoWindow({
+                  content: contentString_sudan,
+                });
+
+                }
+            return infowindow_sudan
+                }
+
+      infowindow_sudan = marker2_popup(level);
+
+      //end gamification add on code
 
       //Infowindow text Yemen
         var contentString_yemen = '<div id="div-main-infoWindow">'+
@@ -117,26 +227,10 @@
             '</div>'+
             '</div>';
 
-       var infowindow_yemen = new google.maps.InfoWindow({
-          content: contentString_yemen,
-        });
+           var infowindow_yemen = new google.maps.InfoWindow({
+              content: contentString_yemen,
+            });
 
-    //Infowindow text Sudan
-        var contentString_sudan = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">South Sudan</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>South Sudan</b>, '+
-            ''+
-            '</p>'+
-            '<p>'+
-            '</div>'+
-            '</div>';
-
-        var infowindow_sudan = new google.maps.InfoWindow({
-          content: contentString_sudan,
-        });
 
     //Infowindow text Somalia
         var contentString_somalia = '<div id="div-main-infoWindow">'+
@@ -293,6 +387,7 @@
           strokeWeight: 14,
           strokeOpacity: 0.4,
         };
+
     //Marker style refugees
         var circlerefugees = {
           path: google.maps.SymbolPath.CIRCLE,
@@ -326,17 +421,18 @@
           strokeOpacity: 0.4,
         };
 
-
     //Yemen
-        var marker1 = new google.maps.Marker({
+    var marker1 = new google.maps.Marker({
           position: yemen,
-          icon: circlehumcrisis,
+          icon: marker1(level),
           map: map,
           title: 'Yemen'
         });
+
         marker1.addListener('click', function() {
           infowindow_yemen.open(marker1);
         });
+
 
 
      //Sudan
@@ -452,4 +548,32 @@
         });
 
 }
+/*
 
+function unlock (badges, points){
+      //Marker style humanitarian crisis
+        var circlehumcrisis = {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: 'orange',
+          fillOpacity: 0.4,
+          scale: 10,
+          strokeColor: 'orange',
+          strokeWeight: 14,
+          strokeOpacity: 0.4,
+        };
+    //marker style locked ****
+       var lock = 'images/padlock.png';
+
+    if (points<300){
+        return "level1"
+    }
+    else if (points>=300 && points<700){
+        return "level2"
+    }
+    else if (points>=700){
+        return "level3"
+    }
+
+
+}
+*/
