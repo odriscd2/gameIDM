@@ -66,7 +66,6 @@ def check_confirmed():
             dbEmail_confirmed=row[1]
             print(row[0], row[1])
             if dbEmail_confirmed== 'TRUE':
-                print('Its true')
                 confirmed=True
     return confirmed
 
@@ -297,6 +296,41 @@ def reset_with_token(token):
             return redirect(url_for('login'))
     return render_template('reset_with_token.html', token=token)
 
+
+@app.route('/reset_email', methods=['GET','POST'])
+def reset_email():
+    error=None
+    if flask.request.method == 'POST':
+        username=flask.request.form['username']
+        password=flask.request.form['password']
+        newEmail=flask.request.form['newEmail']
+        hash_NewEmal = hashlib.md5(newEmail.encode()).hexdigest()
+        completion=validate(username,password)
+
+        db=sqlite3.connect('mydb.db')
+        if completion:
+            with db:
+                cur=db.cursor()
+                cur.execute("SELECT username, email FROM users")
+                cur.execute("UPDATE users SET email= '%s', email_confirmed = 'FALSE' WHERE username=username" %hash_NewEmal)
+
+                subject = "Confirm your email"
+
+                token = ts.dumps(newEmail, salt=app.config['EMAIL_CONFIRM_KEY'])
+
+                confirm_url = url_for(
+                    'confirm_email',
+                    token=token,
+                    _external=True
+                )
+
+                html = render_template('email/activate.html',
+                                       confirm_url=confirm_url)
+
+                send_email(newEmail, subject, html)
+
+                return redirect(url_for('login'))
+    return render_template('update_email.html')
 
 
 
