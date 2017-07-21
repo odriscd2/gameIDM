@@ -95,13 +95,13 @@ def index():
                                 WHERE username ="''' + username + '"')
             db.commit()
         elif int(points) >= 700:
-            level = "level 3"
+            level = "level3"
             print(level)
             cur.execute('''UPDATE badges SET level = 'level3'
                                 WHERE username ="''' + username + '"')
             db.commit()
 
-        return flask.render_template("profile.html", name=flask.session['username'],badges=badges, badge_list=badge_list, length=length, points=points, level=level)
+        return flask.render_template("infowindow.html", name=flask.session['username'],badges=badges, badge_list=badge_list, length=length, points=points, level=level)
 
     else:
         badges = 'Local Activist'
@@ -196,8 +196,9 @@ def register():
                     print(row[0], row[1])
                     row = cur.fetchone()
             else:
-                cur.execute("INSERT INTO badges (username, badge_id, points) VALUES('%s', 'Teacher', 2000)" %username)
+                cur.execute("INSERT INTO badges (username, badge_id, points, level) VALUES('%s', 'Teacher', 2000, 'level3')" %username)
                 db.commit()
+                print(role)
                 cur.execute("SELECT username, badge_id FROM badges")
                 row = cur.fetchone()
                 while row is not None:

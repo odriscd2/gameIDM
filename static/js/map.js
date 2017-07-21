@@ -104,43 +104,16 @@ function initMap() {
         });
 
 //begin gamification add on code
-       var lock = '..static/images/padlock.png';
-       function marker1 (level){
-      //Marker style humanitarian crisis
-            var circlehumcrisis = {
-              path: google.maps.SymbolPath.CIRCLE,
-              fillColor: 'orange',
-              fillOpacity: 0.4,
-              scale: 10,
-              strokeColor: 'orange',
-              strokeWeight: 14,
-              strokeOpacity: 0.4,
-            };
-            //marker style locked ****
-           var lock = '..static/images/padlock.png';
 
-            if (level=="level1"){
-                return lock
-            }
-            else if (level=="level2"){
-                return circlehumcrisis
-            }
-            else if (level=="level3"){
-                return circlehumcrisis
-            }
 
-        }
-
-        function marker2 (level){
-              return "level1"
-        }
+    //Infowindow text Yemen
 
         function marker1_popup(level){
             if (level=="level1") {
                 var contentString_yemen = '<div id="div-main-infoWindow">'+
                     '<div id="siteNotice">'+
                     '</div>'+
-                    '<h1 id="firstHeading" class="firstHeading">Yemen</h1>'+
+                    '<h1 id="firstHeading" class="firstHeading">LOCKED</h1>'+
                     '<div id="bodyContent">'+
                     '<p><b>You do not have enough points to access this story. Keep exploring, unlock badges and gain access! </b>, '+
                     ''+
@@ -170,14 +143,17 @@ function initMap() {
                   content: contentString_yemen,
                 });
                 }
+            return infowindow_yemen
             }
+
+    //Infowindow text sudan
 
         function marker2_popup(level){
             if (level=="level1") {
                 var contentString_sudan = '<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
-                    '<h1 id="firstHeading" class="firstHeading">South Sudan</h1>'+
+                    '<h1 id="firstHeading" class="firstHeading">LOCKED</h1>'+
                     '<div id="bodyContent">'+
                     '<p><b>You do not have enough points to access this story. Keep exploring, unlock badges and gain access! </b>, '+
                     ''+
@@ -189,7 +165,7 @@ function initMap() {
                   content: contentString_sudan,
                 });
                 }
-              else{
+            else{
                 var contentString_sudan = '<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
@@ -210,172 +186,444 @@ function initMap() {
             return infowindow_sudan
                 }
 
-      infowindow_sudan = marker2_popup(level);
-
-      //end gamification add on code
-
-      //Infowindow text Yemen
-        var contentString_yemen = '<div id="div-main-infoWindow">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Yemen</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Yemen</b>, '+
-            ''+
-            '</p>'+
-            '<p>'+
-            '</div>'+
-            '</div>';
-
-           var infowindow_yemen = new google.maps.InfoWindow({
-              content: contentString_yemen,
-            });
-
-
     //Infowindow text Somalia
-        var contentString_somalia = '<div id="div-main-infoWindow">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Somalia</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Somalia</b>, '+
-            ''+
-            '</p>'+
-            '<p>'+
-            '</div>'+
-            '</div>';
-      var infowindow_somalia = new google.maps.InfoWindow({
-          content: contentString_somalia,
-          maxWidth: 291
-        });
-      google.maps.event.addListener(infowindow_somalia, 'domready', function () {
-        $('#div-main-infoWindow').closest('.gm-style-iw').parent().addClass('custom-iw');
-      });
-    //Infowindow text Syria
-        var contentString_syria = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Syria</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Syria</b>, '+
-            ''+
-            '</p>'+
-            '<p>'+
-            '</div>'+
-            '</div>';
-      var infowindow_syria = new google.maps.InfoWindow({
-          content: contentString_syria,
-        });
 
-    //Infowindow text Zimbabwe
-        var contentString_zimbabwe = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Zimbabwe</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Zimbabwe</b>, '+
-            ''+
-            '</p>'+
-            '<p>'+
-            '</div>'+
-            '</div>';
-      var infowindow_zimbabwe = new google.maps.InfoWindow({
-          content: contentString_zimbabwe,
-        });
+        function marker3_popup(level){
+
+                var contentString_somalia = '<div id="div-main-infoWindow">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">Somalia</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>Somalia</b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+
+                var infowindow_somalia = new google.maps.InfoWindow({
+                    content: contentString_somalia,
+                    maxWidth: 291
+                });
+/*                google.maps.event.addListener(infowindow_somalia, 'domready', function () {
+                $('#div-main-infoWindow').closest('.gm-style-iw').parent().addClass('custom-iw');
+                });*/
+
+            return infowindow_somalia
+                }
+
+        function marker4_popup(level){
+            if (level=="level1") {
+                var contentString_syria = '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">LOCKED</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>You do not have enough points to access this story. Keep exploring, unlock badges and gain access! </b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+                var infowindow_syria = new google.maps.InfoWindow({
+                  content: contentString_syria,
+                });
+                }
+            else{
+               var contentString_syria = '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">Syria</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>Syria</b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+               var infowindow_syria = new google.maps.InfoWindow({
+                  content: contentString_syria,
+                });
+
+                }
+            return infowindow_syria
+                }
+
+//Infowindow text Zimbabwe
+
+    function marker5_popup(level){
+            if (level=="level1" || level=="level2") {
+                var contentString_zimbabwe = '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">LOCKED</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>You do not have enough points to access this story. Keep exploring, unlock badges and gain access! </b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+                var infowindow_zimbabwe = new google.maps.InfoWindow({
+                  content: contentString_zimbabwe,
+                });
+                }
+            else{
+                var contentString_zimbabwe = '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">Zimbabwe</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>Zimbabwe</b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+                var infowindow_zimbabwe = new google.maps.InfoWindow({
+                content: contentString_zimbabwe,
+                });
+
+                }
+            return infowindow_zimbabwe
+                }
 
     //Infowindow text Nairobi
-        var contentString_nairobi = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Nairobi</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Nairobi</b>, '+
-            ''+
-            '</p>'+
-            '<p>'+
-            '</div>'+
-            '</div>';
-      var infowindow_nairobi = new google.maps.InfoWindow({
-          content: contentString_nairobi,
-        });
+    function marker6_popup(level){
+            if (level=="level1" || level=="level2") {
+                var contentString_nairobi = '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">LOCKED</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>You do not have enough points to access this story. Keep exploring, unlock badges and gain access! </b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+                var infowindow_nairobi = new google.maps.InfoWindow({
+                  content: contentString_nairobi,
+                });
+                }
+            else{
+                var contentString_nairobi = '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">Nairobi</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>Nairobi</b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+                var infowindow_nairobi = new google.maps.InfoWindow({
+                content: contentString_nairobi,
+                });
+
+                }
+            return infowindow_nairobi
+                }
+
     //Infowindow text Mumbai
-        var contentString_mumbai = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Mumbai</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Mumbai</b>, '+
-            ''+
-            '</p>'+
-            '<p>'+
-            '</div>'+
-            '</div>';
-      var infowindow_mumbai = new google.maps.InfoWindow({
-          content: contentString_mumbai,
-        });
+    function marker7_popup(level){
+
+            var contentString_mumbai = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<h1 id="firstHeading" class="firstHeading">Mumbai</h1>'+
+                '<div id="bodyContent">'+
+                '<p><b>Mumbai</b>, '+
+                ''+
+                '</p>'+
+                '<p>'+
+                '</div>'+
+                '</div>';
+            var infowindow_mumbai = new google.maps.InfoWindow({
+                content: contentString_mumbai,
+                });
+
+            return infowindow_mumbai
+                }
 
     //Infowindow text Denpasar
-        var contentString_denpasar = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Denpasar</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Denpasar</b>, '+
-            ''+
-            '</p>'+
-            '<p>'+
-            '</div>'+
-            '</div>';
-      var infowindow_denpasar = new google.maps.InfoWindow({
-          content: contentString_denpasar,
-        });
+    function marker8_popup(level){
+
+            var contentString_denpasar = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<h1 id="firstHeading" class="firstHeading">Denpasar</h1>'+
+                '<div id="bodyContent">'+
+                '<p><b>Denpasar</b>, '+
+                ''+
+                '</p>'+
+                '<p>'+
+                '</div>'+
+                '</div>';
+            var infowindow_denpasar = new google.maps.InfoWindow({
+                content: contentString_denpasar,
+                 });
+
+
+            return infowindow_denpasar
+                }
 
     //Infowindow text Dehli
-        var contentString_dehli = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Dehli</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Dehli</b>, '+
-            ''+
-            '</p>'+
-            '<p>'+
-            '</div>'+
-            '</div>';
-      var infowindow_dehli = new google.maps.InfoWindow({
-          content: contentString_dehli,
-        });
+    function marker9_popup(level){
+
+            var contentString_dehli = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<h1 id="firstHeading" class="firstHeading">Dehli</h1>'+
+                '<div id="bodyContent">'+
+                '<p><b>Dehli</b>, '+
+                ''+
+                '</p>'+
+                '<p>'+
+                '</div>'+
+                '</div>';
+            var infowindow_dehli = new google.maps.InfoWindow({
+                content: contentString_dehli,
+                });
+
+
+            return infowindow_dehli
+                }
+
 
     //Infowindow text New Jersey
-        var contentString_newjersey = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">New Jersey</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>New Jersey</b>, '+
-            ''+
-            '</p>'+
-            '<p>'+
-            '</div>'+
-            '</div>';
-      var infowindow_newjesrsey = new google.maps.InfoWindow({
-          content: contentString_newjersey,
-        });
+    function marker10_popup(level){
+            if (level=="level1") {
+                var contentString_newjersey = '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">LOCKED</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>You do not have enough points to access this story. Keep exploring, unlock badges and gain access! </b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+                var infowindow_newjersey = new google.maps.InfoWindow({
+                    content: contentString_newjersey,
+                    });
+                }
+            else{
+                var contentString_newjersey = '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">New Jersey</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>New Jersey</b>, '+
+                    ''+
+                    '</p>'+
+                    '<p>'+
+                    '</div>'+
+                    '</div>';
+                var infowindow_newjersey = new google.maps.InfoWindow({
+                    content: contentString_newjersey,
+                    });
+
+                }
+            return infowindow_newjersey
+                }
+
     //Infowindow text Cape Town
-        var contentString_capetown = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Cape Town</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Cape Town</b>, '+
-            ''+
-            '</p>'+
-            '<p>'+
-            '</div>'+
-            '</div>';
-      var infowindow_capetown = new google.maps.InfoWindow({
-          content: contentString_capetown,
-        });
+    function marker11_popup(level){
+
+            var contentString_capetown = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<h1 id="firstHeading" class="firstHeading">Cape Town</h1>'+
+                '<div id="bodyContent">'+
+                '<p><b>Cape Town</b>, '+
+                ''+
+                '</p>'+
+                '<p>'+
+                '</div>'+
+                '</div>';
+            var infowindow_capetown = new google.maps.InfoWindow({
+                content: contentString_capetown,
+                });
+
+
+            return infowindow_capetown
+                }
+
+      //assign infowindow so can be called later
+      infowindow_yemen = marker1_popup(level);
+      infowindow_sudan = marker2_popup(level);
+      infowindow_somalia = marker3_popup(level);
+      infowindow_syria = marker4_popup(level);
+      infowindow_zimbabwe = marker5_popup(level);
+      infowindow_nairobi = marker6_popup(level);
+      infowindow_mumbai = marker7_popup(level);
+      infowindow_denpasar = marker8_popup(level);
+      infowindow_dehli = marker9_popup(level);
+      infowindow_newjersey = marker10_popup(level);
+      infowindow_capetown = marker11_popup(level);
+
+     //variable to set marker as lock
+    var lock = {
+        url: 'https://dl.dropboxusercontent.com/s/gk80q3yrwebdg7t/padlock.png?dl=0',
+        scaledSize: new google.maps.Size(30, 30), // scaled size
+     }
+
+    function marker1(level){
+
+          if (level=="level1"){
+                return lock
+            }
+          else if (level=="level2"){
+                return circlehumcrisis
+            }
+          else if (level=="level3"){
+                return circlehumcrisis
+            }
+        }
+
+    function marker2(level){
+
+          if (level=="level1"){
+                return lock
+            }
+          else if (level=="level2"){
+                return circlehumcrisis
+            }
+          else if (level=="level3"){
+                return circlehumcrisis
+            }
+
+        }
+
+    function marker3(level){
+
+          if (level=="level1"){
+                return circlerefugees
+            }
+          else if (level=="level2"){
+                return circlerefugees
+            }
+          else if (level=="level3"){
+                return circlerefugees
+            }
+
+        }
+    function marker4(level){
+
+          if (level=="level1"){
+                return lock
+            }
+          else if (level=="level2"){
+                return circlerefugees
+            }
+          else if (level=="level3"){
+                return circlerefugees
+            }
+
+        }
+    function marker5(level){
+
+          if (level=="level1"){
+                return lock
+            }
+          else if (level=="level2"){
+                return lock
+            }
+          else if (level=="level3"){
+                return circlerefugees
+            }
+
+        }
+
+    function marker6(level){
+
+          if (level=="level1"){
+                return lock
+            }
+          else if (level=="level2"){
+                return lock
+            }
+          else if (level=="level3"){
+                return circleenvironment
+            }
+
+        }
+
+    function marker7(level){
+
+          if (level=="level1"){
+                return circleenvironment
+            }
+          else if (level=="level2"){
+                return circleenvironment
+            }
+          else if (level=="level3"){
+                return circleenvironment
+            }
+
+        }
+
+    function marker8(level){
+
+          if (level=="level1"){
+                return circleenvironment
+            }
+          else if (level=="level2"){
+                return circleenvironment
+            }
+          else if (level=="level3"){
+                return circleenvironment
+            }
+
+        }
+
+    function marker9(level){
+
+          if (level=="level1"){
+                return circleinequality
+            }
+          else if (level=="level2"){
+                return circleinequality
+            }
+          else if (level=="level3"){
+                return circleinequality
+            }
+
+        }
+
+    function marker10(level){
+
+          if (level=="level1"){
+                return lock
+            }
+          else if (level=="level2"){
+                return circleinequality
+            }
+          else if (level=="level3"){
+                return circleinequality
+            }
+
+        }
+
+    function marker11(level){
+
+          if (level=="level1"){
+                return circleinequality
+            }
+          else if (level=="level2"){
+                return circleinequality
+            }
+          else if (level=="level3"){
+                return circleinequality
+            }
+
+        }
+
+
 
     //Marker style humanitarian crisis
         var circlehumcrisis = {
@@ -421,7 +669,7 @@ function initMap() {
           strokeOpacity: 0.4,
         };
 
-    //Yemen
+
     var marker1 = new google.maps.Marker({
           position: yemen,
           icon: marker1(level),
@@ -429,26 +677,34 @@ function initMap() {
           title: 'Yemen'
         });
 
-        marker1.addListener('click', function() {
-          infowindow_yemen.open(marker1);
+        marker1.addListener('mouseover', function() {
+          infowindow_yemen.open(map, marker1);
+        });
+        marker1.addListener('mouseout', function() {
+          infowindow_yemen.close(map, marker1);
         });
 
 
 
      //Sudan
-       var marker2 = new google.maps.Marker({
+    var marker2 = new google.maps.Marker({
           position: sudan,
-          icon: circlehumcrisis,
+          icon: marker2(level),
           map: map,
           title: 'South Sudan'
         });
-        marker2.addListener('click', function() {
+
+        marker2.addListener('mouseover', function() {
           infowindow_sudan.open(map, marker2);
         });
+        marker2.addListener('mouseout', function() {
+          infowindow_sudan.close(map, marker2);
+        });
+
      //Somalia
         var marker3 = new google.maps.Marker({
           position: somalia,
-          icon: circlehumcrisis,
+          icon: marker3(level),
           map: map,
           title: 'Somalia'
         });
@@ -456,124 +712,122 @@ function initMap() {
 //          infowindow_somalia.open(map, marker3);
 //        });
 
-           google.maps.event.addListener(marker3, 'click', function () {
+        google.maps.event.addListener(marker3, 'mouseover', function () {
         infowindow_somalia.open(map, marker3);
-    });
+         });
+        google.maps.event.addListener(marker3, 'mouseout', function () {
+        infowindow_somalia.close(map, marker3);
+         });
+
     //Syria
         var marker4 = new google.maps.Marker({
           position: syria,
-          icon: circlerefugees,
+          icon: marker4(level),
           map: map,
           title: 'Syria'
         });
-        marker4.addListener('click', function() {
+        marker4.addListener('mouseover', function() {
           infowindow_syria.open(map, marker4);
+        });
+        marker4.addListener('mouseout', function() {
+          infowindow_syria.close(map, marker4);
         });
 
     //Zimbabwe
         var marker5 = new google.maps.Marker({
           position: zimbabwe,
-          icon: circlerefugees,
+          icon: marker5(level),
           map: map,
           title: 'Zimbabwe'
         });
-        marker5.addListener('click', function() {
+        marker5.addListener('mouseover', function() {
           infowindow_zimbabwe.open(map, marker5);
+        });
+        marker5.addListener('mouseout', function() {
+          infowindow_zimbabwe.close(map, marker5);
         });
 
     //Nairobi
         var marker6 = new google.maps.Marker({
           position: nairobi,
-          icon: circleenvironment,
+          icon: marker6(level),
           map: map,
           title: 'Nairobi'
         });
-        marker6.addListener('click', function() {
+        marker6.addListener('mouseover', function() {
           infowindow_nairobi.open(map, marker6);
+        });
+        marker6.addListener('mouseout', function() {
+          infowindow_nairobi.close(map, marker6);
         });
 
     //Mumbai
         var marker7 = new google.maps.Marker({
           position: mumbai,
-          icon: circleenvironment,
+          icon: marker7(level),
           map: map,
           title: 'Mumbai'
         });
-        marker7.addListener('click', function() {
+        marker7.addListener('mouseover', function() {
           infowindow_mumbai.open(map, marker7);
+        });
+        marker7.addListener('mouseout', function() {
+          infowindow_mumbai.close(map, marker7);
         });
 
     //Denpasar
         var marker8 = new google.maps.Marker({
           position: denpasar,
-          icon: circleenvironment,
+          icon: marker8(level),
           map: map,
           title: 'Denpasar'
         });
-        marker8.addListener('click', function() {
+        marker8.addListener('mouseover', function() {
           infowindow_denpasar.open(map, marker8);
+        });
+        marker8.addListener('mouseout', function() {
+          infowindow_denpasar.close(map, marker8);
         });
 
     //Dehli
         var marker9 = new google.maps.Marker({
           position: dehli,
-          icon: circleinequality,
+          icon: marker9(level),
           map: map,
           title: 'Dehli'
         });
-        marker9.addListener('click', function() {
+        marker9.addListener('mouseover', function() {
           infowindow_dehli.open(map, marker9);
+        });
+        marker9.addListener('mouseout', function() {
+          infowindow_dehli.close(map, marker9);
         });
 
     //New Jersey
         var marker10 = new google.maps.Marker({
           position: newjersey,
-          icon: circleinequality,
+          icon: marker10(level),
           map: map,
           title: 'New Jersey'
         });
-        marker10.addListener('click', function() {
-          infowindow_newjesrsey.open(map, marker10);
+        marker10.addListener('mouseover', function() {
+          infowindow_newjersey.open(map, marker10);
+        });
+        marker10.addListener('mouseout', function() {
+          infowindow_newjersey.close(map, marker10);
         });
 
     //Cape Town
         var marker11 = new google.maps.Marker({
           position: capetown,
-          icon: circleinequality,
+          icon: marker11(level),
           map: map,
           title: 'Cape Town'
         });
-        marker11.addListener('click', function() {
+        marker11.addListener('mouseover', function() {
           infowindow_capetown.open(map, marker11);
         });
-
+        marker11.addListener('mouseout', function() {
+          infowindow_capetown.close(map, marker11);
+        });
 }
-/*
-
-function unlock (badges, points){
-      //Marker style humanitarian crisis
-        var circlehumcrisis = {
-          path: google.maps.SymbolPath.CIRCLE,
-          fillColor: 'orange',
-          fillOpacity: 0.4,
-          scale: 10,
-          strokeColor: 'orange',
-          strokeWeight: 14,
-          strokeOpacity: 0.4,
-        };
-    //marker style locked ****
-       var lock = 'images/padlock.png';
-
-    if (points<300){
-        return "level1"
-    }
-    else if (points>=300 && points<700){
-        return "level2"
-    }
-    else if (points>=700){
-        return "level3"
-    }
-
-
-}
-*/
