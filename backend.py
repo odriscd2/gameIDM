@@ -7,7 +7,7 @@ from flask_mail import Mail, Message
 from flask import send_from_directory, render_template, redirect, url_for, request, g
 from itsdangerous import URLSafeTimedSerializer
 from flask import abort
-
+#This is a comment to show GIT
 # database
 db = sqlite3.connect('mydb.db')
 cur = db.cursor()
