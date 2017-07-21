@@ -16,7 +16,9 @@ db.commit()
 cur.execute('''CREATE TABLE	IF NOT EXISTS badges
 (
 username varchar(20),
-badge_id varchar (50)
+badge_id varchar (50),
+points int,
+level varchar (50)
 )''')
 
 db.commit()

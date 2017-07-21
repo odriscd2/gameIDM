@@ -1,15 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<link rel="stylesheet" type="text/css" href="../static/css/style.css">
-	<script src="../static/js/map.js"></script>
-    <Title>Homepage</Title>
-</head>
-<body>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../static/CSS/style.css">
+	  <script src="../static/JS/map-java.js"></script>
+    <title>Map</title>
+    </head>
+  <body>
+  <audio id="soundrefugees" preload="auto">
+      <source src="audio/refugees.wav" type="audio/wav">
+      Your browser doesn't support audio.
+  </audio>
+  <audio id="soundenvironment" preload="auto">
+      <source src="audio/environment.wav" type="audio/wav">
+      Your browser doesn't support audio.
+  </audio>
+  <audio id="soundinequality" preload="auto">
+      <source src="audio/inequality.wav" type="audio/wav">
+      Your browser doesn't support audio.
+  </audio>
+  <audio id="soundhcrisis" preload="auto">
+      <source src="audio/hcrisis.wav" type="audio/wav">
+      Your browser doesn't support audio.
+  </audio>
+        <!-- Navigation -->
+ <div class="container">
+    <input id="toggle" type="checkbox"/>
+    <label class="toggle-container" for="toggle">
+    <span class="button button-toggle"></span>
+    </label>
 
+     <nav class="nav">
+              <a rel="nofollow" rel="noreferrer"  class="nav-item" href="">Refugees</a>
+              <a rel="nofollow" rel="noreferrer"  class="nav-item" href="">Inequality</a>
+              <a rel="nofollow" rel="noreferrer"  class="nav-item" href="">Environment</a>
+              <a rel="nofollow" rel="noreferrer"  class="nav-item" href="">Humanitarian Crisis</a>
+              <a rel="nofollow" rel="noreferrer"  class="nav-item" href="">About Project</a>
+              <a rel="nofollow" rel="noreferrer"  class="nav-item" href="">DIY/Games</a>
+            </nav>
+           </div>
 
-
-    <h1>Welcome to the page</h1>
+      <h1>Welcome to the page</h1>
 
     <a class="buttono" href="{{ url_for('login') }}">Login</a>
  <a class="buttono" href="{{ url_for('register') }}">Register</a>
@@ -20,9 +52,19 @@
 </form>
 
 
-    <div id="map">
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWdCRYR6k-5WVxvZodvqOIAUwBFVfuvno&callback=initMap">
-	</script>
-	</div>
-</body>
+    <div id="map"></div>
+
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWdCRYR6k-5WVxvZodvqOIAUwBFVfuvno&callback=initMap">
+    </script>
+
+
+
+
+
+
+
+
+  </body>
 </html>

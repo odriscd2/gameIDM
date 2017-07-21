@@ -107,25 +107,51 @@ def page_not_found(e):
 @app.route('/')
 def index():
     if 'username' in flask.session:
-        badges = os.listdir('./static')
-        cur.execute('''SELECT username, badge_id FROM badges''')
-        badge_list = cur.fetchall()
+        # badges = os.listdir('./static')
+        username= flask.session['username']
+        cur.execute('''SELECT badge_id FROM badges WHERE username = "%s" ''' % username)
+        badge_list = cur.fetchone()
+        badges=badge_list[0]
         length = len(badge_list)
         # print(length)
         print(badges)
         print(badge_list)
+        cur.execute('''SELECT points FROM badges WHERE username = "%s" ''' % username)
+        pointslist = cur.fetchone()
+        points=pointslist[0]
+        print(points)
+        if int(points) < 300:
+            level = "level1"
+            cur.execute('''UPDATE badges SET level = 'level1'
+                    WHERE username ="''' + username + '"')
+            db.commit()
+            print(level)
+        elif int(points) >= 300 and points < 700:
+            level = "level2"
+            print(level)
+            cur.execute('''UPDATE badges SET level = 'level2'
+                                WHERE username ="''' + username + '"')
+            db.commit()
+        elif int(points) >= 700:
+            level = "level3"
+            print(level)
+            cur.execute('''UPDATE badges SET level = 'level3'
+                                WHERE username ="''' + username + '"')
+            db.commit()
 
-        return flask.render_template("profile.html", name=flask.session['username'], badges=badges,
-                                     badge_list=badge_list, length=length)
+        return flask.render_template("infowindow.html", name=flask.session['username'],badges=badges, badge_list=badge_list, length=length, points=points, level=level)
+
     else:
-        # Increment variable
-        badges = os.listdir('./static')  # create list of image names
-        cur.execute('''SELECT username, badge_id FROM badges''')  # select image details from table
-        badge_list = cur.fetchall()  # create list from results
+        badges = 'Local Activist'
+        badge_list='Local Activist'
         length = len(badge_list)
+        print('No Sign In')
 
-        return flask.render_template('infowindow.html', badges=badges, badge_list=badge_list,
-                                     length=length)  # return index and relevant variables
+        return flask.render_template('infowindow.html', badges=badges, badge_list=badge_list, length=length,
+                                    points=200, level='level1') # return index and relevant variables
+
+
+
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -171,9 +197,8 @@ def register():
 
             send_email(email, subject, html)
 
-
             if role == 'Student':
-                cur.execute("INSERT INTO badges (username, badge_id) VALUES('%s', 'Local Activist')"
+                cur.execute("INSERT INTO badges (username, badge_id, points) VALUES('%s', 'Local Activist', 0)"
                             % username)
                 db.commit()
                 cur.execute("SELECT username, badge_id FROM badges")
@@ -182,8 +207,10 @@ def register():
                     print(row[0], row[1])
                     row = cur.fetchone()
             else:
-                cur.execute("INSERT INTO badges (username, badge_id) VALUES('%s', 'Teacher')" % username)
+                cur.execute(
+                    "INSERT INTO badges (username, badge_id, points, level) VALUES('%s', 'Teacher', 2000, 'level3')" % username)
                 db.commit()
+                print(role)
                 cur.execute("SELECT username, badge_id FROM badges")
                 row = cur.fetchone()
                 while row is not None:

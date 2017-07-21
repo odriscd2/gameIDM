@@ -1,0 +1,564 @@
+
+   
+      // This example displays a marker at the center of Australia.
+      // When the user clicks the marker, an info window opens.
+
+      function initMap() {
+          //Humanitarian crisis
+        var yemen = {lat: 15.35472, lng: 44.20667};
+        var sudan = {lat: 9.53342, lng: 31.66049};
+        var somalia = {lat: 1.71594, lng: 44.77166};
+          //Refugees
+        var syria = {lat: 36.20124, lng: 37.16117};
+        var zimbabwe = {lat: -19.45, lng: 29.81667};
+          //Environment
+        var nairobi = {lat: -1.28333, lng: 36.81667};
+        var mumbai = {lat: 19.07283, lng: 72.88261};
+        var denpasar = {lat: -8.650000, lng: 115.216667};
+          //Inequality
+        var dehli = {lat: 28.65381, lng:  77.22897};
+        var newjersey = {lat: 39.833851, lng: 	-74.871826};
+        var capetown = {lat: -33.92584, lng: 18.42322};
+       
+ 
+        var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 2,
+        minZoom: 2,
+        maxZoom: 2,
+        draggable:false,
+        disableDefaultUI: true,
+        center: {lat: 50.45466, lng: 30.5238},
+        styles: [
+            {elementType: 'geometry', stylers: [{color: '#616161'}]},
+            {elementType: 'labels.text.stroke', stylers: [{color: '#616161', display: 'none'}]},
+            {elementType: 'labels.text.fill', stylers: [{color: '#616161', display: 'none'}]},
+
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#616161'}]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#616161'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#263c3f'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#84E0B7'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{color: '#38414e'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#212a37'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#616161'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#746855'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#1f2835'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#FFC300'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#616161'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#3a3a3a'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#515c6d', display: 'none'}]
+            
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#17263c', display: 'none'}]
+            }
+          ]
+        });
+
+        
+    
+      //Infowindow text Yemen
+        var contentString_yemen = '<div id="Yemen">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"></h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Yemen</b> '+
+            ''+ 
+            '</p>'+
+            '<p>'+
+            '</div>'+
+            '</div>';
+          
+       var infowindow_yemen = new google.maps.InfoWindow({
+          content: contentString_yemen,
+        });
+        
+    //Infowindow text Sudan
+        var contentString_sudan = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"></h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>South Sudan</b> '+
+            ''+ 
+            '</p>'+
+            '<p>'+
+            '</div>'+
+            '</div>';
+          
+        var infowindow_sudan = new google.maps.InfoWindow({
+          content: contentString_sudan,
+        });
+          
+    //Infowindow text Somalia
+        var contentString_somalia = '<div id="Somalia">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"></h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Somalia</b> '+
+            ''+ 
+            '</p>'+
+            '<p>'+
+            '</div>'+
+            '</div>';
+      var infowindow_somalia = new google.maps.InfoWindow({
+          content: contentString_somalia,
+        });
+
+    //Infowindow text Syria
+        var contentString_syria = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"></h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Syria</b> '+
+            ''+ 
+            '</p>'+
+            '<p>'+
+            '</div>'+
+            '</div>';
+      var infowindow_syria = new google.maps.InfoWindow({
+          content: contentString_syria,
+        });
+          
+    //Infowindow text Zimbabwe
+        var contentString_zimbabwe = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"></h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Zimbabwe</b> '+
+            ''+ 
+            '</p>'+
+            '<p>'+
+            '</div>'+
+            '</div>';
+      var infowindow_zimbabwe = new google.maps.InfoWindow({
+          content: contentString_zimbabwe,
+        });
+          
+    //Infowindow text Nairobi
+        var contentString_nairobi = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"></h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Nairobi</b> '+
+            ''+ 
+            '</p>'+
+            '<p>'+
+            '</div>'+
+            '</div>';
+      var infowindow_nairobi = new google.maps.InfoWindow({
+          content: contentString_nairobi,
+        });
+    //Infowindow text Mumbai
+        var contentString_mumbai = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"></h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Mumbai</b> '+
+            ''+ 
+            '</p>'+
+            '<p>'+
+            '</div>'+
+            '</div>';
+      var infowindow_mumbai = new google.maps.InfoWindow({
+          content: contentString_mumbai,
+        });
+          
+    //Infowindow text Denpasar
+        var contentString_denpasar = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"></h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Denpasar</b> '+
+            ''+ 
+            '</p>'+
+            '<p>'+
+            '</div>'+
+            '</div>';
+      var infowindow_denpasar = new google.maps.InfoWindow({
+          content: contentString_denpasar,
+        });
+          
+    //Infowindow text Dehli
+        var contentString_dehli = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"></h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Dehli</b> '+
+            ''+ 
+            '</p>'+
+            '<p>'+
+            '</div>'+
+            '</div>';
+      var infowindow_dehli = new google.maps.InfoWindow({
+          content: contentString_dehli,
+        });
+    
+    //Infowindow text New Jersey
+        var contentString_newjersey = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"></h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>New Jersey</b> '+
+            ''+ 
+            '</p>'+
+            '<p>'+
+            '</div>'+
+            '</div>';
+      var infowindow_newjesrsey = new google.maps.InfoWindow({
+          content: contentString_newjersey,
+        });
+          
+    //Infowindow text Cape Town
+        var contentString_capetown = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading"></h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Cape Town</b> '+
+            ''+ 
+            '</p>'+
+            '<p>'+
+            '</div>'+
+            '</div>';
+      var infowindow_capetown = new google.maps.InfoWindow({
+          content: contentString_capetown,
+        });
+    
+          
+    //Marker style humanitarian crisis
+        var circlehumcrisis = {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: 'orange',
+          fillOpacity: 0.4,
+          scale: 10,
+          strokeColor: 'orange',
+          strokeWeight: 14,
+          strokeOpacity: 0.4,
+        };
+    //Marker style refugees
+        var circlerefugees = {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: 'red',
+          fillOpacity: 0.4,
+          scale: 10,
+          strokeColor: 'red',
+          strokeWeight: 14,
+          strokeOpacity: 0.4,
+        };
+          
+    //Marker style environment
+        var circleenvironment = {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: 'green',
+          fillOpacity: 0.4,
+          scale: 10,
+          strokeColor: 'green',
+          strokeWeight: 14,
+          strokeOpacity: 0.4,
+        };
+          
+    //Marker style inequality
+        var circleinequality = {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: 'magenta',
+          fillOpacity: 0.4,
+          scale: 10,
+          strokeColor: 'magenta',
+          strokeWeight: 14,
+          strokeOpacity: 0.4,
+        };
+          
+
+    //Yemen
+        var marker1 = new google.maps.Marker({
+          position: yemen,
+          icon: circlehumcrisis,
+          map: map,
+          title: 'Yemen'
+        });
+        marker1.addListener('mouseover', function() {
+          infowindow_yemen.open(map, marker1);
+        });
+         marker1.addListener('mouseout', function() {
+          infowindow_yemen.close(map, marker1); 
+        }); 
+        marker1.addListener('mouseover', function() {
+          soundhcrisis.play(map, marker1); 
+        }); 
+        marker1.addListener('mouseout', function() {
+          soundhcrisis.pause(map, marker1);  
+        });
+        new google.maps.event.addListener(marker1, "click", function() {        
+            window.open('file:///Users/elenaorlova/Google%20%D0%94%D0%B8%D1%81%D0%BA/sa_html_css/Saleem.html');
+        });
+          
+     //Sudan
+       var marker2 = new google.maps.Marker({
+          position: sudan,
+          icon: circlehumcrisis,
+          map: map,
+          title: 'South Sudan'
+        });
+        marker2.addListener('mouseover', function() {
+          infowindow_sudan.open(map, marker2);
+        });
+        marker2.addListener('mouseout', function() {
+          infowindow_sudan.close(map, marker2); 
+        }); 
+        marker2.addListener('mouseover', function() {
+          soundhcrisis.play(map, marker2); 
+        }); 
+        marker2.addListener('mouseout', function() {
+          soundhcrisis.pause(map, marker2);  
+        }); 
+     //Somalia
+        var marker3 = new google.maps.Marker({
+          position: somalia,
+          icon: circlehumcrisis,
+          map: map,
+          title: 'Somalia'
+        });
+     
+          marker3.addListener('mouseover', function() {
+          infowindow_somalia.open(map, marker3);
+        });
+          marker3.addListener('mouseout', function() {
+          infowindow_somalia.close(map, marker3); 
+        }); 
+          marker3.addListener('mouseover', function() {
+          soundhcrisis.play(map, marker3); 
+        }); 
+          marker3.addListener('mouseout', function() {
+          soundhcrisis.pause(map, marker3);  
+        });  
+    //Syria
+        var marker4 = new google.maps.Marker({
+          position: syria,
+          icon: circlerefugees,
+          map: map,
+          title: 'Syria'
+        });
+        marker4.addListener('mouseover', function() {
+          infowindow_syria.open(map, marker4);
+        }); 
+        marker4.addListener('mouseout', function() {
+          infowindow_syria.close(map, marker4); 
+        }); 
+        marker4.addListener('mouseover', function() {
+          soundrefugees.play(map, marker4); 
+        });
+        marker4.addListener('mouseout', function() {
+          soundrefugees.pause(map, marker4);  
+        });
+          
+    //Zimbabwe
+        var marker5 = new google.maps.Marker({
+          position: zimbabwe,
+          icon: circlerefugees,
+          map: map,
+          title: 'Zimbabwe'
+        });
+        marker5.addListener('mouseover', function() {
+          infowindow_zimbabwe.open(map, marker5);
+        });
+        marker5.addListener('mouseout', function() {
+          infowindow_zimbabwe.close(map, marker5); 
+        }); 
+        marker5.addListener('mouseover', function() {
+          soundrefugees.play(map, marker5); 
+        }); 
+        marker5.addListener('mouseout', function() {
+          soundrefugees.pause(map, marker5);  
+        });
+        
+    //Nairobi
+        var marker6 = new google.maps.Marker({
+          position: nairobi,
+          icon: circleenvironment,
+          map: map,
+          title: 'Nairobi'
+        });
+        marker6.addListener('mouseover', function() {
+          infowindow_nairobi.open(map, marker6);
+        }); 
+        marker6.addListener('mouseout', function() {
+          infowindow_nairobi.close(map, marker6); 
+        }); 
+        marker6.addListener('mouseover', function() {
+          soundenvironment.play(map, marker6); 
+        }); 
+        marker6.addListener('mouseout', function() {
+          soundenvironment.pause(map, marker6);  
+        });
+    //Mumbai
+        var marker7 = new google.maps.Marker({
+          position: mumbai,
+          icon: circleenvironment,
+          map: map,
+          title: 'Mumbai'
+        });
+        marker7.addListener('mouseover', function() {
+          infowindow_mumbai.open(map, marker7);
+        });
+        marker7.addListener('mouseout', function() {
+          infowindow_mumbai.close(map, marker7); 
+        }); 
+        marker7.addListener('mouseover', function() {
+          soundenvironment.play(map, marker7); 
+        }); 
+        marker7.addListener('mouseout', function() {
+          soundenvironment.pause(map, marker7);  
+        }); 
+    //Denpasar
+        var marker8 = new google.maps.Marker({
+          position: denpasar,
+          icon: circleenvironment,
+          map: map,
+          title: 'Denpasar'
+        });
+        marker8.addListener('mouseover', function() {
+          infowindow_denpasar.open(map, marker8);
+        }); 
+        marker8.addListener('mouseout', function() {
+          infowindow_denpasar.close(map, marker8); 
+        }); 
+        marker8.addListener('mouseover', function() {
+          soundenvironment.play(map, marker8); 
+        });
+         marker8.addListener('mouseout', function() {
+          soundenvironment.pause(map, marker8);  
+        }); 
+    //Dehli
+        var marker9 = new google.maps.Marker({
+          position: dehli,
+          icon: circleinequality,
+          map: map,
+          title: 'Dehli'
+        });
+        marker9.addListener('mouseover', function() {
+          infowindow_dehli.open(map, marker9);
+        }); 
+        marker9.addListener('mouseout', function() {
+          infowindow_dehli.close(map, marker9); 
+        }); 
+        marker9.addListener('mouseover', function() {
+          soundinequality.play(map, marker9); 
+        });
+        marker9.addListener('mouseout', function() {
+          soundinequality.pause(map, marker9);  
+        }); 
+          
+    //New Jersey
+        var marker10 = new google.maps.Marker({
+          position: newjersey,
+          icon: circleinequality,
+          map: map,
+          title: 'New Jersey'
+        });
+        marker10.addListener('mouseover', function() {
+          infowindow_newjesrsey.open(map, marker10);
+        }); 
+        marker10.addListener('mouseout', function() {
+          infowindow_newjesrsey.close(map, marker10); 
+        }); 
+        marker10.addListener('mouseout', function() {
+          infowindow_newjesrsey.close(map, marker10); 
+        }); 
+        marker10.addListener('mouseover', function() {
+          soundinequality.play(map, marker10); 
+        });
+        marker10.addListener('mouseout', function() {
+          soundinequality.pause(map, marker10);  
+        }); 
+        new google.maps.event.addListener(marker10, "click", function() {        
+            window.open('file:///Users/elenaorlova/Google%20%D0%94%D0%B8%D1%81%D0%BA/sa_html_css/jInvertScroll/examples/index.htm');
+        });
+    
+    //Cape Town
+        var marker11 = new google.maps.Marker({
+          position: capetown,
+          icon: circleinequality,
+          map: map,
+          title: 'Cape Town'
+        });
+        marker11.addListener('mouseover', function() {
+          infowindow_capetown.open(map, marker11); 
+        }); 
+        marker11.addListener('mouseout', function() {
+          infowindow_capetown.close(map, marker11); 
+        }); 
+        marker11.addListener('mouseover', function() {
+          soundinequality.play(map, marker11); 
+        });
+        marker11.addListener('mouseout', function() {
+          soundinequality.pause(map, marker11);  
+        }); 
+
+      }
