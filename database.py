@@ -7,7 +7,8 @@ username varchar(20)	unique	not	null,
 password	varchar(100),
 name varchhar(50),
 email varchar(60),
-role varchar (50)
+role varchar (50),
+email_confirmed varchar (10)
 )''')
 
 db.commit()
