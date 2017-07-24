@@ -154,7 +154,7 @@ def index():
 
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET','POST'])
 def register():
     error = None
 
@@ -217,9 +217,9 @@ def register():
                     print(row[0], row[1])
                     row = cur.fetchone()
 
-            return flask.render_template("registered.html")
+                    return redirect(url_for('/'))
 
-    return flask.render_template("register.html", error=error)
+    return redirect(url_for('/'))
 
 
 @app.route('/confirm/<token>')
@@ -242,7 +242,7 @@ def confirm_email(token):
     return redirect(url_for('login'))
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=[ 'POST'])
 def login():
     error = None
     if flask.request.method == 'POST':
@@ -261,7 +261,7 @@ def login():
             print("Log in successful")
             return flask.redirect(flask.url_for('index'))
 
-    return flask.render_template('login.html', error=error)
+        return flask.redirect("/")
 
 
 @app.route('/logout', methods=['POST'])
