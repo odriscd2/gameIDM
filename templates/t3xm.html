@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link type="text/css" href="../static/CSS/xmcsst3.css">
+    <title>Story</title>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+	
+	        body {
+            background-image: url(tier3pic/Xiuhtezcatl%20Martinez-%20%20Earth%20Guardianspng.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+				overflow: hidden;
+        }
+        
+        @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+            body,
+            #map {
+                background-image: url(../static/Images/earthguardians.png);
+                width: 50%;
+                height: 200%;
+                background-repeat: no-repeat;
+            }
+        }
+        
+        .h1 {
+            color: white;
+            text-align: center;
+        }
+        
+        .intro-section {
+            left: 28px;
+            height: 500px;
+            width: 480px;
+            padding: 24px;
+            background: rgba(214, 141, 51, 0.9);
+            color: white;
+            border-radius: 1px 83px 0px 83px;
+            -moz-border-radius: 1px 83px 0px 83px;
+            -webkit-border-radius: 1px 83px 0px 83px;
+            -webkit-border-radius: 1px 83px 0px 83px;
+            text-align: left;
+            font-family: 'Letter Gothic', sans-serif, bold;
+            font-size: 23px;
+            bottom: 5px;
+            position: absolute;
+        }
+        
+        .container {
+            position: fixed left;
+            padding-right: 50px;
+            overflow: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        #toggle {
+            position: fixed;
+            /*fixed*/
+            right: -100%;
+            top: -100%;
+            z-index: 1000000;
+            float: left;
+            text-align: left;
+        }
+        
+        #toggle:focus ~ .toggle-container .button-toggle {
+            box-shadow: 0 0 0 8px rgba(214, 141, 51, 0.9), inset 0 0 0 20px rgba(214, 141, 51, 0.9);
+            z-index: 1000000;
+        }
+        
+        #toggle:checked ~ .toggle-container .button-toggle {
+            box-shadow: 0 0 0 550px rgba(214, 141, 51, 0.9), inset 0 0 0 20px rgba(214, 141, 51, 0.9);
+            z-index: 1000000;
+        }
+        
+        #toggle:checked ~ .toggle-container .button-toggle:hover {
+            box-shadow: 0 0 0 550px rgba(214, 141, 51, 0.9), inset 0 0 0 20px, 0 0 0 8px rgba(214, 141, 51, 0.9), inset 0 0 0 20px rgba(214, 141, 51, 0.9);
+            z-index: 1000000;
+        }
+        
+        #toggle:checked ~ .toggle-container .button-toggle:before {
+            z-index: 1000000;
+        }
+        
+        #toggle:checked ~ .toggle-container .button-toggle:after {
+            z-index: 1000000;
+        }
+        
+        #toggle:checked:focus ~ .toggle-container .button-toggle {
+            box-shadow: 0 0 0 550px rgba(214, 141, 51, 0.9), inset 0 0 0 20px rgba(214, 141, 51, 0.9), 0 0 0 8px rgba(214, 141, 51, 0.9), inset 0 0 0 20px rgba(214, 141, 51, 0.9);
+            z-index: 1000000;
+        }
+        
+        #toggle:checked ~ .nav {
+            margin-bottom: 10px;
+            pointer-events: auto;
+            transform: translate(50px, 50px);
+            z-index: 1000000;
+            position: fixed;
+            float: left;
+            text-align: left;
+        }
+        
+        #toggle:checked ~ .nav .nav-item {
+            color: #ffffff;
+            letter-spacing: 0px;
+            height: 40px;
+            line-height: 40px;
+            margin-top: 10px;
+            opacity: 1;
+            transform: scaleY(1);
+            transition: 0.5s, opacity 0.1s;
+            text-align: left;
+        }
+        
+        #toggle:checked ~ .nav .nav-item:nth-child(1) {
+            transition-delay: 0.15s;
+        }
+        
+        #toggle:checked ~ .nav .nav-item:nth-child(1):before {
+            transition-delay: 0.15s;
+        }
+        
+        #toggle:checked ~ .nav .nav-item:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+        
+        #toggle:checked ~ .nav .nav-item:nth-child(2):before {
+            transition-delay: 0.1s;
+        }
+        
+        #toggle:checked ~ .nav .nav-item:nth-child(3) {
+            transition-delay: 0.05s;
+        }
+        
+        #toggle:checked ~ .nav .nav-item:nth-child(3):before {
+            transition-delay: 0.05s;
+        }
+        
+        #toggle:checked ~ .nav .nav-item:nth-child(4) {
+            transition-delay: 0s;
+        }
+        
+        #toggle:checked ~ .nav .nav-item:nth-child(4):before {
+            transition-delay: 0s;
+        }
+        
+        #toggle:checked ~ .nav .nav-item:before {
+            opacity: 0;
+        }
+        
+        #toggle:checked ~ .dummy-content {
+            padding-top: 30px;
+        }
+        
+        #toggle:checked ~ .dummy-content:before {
+            background-color: rgba(214, 141, 51, 0.9);
+        }
+        /* Button */
+        
+        .button-toggle {
+            position: fixed;
+            display: inline-block;
+            width: 43px;
+            height: 43px;
+            /*  margin: 18px;*/
+            margin-left: 25px;
+            margin-top: 18px;
+            background-color: rgba(214, 141, 51, 0.9);
+            border: none;
+            cursor: pointer;
+            border-radius: 100%;
+            transition: 0.6s;
+            float: left;
+            z-index: 1000000;
+        }
+        
+        .button-toggle:hover {
+            box-shadow: 0 0 0 8px rgba(214, 141, 51, 0.9), inset 0 0 0 20px rgba(214, 141, 51, 0.9);
+            z-index: 1000000;
+        }
+        
+        .button-toggle:before,
+        .button-toggle:after {
+            position: fixed;
+            content: '';
+            top: 50%;
+            width: 100%;
+            height: 2px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            transition: 0.5s;
+            z-index: 1000000;
+            float: left;
+        }
+        
+        .button-toggle:before {
+            transform: translateY(-50%) rotate(45deg) scale(0);
+            z-index: 1000000;
+        }
+        
+        .button-toggle:after {
+            transform: translateY(-50%) rotate(-45deg) scale(0);
+            z-index: 1000000;
+        }
+        /* Menu*/
+        
+        .nav {
+            display: inline-block;
+            margin: 20px 25px 20px;
+            pointer-events: none;
+            transition: 0.5s;
+            z-index: 1000000;
+            position: fixed;
+            float: left;
+            text-align: left;
+        }
+        
+        .nav-item {
+            position: relative;
+            /*only relative*/
+            display: inline-block;
+            float: left;
+            clear: both;
+            color: transparent;
+            font-size: 14px;
+            font-family: 'Letter Gothic', sans-serif;
+            letter-spacing: -5px;
+            height: 15px;
+            line-height: 20px;
+            text-transform: uppercase;
+            text-align: left;
+            transform: scaleY(0.3);
+            /*width of line*/
+            transition: 0.7s, opacity 1s;
+            z-index: 1000000;
+        }
+        
+        .nav-item:nth-child(1) {
+            transition-delay: 0s;
+            text-align: left;
+            z-index: 1000000;
+        }
+        
+        .nav-item:nth-child(1):before {
+            transition-delay: 0s;
+            z-index: 1000000;
+        }
+        
+        .nav-item:nth-child(2) {
+            transition-delay: 0.05s;
+            z-index: 1000000;
+        }
+        
+        .nav-item:nth-child(2):before {
+            transition-delay: 0.05s;
+            z-index: 1000000;
+        }
+        
+        .nav-item:nth-child(3) {
+            transition-delay: 0.1s;
+            z-index: 1000000;
+        }
+        
+        .nav-item:nth-child(3):before {
+            transition-delay: 0.1s;
+            z-index: 1000000;
+        }
+        
+        .nav-item:nth-child(4) {
+            transition-delay: 0.15s;
+            /*  z-index: 1000000;*/
+        }
+        
+        .nav-item:nth-child(4):before {
+            transition-delay: 0.15s;
+            z-index: 1000000;
+        }
+        
+        .nav-item:nth-child(1) {
+            letter-spacing: -8px;
+            z-index: 1000000;
+        }
+        
+        .nav-item:nth-child(2) {
+            letter-spacing: -7px;
+            z-index: 1000000;
+        }
+        
+        .nav-item:nth-child(n + 4) {
+            letter-spacing: -8px;
+            margin-top: -7px;
+            opacity: 0;
+            z-index: 1000000;
+        }
+        
+        .nav-item:before {
+            position: fixed;
+            content: '';
+            top: 50%;
+            float: right;
+            width: 100%;
+            height: 2px;
+            background-color: #ffffff;
+            transform: translateY(-50%) scaleY(5);
+            transition: 0.5s;
+            z-index: 1000000;
+        }
+        
+        $items: 4;
+        $transition-delay: 0.05s;
+        .nav-item {
+            @for $i from 1 through $items {
+                &:nth-child(#{$i}) {
+                    $delay: ($i - 1) * $transition-delay;
+                    transition-delay: $delay;
+                    &:before {
+                        transition-delay: $delay;
+                    }
+                }
+            }
+        }
+        
+        #cta {
+            /*
+            width: 800px;
+            height: 500px;
+*/
+            top: 320px;
+            left: 40%;
+            /*
+  
+            padding: 30px;
+            30px;
+*/
+            position: fixed;
+            text-align: center;
+            font-size: 30px;
+            color: white;
+            font-family: 'Letter Gothic', sans-serif;
+        }
+        
+        .ctalink {
+            text-decoration: none;
+            font-size: 26px;
+            width: 200px;
+            height: 40px;
+            color: #fff;
+            cursor: pointer;
+            display: block;
+            z-index: 1;
+            position: fixed;
+            border: 5px solid rgba(215, 44, 44, 0.9);
+            transition: all 0.4s circle(0.215, 0.61, 0.355, 1) 0s;
+            text-align: center;
+            margin: auto;
+            /*width: 50%;*/
+            font-family: 'Letter Gothic', sans-serif;
+            /*            padding: 40px 0;*/
+            padding-top: 10px;
+            text-align: center;
+        }
+        
+        .ctalink:hover {
+            color: #ffffff !important;
+            background-color: transparent;
+            text-shadow: ntwo;
+        }
+        
+        .ctalink:hover:before {
+            top: 0%;
+            bottom: auto;
+            height: 100%;
+        }
+        
+        .ctalink:before {
+            display: block;
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            height: 0px;
+            width: 100%;
+            z-index: -1;
+            content: '';
+            color: #ffffff !important;
+            background: rgba(215, 44, 44, 0.7);
+            transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+        }
+	
+	</style>
+</head>
+<!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <!-- Navigation -->
+    <div class="container">
+        <input id="toggle" type="checkbox" />
+        <label class="toggle-container" for="toggle"> <span class="button button-toggle"></span> </label>
+        <nav class="nav"> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Home</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Map</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">About Project</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">DIY/Games</a> </nav>
+    </div>
+    <!-- Content --><div id="background image">
+    
+<img src="../static/Images/earthguardians.png">
+          
+          
+           <section id="intro" class="intro-section">
+        <div> 
+My name is Xiuhtezcatl Martinez- and this is my story. My first name comes from the Aztec language. It’s pronounced ‘Shoe-Tez- Caht’. From a young age I began to find books in school and do research about the effects of our everyday on the climate. 
+When I was six I started to warn people of the dangers of climate change. I began a campaign to remove pesticides from local parks. I was inspired by being able to make a difference in my community. I decided to tackle more issues in my community. I campaigned to stop fracking in my state and then joined with a group of young activists to sue the government for failing to protect the environment for future generations. 
+My story has seen me move from being a local activist to a regional activist. I try to teach young people about the environment and why it is worth fighting to protect.
+        </div>
+    </section>
+</body>
+
+</html>
