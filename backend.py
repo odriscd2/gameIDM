@@ -217,9 +217,10 @@ def register():
                     print(row[0], row[1], row[2], row[3])
                     row = cur.fetchone()
 
-            return flask.redirect(flask.url_for('index'))
+            return flask.render_template('registered.html')
 
-    return flask.redirect(flask.url_for('index'))
+    return flask.render_template('registered.html')
+
 
 
 @app.route('/confirm/<token>')
@@ -239,7 +240,7 @@ def confirm_email(token):
         cur.execute("UPDATE users SET email_confirmed = 'TRUE' WHERE username = username ")
         db.commit()
 
-    return flask.redirect(flask.url_for('index'))
+    return flask.render_template('login.html')
 
 
 @app.route('/login', methods=['POST'])
