@@ -145,7 +145,7 @@ def index():
         badges = 'Local Activist'
         badge_list='Local Activist'
         length = len(badge_list)
-        print('No Sign In')
+
 
         return flask.render_template('infowindow.html', badges=badges, badge_list=badge_list, length=length,
                                     points=200, level='level1') # return index and relevant variables
@@ -154,7 +154,7 @@ def index():
 
 
 
-@app.route('/register', methods=['GET','POST'])
+@app.route('/register', methods=['POST'])
 def register():
     error = None
 
@@ -211,15 +211,15 @@ def register():
                     "INSERT INTO badges (username, badge_id, points, level) VALUES('%s', 'Teacher', 2000, 'level3')" % username)
                 db.commit()
                 print(role)
-                cur.execute("SELECT username, badge_id FROM badges")
+                cur.execute("SELECT username, badge_id, points, level FROM badges")
                 row = cur.fetchone()
                 while row is not None:
-                    print(row[0], row[1])
+                    print(row[0], row[1], row[2], row[3])
                     row = cur.fetchone()
 
-                    return redirect(url_for('/'))
+            return flask.redirect(flask.url_for('index'))
 
-    return redirect(url_for('/'))
+    return flask.redirect(flask.url_for('index'))
 
 
 @app.route('/confirm/<token>')
@@ -239,10 +239,10 @@ def confirm_email(token):
         cur.execute("UPDATE users SET email_confirmed = 'TRUE' WHERE username = username ")
         db.commit()
 
-    return redirect(url_for('login'))
+    return flask.redirect(flask.url_for('index'))
 
 
-@app.route('/login', methods=[ 'POST'])
+@app.route('/login', methods=['POST'])
 def login():
     error = None
     if flask.request.method == 'POST':
@@ -261,7 +261,7 @@ def login():
             print("Log in successful")
             return flask.redirect(flask.url_for('index'))
 
-        return flask.redirect("/")
+        return flask.redirect(flask.url_for('index'))
 
 
 @app.route('/logout', methods=['POST'])
@@ -324,7 +324,7 @@ def reset_with_token(token):
     return render_template('reset_with_token.html', token=token)
 
 
-@app.route('/reset_email', methods=['GET','POST'])
+@app.route('/reset_email', methods=['POST'])
 def reset_email():
     error=None
     if flask.request.method == 'POST':

@@ -45,9 +45,14 @@
 		<div class="modal-content"> <span class="close">&times;</span>
 			<div id="modaltitles">
 				<h2>Log in or Sign Up for Global Activist</h2>
-				<h3>Unlock more stories and places and check your progress</h3> </div>
+				<h3>Unlock more stories and places and check your progress</h3>
+
+			</div>
 			<div id="loginmodal">
 				<form method="post" action='\login' name="login_form">
+					{% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
 					<p>
 						<input type="text"  name="username" id="username" placeholder="Username">
 					</p>
@@ -60,15 +65,22 @@
 				
 			</div>
 			<div id="registermodal">
-				<form method="post" action='\register' name="register_form">
+				{% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+				<form method="post" action="/register" name="regForm">
 					<p>
-						<input type="text"  name="username" id="username" placeholder="Username" required>
+						<input type="text"  name="username" placeholder="Username" required>
 					</p>
 					<p>
-						<input type="text"  name="email" id="email" placeholder="Email" required>
+						<input type="text"  name="email" placeholder="Email" required>
 					</p>
 					<p>
 						<input type="password"  name="password" placeholder="Password" required>
+					</p>
+
+					<p>
+						<input type="text"  name="name" placeholder="Name" required>
 					</p>
 					<p>Select your role:</p>
 					<select name="role" required>
@@ -76,7 +88,7 @@
 						<option value="Student">Student</option>
 					</select>
 					<p>
-						<button type="submit" value="Register" class="btn btn-primary">Sign in</button>
+						<button type="submit" value="register" class="btn btn-primary">Register</button>
 					</p>
 				</form>
 			</div>
@@ -84,6 +96,10 @@
 	</div>
 	<footer>
 		<p>Discover your world. Inspire your world.</p>
+		<h2>Logout</h2>
+<form action="\logout" method="post">
+    <input type="submit" value="Logout">
+</form>
 	</footer>
 	<script>
 		// Get the modal
