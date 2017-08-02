@@ -1,41 +1,14 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
+{% block body %}
 
-<head>
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="../static/CSS/style.css">
-	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
-	<script>
-		var badges = "{{badges}}";
-		var points = "{{points}}";
-		var level = "{{level}}";
-	</script>
-	<script src="../static/JS/map-java.js"></script>
-	<script src="../static/JS/modal-java.js"></script>
-	<title>Global Activist</title>
-</head>
-
-<body>
-	<header id="header">
-		<h1 style="display:none;">Global Activist</h1>
-		<!-- Trigger/Open The Modal -->
-		<button id="myBtn" >Open Modal</button> <img src="../static/Images/Header.png" alt="global-activist-logo"> </header>
-	<!--
-	<audio id="soundrefugees" preload="auto">
-		<source src="../static/audio/refugees.wav" type="audio/wav"> Your browser doesn't support audio. </audio>
-	<audio id="soundenvironment" preload="auto">
-		<source src="../static/audio/environment.wav" type="audio/wav"> Your browser doesn't support audio. </audio>
-	<audio id="soundinequality" preload="auto">
-		<source src="../static/audio/inequality.wav" type="audio/wav"> Your browser doesn't support audio. </audio>
-	<audio id="soundhcrisis" preload="auto">
-		<source src="../static/audio/hcrisis.wav" type="audio/wav"> Your browser doesn't support audio. </audio>-->
-	<!-- Navigation -->
-	<div class="container">
+<!-- Navigation -->
+<!--
+    <div id="container" class="container">
+		<div class="horizon scroll" style="left: 0px;"> </div>
 		<input id="toggle" type="checkbox" />
 		<label class="toggle-container" for="toggle"> <span class="button button-toggle"></span> </label>
-		<nav class="nav"> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Refugees</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Inequality</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Environment</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Humanitarian Crisis</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">About Project</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">DIY/Games</a></nav>
-	</div>
+		<nav class="nav"> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Home</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Map</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">About Project</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">DIY/Games</a> </nav>
+</div>-->
 	<div id="map"></div>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWdCRYR6k-5WVxvZodvqOIAUwBFVfuvno&callback=initMap">
 	</script>
@@ -45,100 +18,138 @@
 		<div class="modal-content"> <span class="close">&times;</span>
 			<div id="modaltitles">
 				<h2>Log in or Sign Up for Global Activist</h2>
-				<h3>Unlock more stories and places and check your progress</h3>
-
-			</div>
+				<h3>Unlock more stories and places and check your progress</h3> </div>
 			<div id="loginmodal">
+
+				<h3>Login to keep exploring</h3>
 				<form method="post" action='\login' name="login_form">
-					{% if error %}
-    <p class=error><strong>Error:</strong> {{ error }}
-  {% endif %}
 					<p>
-						<input type="text"  name="username" id="username" placeholder="Username">
-					</p>
+						<input type="text" name="username" id="username" placeholder="Username"> </p>
 					<p>
-						<input type="password"  name="password" placeholder="Password">
-					</p>
+						<input type="password" name="password" placeholder="Password"> </p>
 					<p>
-						<button type="submit" class="btn btn-primary">Sign in</button> <a href="#">Forgot Password?</a> </p>
+						<button type="submit" class="btn btn-primary">Sign in</button>
 				</form>
-				
-			</div>
-			<div id="registermodal">
-				{% if error %}
-    <p class=error><strong>Error:</strong> {{ error }}
-  {% endif %}
+				<br/> <a class="buttono" href="{{ url_for('reset') }}"> Reset your password </a>
+				<br/>
+				<br/> <a class="buttono" href="{{ url_for('reset_email') }}"> Reset your email </a>
+				<br/> 
+				<script>
+				var x="SELECT * FROM users WHERE username='"+username+"' AND password='"+password+"' ";    
+tx.executeSql(x,[],function(tx,result){
+          if (result.rows.length > 0){
+
+            alert("Username : " +  result.rows[0].username);
+            alert("Password: " + result.rows[0].password); 
+          }else{
+            alert("User not found!");
+          }
+}); </script>
+				</div>
+				<div id="registermodal">
+			<div id="registerForm">
+				<h3>Sign Up for Global Activist</h3>
 				<form method="post" action="/register" name="regForm">
+                    <p>Select your role:</p>
+
+						<input type="radio" id="teacher" name="role" value="teacher" onclick="show('teacherReg'); hide('studentReg')" required > Teacher
+						<input type="radio" id="student" name="role" value="student" onclick="show('studentReg'); hide('teacherReg')" required> Student
+						<br>
+						<div id="studentReg" style="display:none">
 					<p>
-						<input type="text"  name="username" placeholder="Username" required>
-					</p>
+						<input type="text" name="username" placeholder="Username" required> </p>
 					<p>
-						<input type="email"  name="email" placeholder="Email" required>
-					</p>
+						<input type="email" name="email" placeholder="Email" required> </p>
 					<p>
 						<input type="password" placeholder="Password" id="password" name="password" required>
-        <input type="password" placeholder="Confirm Password" id="confirm_password" required>
-					</p>
+						<input type="password" placeholder="Confirm Password" id="confirm_password" required> </p>
+					<p>
+						<input type="text" name="name" placeholder="Name" required> </p>
 
-					<p>
-						<input type="text"  name="name" placeholder="Name" required>
-					</p>
-					<p>Select your role:</p>
-					<select name="role" required>
-						<option value="Teacher">Teacher</option>
-						<option value="Student">Student</option>
-					</select>
-					<p>
 						<button type="submit" value="register" class="btn btn-primary">Register</button>
-					</p>
+					</div>
+					
+					
+					<div id="teacherReg" style="display:none">
+					<p>
+						<input type="text" name="username" placeholder="Username" required> </p>
+					<p>
+						<input type="email" name="email" placeholder="Email" required> </p>
+					<p>
+						<input type="password" placeholder="Password" id="password" name="password" required>
+						<input type="password" placeholder="Confirm Password" id="confirm_password" required> </p>
+					<p>
+						<input type="text" name="name" placeholder="Name" required> </p>
+						
+						<p>
+						<input type="text" name="classname" placeholder="Class Name" required> </p>
+
+						<button type="submit" value="register" class="btn btn-primary">Register</button>
+					</div>
 				</form>
+</div>
 			</div>
+<script>
+  function show (toBlock){
+    setDisplay(toBlock, 'block');
+  }
+  function hide (toNone) {
+    setDisplay(toNone, 'none');
+  }
+  function setDisplay (target, str) {
+    document.getElementById(target).style.display = str;
+  }
+</script>
 		</div>
 	</div>
 	<footer>
 		<p>Discover your world. Inspire your world.</p>
-		<h2>Logout</h2>
-<form action="\logout" method="post">
-    <input type="submit" value="Logout">
-</form>
+		<form action="\logout" method="post">
+			<input type="submit" value="Logout"> </form>
 	</footer>
-	<script>
-		// Get the modal
-		var modal = document.getElementById('myModal');
-		// Get the button that opens the modal
-		var btn = document.getElementById("myBtn");
-		// Get the <span> element that closes the modal
-		var span = document.getElementsByClassName("close")[0];
-		// When the user clicks on the button, open the modal 
-		btn.onclick = function () {
-				modal.style.display = "block";
-			}
-			// When the user clicks on <span> (x), close the modal
-		span.onclick = function () {
-				modal.style.display = "none";
-			}
-			// When the user clicks anywhere outside of the modal, close it
-		window.onclick = function (event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
-			}
-		}
-	</script>
-	<script>
-		var password = document.getElementById("password")
-  , confirm_password = document.getElementById("confirm_password");
+<script>
 
-function validatePassword(){
-  if(password.value != confirm_password.value) {
-    confirm_password.setCustomValidity("Woops! Looks like the passwords don't match");
-  } else {
-    confirm_password.setCustomValidity('');
-  }
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
 }
 
-password.onchange = validatePassword;
-confirm_password.onkeyup = validatePassword;
-	</script>
-</body>
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
 
-</html>
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+	
+</script>
+<script>
+var password = document.getElementById("password")
+			, confirm_password = document.getElementById("confirm_password");
+
+		function validatePassword() {
+			if (password.value != confirm_password.value) {
+				confirm_password.setCustomValidity("Woops! Looks like the passwords don't match");
+			}
+			else {
+				confirm_password.setCustomValidity('');
+			}
+		}
+		password.onchange = validatePassword;
+		confirm_password.onkeyup = validatePassword;
+</script>
+
+{% endblock %}

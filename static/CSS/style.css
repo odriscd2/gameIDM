@@ -10,7 +10,7 @@ body {
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	background-color:#2F4F4F;
+
 	overflow: hidden;
 }
 
@@ -420,6 +420,7 @@ footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
+	background-color:#2F4F4F;
 }
 
 footer p {
@@ -432,21 +433,21 @@ header h1 {
 	float: right;
 }
 
-header img {
+.logo {
 	height: 68px;
 	width: auto;
-	position: relative;
-	float: right;
+	position: fixed;
 	padding-right: 20px;
 	padding-bottom: 5px;
 	padding-top: 5px;
+	    z-index: 1;
+    left: 85%;
+    top: 1%;
 }
 
-#headertitle {
-	left: 20%;
-	position: relative;
+header{
+		background-color:#2F4F4F;
 }
-
 /*Modal CSS and set up*/
 
 
@@ -455,24 +456,25 @@ header img {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
-    top: 0;
+    bottom: 15%;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    overflow:hidden; /* Enable scroll if needed */
+	padding-right: 20px;
+	padding-left: 20px;
 }
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
+    background-color: #660066;
     margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
+
+    border: 3px solid white;
     width: 80%; /* Could be more or less, depending on screen size
 	*/
-	    background-color: white;
-    height: 50%;
+	height: 68%;
+	padding-right: 10px;
+	padding-left: 10px;
 }
 
 /* The Close Button */
@@ -492,19 +494,77 @@ header img {
 
 #modaltitles{
 text-align: center;
+padding-top: 0;
+	font-family: 'Didact Gothic', sans-serif;
+	color: white;
 }
 #registermodal{
 	float: right;
+	color: white;
+	font-family: 'Didact Gothic', sans-serif;
 
 }
 
 #loginmodal{
 	float: left;
+	color: white;
+	font-family: 'Didact Gothic', sans-serif;
 
 }
+
+#loginmodal a{
+	color: white;
+	text-decoration: underline;
+}
+
 .modal-content span{
 	visibility: hidden;
 }
 #mymodal{
-	background-color: white;
+	background-color: #660066;
 }
+footer form{
+	float: right
+}
+
+#login-page {
+	background-color: white;
+	z-index: 30;
+	position: absolute;
+	left: 50%;
+	top:50%;
+}
+
+.loginimg{
+	height: 68px;
+	width: auto;
+	position: relative;
+	left:5%;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	float: inherit;
+	
+}
+
+header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+	float: none;
+}
+
+header li{
+	display: inline;
+}
+
+header img{
+	height: 68px;
+	width: auto;
+	position: relative;
+	padding-right: 20px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	float: inherit;
+}
+

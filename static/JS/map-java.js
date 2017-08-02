@@ -55,13 +55,13 @@
                 , lng: 18.42322
             };
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 2
+                zoom: 1.5
                 , minZoom: 2
                 , maxZoom: 2
                 , draggable: false
                 , disableDefaultUI: true
                 , center: {
-                    lat: 0
+                    lat: 28.4826
                     , lng: 0
                 }
                 , styles: [

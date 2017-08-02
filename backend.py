@@ -6,7 +6,7 @@ import datetime
 from flask_mail import Mail, Message
 from flask import send_from_directory, render_template, redirect, url_for, request, g
 from itsdangerous import URLSafeTimedSerializer
-from flask import abort
+from flask import abort, flash
 #This is a comment to show GIT
 # database
 db = sqlite3.connect('mydb.db')
@@ -106,6 +106,7 @@ def page_not_found(e):
 # creating routes & static folders for badges
 @app.route('/')
 def index():
+
     if 'username' in flask.session:
         # badges = os.listdir('./static')
         username= flask.session['username']
@@ -140,7 +141,6 @@ def index():
             db.commit()
 
         return flask.render_template("infowindow.html", name=flask.session['username'],badges=badges, badge_list=badge_list, length=length, points=points, level=level)
-
     else:
         badges = 'Local Activist'
         badge_list='Local Activist'
@@ -156,14 +156,14 @@ def index():
 
 @app.route('/register', methods=['POST'])
 def register():
-    error = None
-
+    error=None
     if flask.request.method == 'POST':
         username = flask.request.form['username']
         password = flask.request.form['password']
         name = flask.request.form['name']
         email = flask.request.form['email']
         role = flask.request.form['role']
+        classname= flask.request.form['classname']
 
         hash_password = hashlib.md5(password.encode()).hexdigest()
         hash_email = hashlib.md5(email.encode()).hexdigest()
@@ -173,14 +173,16 @@ def register():
         cur.execute("SELECT email from users where email= (?)", [hash_email])
         emailexists = cur.fetchone()
         if userexists:
-            error = 'Username taken'
+            error = "Username taken"
         elif emailexists:
-            error = 'An account with this email address already exists'
+            error = "An account with this email address already exists"
 
         else:
             cur.execute("INSERT INTO users( username, password, name,email, role, email_confirmed) "
                         "VALUES('%s','%s', '%s', '%s', '%s', 'FALSE')"
                         % (username, hash_password, name, hash_email, role))
+            db.commit()
+            cur.execute("INSERT INTO classImages (classname) VALUES ('%s')" %classname)
             db.commit()
             subject = "Confirm your email"
 
@@ -196,6 +198,7 @@ def register():
                                    confirm_url=confirm_url)
 
             send_email(email, subject, html)
+
 
             if role == 'Student':
                 cur.execute("INSERT INTO badges (username, badge_id, points) VALUES('%s', 'Local Activist', 0)"
@@ -217,9 +220,9 @@ def register():
                     print(row[0], row[1], row[2], row[3])
                     row = cur.fetchone()
 
-            return flask.render_template('registered.html')
+            return flask.render_template('registered.html', error=error)
 
-    return flask.render_template('registered.html')
+    return flask.render_template('register.html', error=error)
 
 
 
@@ -245,7 +248,7 @@ def confirm_email(token):
 
 @app.route('/login', methods=['POST'])
 def login():
-    error = None
+    error=None
     if flask.request.method == 'POST':
         username = flask.request.form['username']
         password = flask.request.form['password']
@@ -256,19 +259,19 @@ def login():
         if completion == False:
             error = "Your login details are incorrect"
 
+
         elif confirmed == False:
-            error="You must confirm your email address"
+           error = "You must confirm your email address"
         else:
-            print("Log in successful")
             return flask.redirect(flask.url_for('index'))
 
-        return flask.redirect(flask.url_for('index'))
+    return flask.render_template('login.html', error=error)
 
 
 @app.route('/logout', methods=['POST'])
 def logout():
     flask.session.pop('username', None)
-    print("Log out successful")
+    flash("Log out successful")
     return flask.redirect(flask.url_for('index'))
 
 
@@ -359,6 +362,26 @@ def reset_email():
 
                 return redirect(url_for('login'))
     return render_template('update_email.html')
+
+def upload_work():
+    error=None
+
+    if flask.request.method == "GET":
+        return flask.render_template("upload-form.html")
+
+    else:
+        file= flask.request.files["image"]
+        file.save("static/"+file.filename)
+
+        filename=file.filename
+        username = flask.session['username']
+        classname = flask.request.form['classname']
+
+        cur.execute("INSERT INTO classImages (username, filename, classname) VALUES ('%s', '%s', '%s')"
+                    %(username, filename, classname))
+        db.commit()
+
+        return flask.render_template("gallery.html", error=error)
 
 
 

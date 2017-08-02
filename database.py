@@ -24,3 +24,13 @@ level varchar (50)
 db.commit()
 
 
+cur.execute('''CREATE TABLE	IF NOT EXISTS classImages
+(
+username varchar(20),
+filename (50) unique not null,
+classname varchar (50)
+)''')
+
+db.commit()
+
+
