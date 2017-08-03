@@ -23,12 +23,14 @@ level varchar (50)
 
 db.commit()
 
-
-cur.execute('''CREATE TABLE	IF NOT EXISTS classImages
+cur.execute('''CREATE TABLE IF NOT EXISTS share_spaces
 (
-username varchar(20),
-filename (50) unique not null,
-classname varchar (50)
+admin_username varchar(20),
+admin_password varchar(20),
+user_username varchar (20),
+classname varchar(20),
+sharespace_password varchar(20),
+file_name varchar(50)
 )''')
 
 db.commit()

@@ -67,6 +67,10 @@
       {% block footer %}
 	<footer>
 		<p>Discover your world. Inspire your world.</p>
+<a class="buttono" href="{{ url_for('create_sharespace') }}"> Create your sharespace! </a>
+
+        <a class="buttono" href="{{ url_for('sharespace_admin_login') }}"> Enter your sharespace! </a>
+
 		<form action="\logout" method="post">
 			<input type="submit" value="Logout"> </form>
 	</footer>

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{%block body %}
+<h1>Register</h1>
+<h2>Fill in your details</h2>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+
+<div id="registerForm">
+				<h3>Sign Up for Global Activist</h3>
+				<form method="post" action="/sharespace_login_admin" name="ShareSpaceForm">
+<p>Enter your username:
+<input type="text" name="admin_username" placeholder="Username" required> </p>
+<br/>
+<p>Enter your password:
+<input type="password" name="admin_password" placeholder="Password" required> </p>
+<br/>
+                    <p>Create a name for your class's own sharespace:<br/>
+
+						<input type="text" name="classname" placeholder="Class Name" required> </p>
+
+                    <p>Create a password so your students can acess their own sharespace!
+                        Your own account password will be the administrator password<br/>
+                    <input type="password" name="sharespace_password" placeholder="Sharespace Password" required> </p>
+                    <button type="submit" value="register" class="btn btn-primary">Register</button>
+				</form>
+</div>
+{% endblock %}

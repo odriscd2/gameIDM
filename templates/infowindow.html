@@ -34,61 +34,30 @@
 				<br/>
 				<br/> <a class="buttono" href="{{ url_for('reset_email') }}"> Reset your email </a>
 				<br/> 
-				<script>
-				var x="SELECT * FROM users WHERE username='"+username+"' AND password='"+password+"' ";    
-tx.executeSql(x,[],function(tx,result){
-          if (result.rows.length > 0){
 
-            alert("Username : " +  result.rows[0].username);
-            alert("Password: " + result.rows[0].password); 
-          }else{
-            alert("User not found!");
-          }
-}); </script>
 				</div>
-				<div id="registermodal">
 			<div id="registerForm">
 				<h3>Sign Up for Global Activist</h3>
 				<form method="post" action="/register" name="regForm">
                     <p>Select your role:</p>
 
-						<input type="radio" id="teacher" name="role" value="teacher" onclick="show('teacherReg'); hide('studentReg')" required > Teacher
-						<input type="radio" id="student" name="role" value="student" onclick="show('studentReg'); hide('teacherReg')" required> Student
+						<input type="radio" id="teacher" name="role" value="teacher"  required > Teacher
+						<input type="radio" id="student" name="role" value="student"  required> Student
 						<br>
-						<div id="studentReg" style="display:none">
-					<p>
-						<input type="text" name="username" placeholder="Username" required> </p>
-					<p>
-						<input type="email" name="email" placeholder="Email" required> </p>
-					<p>
-						<input type="password" placeholder="Password" id="password" name="password" required>
-						<input type="password" placeholder="Confirm Password" id="confirm_password" required> </p>
-					<p>
-						<input type="text" name="name" placeholder="Name" required> </p>
-
-						<button type="submit" value="register" class="btn btn-primary">Register</button>
-					</div>
-					
-					
-					<div id="teacherReg" style="display:none">
-					<p>
-						<input type="text" name="username" placeholder="Username" required> </p>
-					<p>
-						<input type="email" name="email" placeholder="Email" required> </p>
-					<p>
-						<input type="password" placeholder="Password" id="password" name="password" required>
-						<input type="password" placeholder="Confirm Password" id="confirm_password" required> </p>
-					<p>
-						<input type="text" name="name" placeholder="Name" required> </p>
-						
 						<p>
-						<input type="text" name="classname" placeholder="Class Name" required> </p>
+						<input type="text" name="username" placeholder="Username" required> </p>
+					<p>
+						<input type="email" name="email" placeholder="Email" required> </p>
+					<p>
+						<input type="password" placeholder="Password" id="password" name="password" required>
+						<input type="password" placeholder="Confirm Password" id="confirm_password" required> </p>
+					<p>
+						<input type="text" name="name" placeholder="Name" required> </p>
 
-						<button type="submit" value="register" class="btn btn-primary">Register</button>
-					</div>
+					<button type="submit" value="register" class="btn btn-primary">Register</button>
+
 				</form>
 </div>
-			</div>
 <script>
   function show (toBlock){
     setDisplay(toBlock, 'block');

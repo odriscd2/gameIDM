@@ -11,10 +11,10 @@
 				<form method="post" action="/register" name="regForm">
                     <p>Select your role:</p>
 
-						<input type="radio" id="teacher" name="role" value="teacher" onclick="show('teacherReg'); hide('studentReg')" required > Teacher
-						<input type="radio" id="student" name="role" value="student" onclick="show('studentReg'); hide('teacherReg')" required> Student
+						<input type="radio" id="teacher" name="role" value="teacher" > Teacher
+						<input type="radio" id="student" name="role" value="student" > Student
 						<br>
-						<div id="studentReg" style="display:none">
+
 					<p>
 						<input type="text" name="username" placeholder="Username" required> </p>
 					<p>
@@ -26,36 +26,9 @@
 						<input type="text" name="name" placeholder="Name" required> </p>
 
 						<button type="submit" value="register" class="btn btn-primary">Register</button>
-					</div>
-					
-					
-					<div id="teacherReg" style="display:none">
-					<p>
-						<input type="text" name="username" placeholder="Username" required> </p>
-					<p>
-						<input type="email" name="email" placeholder="Email" required> </p>
-					<p>
-						<input type="password" placeholder="Password" id="password" name="password" required>
-						<input type="password" placeholder="Confirm Password" id="confirm_password" required> </p>
-					<p>
-						<input type="text" name="name" placeholder="Name" required> </p>
-						
-						<p>
-						<input type="text" name="classname" placeholder="Class Name" required> </p>
 
-						<button type="submit" value="register" class="btn btn-primary">Register</button>
-					</div>
-				</form>
+					
+
 </div>
-<script>
-  function show (toBlock){
-    setDisplay(toBlock, 'block');
-  }
-  function hide (toNone) {
-    setDisplay(toNone, 'none');
-  }
-  function setDisplay (target, str) {
-    document.getElementById(target).style.display = str;
-  }
-</script>
+
 {% endblock %}

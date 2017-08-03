@@ -31,10 +31,8 @@ mail = Mail(app)
 
 ts = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
-
 def check_email(hashed_email, user_email):
     return hashed_email == hashlib.md5(user_email.encode()).hexdigest()
-
 
 def check_password(hashed_password, user_password):
     return hashed_password == hashlib.md5(user_password.encode()).hexdigest()
@@ -69,7 +67,6 @@ def check_confirmed():
                 confirmed=True
     return confirmed
 
-
 def validate(username, password):
     db = sqlite3.connect('mydb.db')
     completion = False
@@ -84,7 +81,24 @@ def validate(username, password):
             if dbUser == username:
                 print(dbPass)
                 completion = check_password(dbPass, password)
-                print(check_password, completion)
+
+
+    return completion
+
+def validate_admin(admin_username, admin_password):
+    db = sqlite3.connect('mydb.db')
+    completion = False
+    with db:
+        cur = db.cursor()
+        cur.execute("SELECT username, password FROM users")
+        rows = cur.fetchall()
+        for row in rows:
+            dbUser = row[0]
+            dbPass = row[1]
+
+            if dbUser == admin_username:
+
+                completion = check_password(dbPass, admin_password)
 
     return completion
 
@@ -97,11 +111,9 @@ def send_email(email, subject, html):
     mail.send(msg)
     print("Message sent")
 
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-
 
 # creating routes & static folders for badges
 @app.route('/')
@@ -150,10 +162,6 @@ def index():
         return flask.render_template('infowindow.html', badges=badges, badge_list=badge_list, length=length,
                                     points=200, level='level1') # return index and relevant variables
 
-
-
-
-
 @app.route('/register', methods=['POST'])
 def register():
     error=None
@@ -163,7 +171,6 @@ def register():
         name = flask.request.form['name']
         email = flask.request.form['email']
         role = flask.request.form['role']
-        classname= flask.request.form['classname']
 
         hash_password = hashlib.md5(password.encode()).hexdigest()
         hash_email = hashlib.md5(email.encode()).hexdigest()
@@ -182,8 +189,8 @@ def register():
                         "VALUES('%s','%s', '%s', '%s', '%s', 'FALSE')"
                         % (username, hash_password, name, hash_email, role))
             db.commit()
-            cur.execute("INSERT INTO classImages (classname) VALUES ('%s')" %classname)
-            db.commit()
+
+
             subject = "Confirm your email"
 
             token = ts.dumps(email, salt=app.config['EMAIL_CONFIRM_KEY'])
@@ -213,18 +220,10 @@ def register():
                 cur.execute(
                     "INSERT INTO badges (username, badge_id, points, level) VALUES('%s', 'Teacher', 2000, 'level3')" % username)
                 db.commit()
-                print(role)
-                cur.execute("SELECT username, badge_id, points, level FROM badges")
-                row = cur.fetchone()
-                while row is not None:
-                    print(row[0], row[1], row[2], row[3])
-                    row = cur.fetchone()
 
             return flask.render_template('registered.html', error=error)
 
     return flask.render_template('register.html', error=error)
-
-
 
 @app.route('/confirm/<token>')
 def confirm_email(token):
@@ -243,8 +242,8 @@ def confirm_email(token):
         cur.execute("UPDATE users SET email_confirmed = 'TRUE' WHERE username = username ")
         db.commit()
 
-    return flask.render_template('login.html')
 
+        return flask.render_template('login.html')
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -267,13 +266,11 @@ def login():
 
     return flask.render_template('login.html', error=error)
 
-
 @app.route('/logout', methods=['POST'])
 def logout():
     flask.session.pop('username', None)
     flash("Log out successful")
     return flask.redirect(flask.url_for('index'))
-
 
 @app.route ('/reset', methods=['GET','POST'])
 def reset():
@@ -304,7 +301,6 @@ def reset():
             error= "This username and password do not match"
     return render_template('reset.html', error=error)
 
-
 @app.route('/reset/<token>', methods=['GET', 'POST'])
 def reset_with_token(token):
     request.args.get('username')
@@ -326,7 +322,6 @@ def reset_with_token(token):
 
             return redirect(url_for('login'))
     return render_template('reset_with_token.html', token=token)
-
 
 @app.route('/reset_email', methods=['POST'])
 def reset_email():
@@ -363,28 +358,82 @@ def reset_email():
                 return redirect(url_for('login'))
     return render_template('update_email.html')
 
-def upload_work():
+@app.route('/create_sharespace', methods=["GET","POST"])
+def create_sharespace():
     error=None
+    if flask.request.method == 'POST':
+        cur.execute("SELECT role FROM users WHERE username = username")
+        row=cur.fetchone()
+        if row[0] == "Student":
+            error = "You'll have to wait for your teacher to set one up"
+        else:
+            admin_username = flask.request.form ['admin_username']
+            admin_password= flask.request.form['admin_password']
+            completion = validate(admin_username, admin_password)
 
-    if flask.request.method == "GET":
-        return flask.render_template("upload-form.html")
+            if completion == False:
+                error= "Your login details are not correct!"
 
-    else:
-        file= flask.request.files["image"]
-        file.save("static/"+file.filename)
 
-        filename=file.filename
-        username = flask.session['username']
-        classname = flask.request.form['classname']
+            else:
+                classname = flask.request.form['classname']
+                sharespace_password = flask.request.form['sharespace_password']
+                hash_sharespace_password = hashlib.md5(sharespace_password.encode()).hexdigest()
 
-        cur.execute("INSERT INTO classImages (username, filename, classname) VALUES ('%s', '%s', '%s')"
-                    %(username, filename, classname))
-        db.commit()
+                cur.execute("SELECT classname from share_space where classname=(?)", [classname])
+                classname_exists = cur.fetchone()
 
-        return flask.render_template("gallery.html", error=error)
+                if classname_exists:
+                    error = "This classname exists!"
+
+                else:
+                    cur.execute("SELECT admin_username FROM share_space")
+                    cur.execute("UPDATE share_space SET classname, sharespace_password= '%s', '%s' WHERE admin_username= admin_username"
+                                %(classname, hash_sharespace_password))
+                    db.commit()
+
+                return flask.redirect('sharespace_admin_login')
+
+    return flask.render_template("sharespace-setup.html", error=error)
+
+@app.route ('/sharespace_admin_login', methods=["GET", "POST"])
+def sharespace_admin_login():
+    error = None
+    if flask.request.method == 'POST':
+        admin_username = flask.request.form['admin_username']
+        admin_password = flask.request.form['admin_password']
+        completion = validate(admin_username, admin_password)
+
+        if completion == False:
+            error = "Your login details are incorrect"
+
+        else:
+            return flask.render_template("sharespace-admin.html", error=error)
+
+    return render_template("sharespace-admin-login.html", error=error)
+
+
+@app.route('/sharespace_login', methods=["GET", "POST"])
+def sharespace_login():
+    error = None
+    if flask.request.method == 'POST':
+        username = flask.request.form['admin_username']
+        sharespace_password = flask.request.form['password']
+        completion = validate(username, sharespace_password)
+
+        if completion == False:
+            error = "Your login details are incorrect"
+
+        else:
+            return flask.render_template("sharespace.html")
+
+    return flask.render_template('sharespace-login.html', error=error)
+
 
 
 
 app.secret_key = "RQuo1HhBvjsxQj0StcNYhQ6zoYyGYUVX"
+
+
 
 app.run()
