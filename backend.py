@@ -85,12 +85,52 @@ def validate(username, password):
 
     return completion
 
+def validate_join_sharespace(classname, sharespace_password):
+    db = sqlite3.connect('mydb.db')
+    completion = False
+    with db:
+        cur = db.cursor()
+        cur.execute("SELECT classname, sharespace_password FROM share_space_admin")
+        rows = cur.fetchall()
+        for row in rows:
+            dbUser = row[0]
+            dbPass = row[1]
+            print(row[0], row[1])
+            if dbUser == classname:
+                print(dbPass)
+                completion = check_password(dbPass, sharespace_password)
+
+    return completion
+
+
+
+
+def validate_sharespace(user_username, sharespace_password):
+    db = sqlite3.connect('mydb.db')
+    completion = False
+    with db:
+        cur = db.cursor()
+        cur.execute("SELECT user_username, sharespace_password FROM share_space_user")
+        rows = cur.fetchall()
+        for row in rows:
+            dbUser = row[0]
+            dbPass = row[1]
+            print(row[0], row[1])
+            if dbUser ==  user_username:
+                print(dbPass)
+                completion = check_password(dbPass, sharespace_password)
+
+    return completion
+
+
+
+
 def validate_admin(admin_username, admin_password):
     db = sqlite3.connect('mydb.db')
     completion = False
     with db:
         cur = db.cursor()
-        cur.execute("SELECT username, password FROM users")
+        cur.execute("SELECT admin_username, admin_password FROM share_space_admin")
         rows = cur.fetchall()
         for row in rows:
             dbUser = row[0]
@@ -396,6 +436,39 @@ def create_sharespace():
 
     return flask.render_template("sharespace-setup.html", error=error)
 
+@app.route('/join_sharespace', methods=["GET", "POST"])
+def join_sharespace():
+    error= None
+    if flask.request.method == 'POST':
+        classname= flask.request.form['classname']
+        sharespace_password=flask.request.form['sharespace_password']
+        completion= validate (classname, sharespace_password)
+
+        if completion == False:
+            error= "Your sharespace details are incorect"
+        else:
+            username= flask.session['username']
+            password= flask.request.form['password']
+            hash_ss_password = hashlib.md5(password.encode()).hexdigest()
+            cur.execute("SELECT user_username FROM sharespace_user where user_username=(?)", [username])
+            user_exists= cur.fetchone()
+            if user_exists:
+                error= "You have already registered to this sharespace"
+            else:
+                confirmed= validate(username, password)
+                if confirmed:
+                    cur.execute("INSERT INTO sharespace_user (user_username, user_password) VALUES ('%s', '%s')" %(username, hash_ss_password ))
+                    db.commit()
+                    return flask.redirect(url_for('sharespace_login'))
+
+    return render_template("join-sharespace.html", error=error)
+
+
+
+
+
+
+
 @app.route ('/sharespace_admin_login', methods=["GET", "POST"])
 def sharespace_admin_login():
     error = None
@@ -417,7 +490,7 @@ def sharespace_admin_login():
 def sharespace_login():
     error = None
     if flask.request.method == 'POST':
-        username = flask.request.form['admin_username']
+        username = flask.request.form['user_username']
         sharespace_password = flask.request.form['password']
         completion = validate(username, sharespace_password)
 
@@ -428,6 +501,26 @@ def sharespace_login():
             return flask.render_template("sharespace.html")
 
     return flask.render_template('sharespace-login.html', error=error)
+
+
+@app.route('/upload_to_sharespace', methods=["GET","POST"])
+def upload_to_sharespace():
+    if flask.request.method == "GET":
+        return flask.render_template("upload-form.html")
+    else:
+        file= flask.request.files["image"]
+        file.save("static/classfolders"+file.filename)
+
+        filename = file.filename
+        user = flask.session ['username']
+
+        cur.execute("SELECT user_username FROM share_space")
+        cur.execute("UPDATE share_space SET filename = '%s', WHERE admin_username= '%s'"
+            % (filename, user))
+        db.commit()
+
+        return flask.render_template("sharespace.html")
+
 
 
 
