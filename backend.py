@@ -219,6 +219,7 @@ def register():
 
             return flask.render_template('registered.html')
 
+
     return flask.render_template('registered.html')
 
 
@@ -360,7 +361,52 @@ def reset_email():
                 return redirect(url_for('login'))
     return render_template('update_email.html')
 
+# new from jazzi
+@app.route('/render_content/<template>', methods=['GET'])
+def render_content(template):
+    if 'username' in flask.session:
+        username = flask.session['username']
+        return render_template("content/"+template, username=username)
+    else:
+        username="none"
+        return render_template("content/"+template, username=username)
 
+@app.route('/game', methods=['GET'])
+def game():
+    print("game")
+    story=request.args.get('story')
+    print(story)
+    username=request.args.get('username')
+    print(username)
+
+
+    if username == "none":
+        print("sign up to earn points!")
+        # enter in a pop up that tells you that you should sign up
+        completion = "complete"
+    else:
+        cur.execute('''SELECT %s FROM badges WHERE username = '%s' ''' % (story, username))
+        story_result_list = cur.fetchone()
+        print(story_result_list)
+        complete_check = story_result_list[0]
+        cur.execute('''SELECT points FROM badges WHERE username = '%s' ''' % (username))
+        points_list = cur.fetchone()
+        points = points_list[0]
+        if complete_check == "complete":
+            print("story already has been completed")
+            completion="complete"
+        else:
+            cur.execute('''UPDATE badges SET '%s' = 'complete'
+                        WHERE username ='%s' ''' % (story, username))
+            points_new= int(points) + 50
+            print(points_new)
+            cur.execute('''UPDATE badges SET points = '%s'
+                                    WHERE username ='%s' ''' % (points_new, username))
+            print("points updated")
+            db.commit()
+            completion="complete"
+
+    return completion
 
 app.secret_key = "RQuo1HhBvjsxQj0StcNYhQ6zoYyGYUVX"
 

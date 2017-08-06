@@ -1,3 +1,94 @@
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+footer p {
+	color: white;
+	font-family: 'Nunito Sans', sans-serif;
+	bottom: 0;
+}
+
+header h1 {
+	float: right;
+}
+
+header img {
+	height: 68px;
+	width: auto;
+	position: relative;
+	float: right;
+	padding-right: 20px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+#headertitle {
+	left: 20%;
+	position: relative;
+}
+
+.modal-content p {
+	text-align: right;
+	visibility: hidden;
+}
+
+#loginmodal .buttono {
+	border: none;
+	text-decoration: none;
+	background: none;
+	color: ghostwhite;
+	text-align: left;
+	left: auto;
+}
+
+#registermodal input {
+	left: 50%
+}
+
+#myBtn {
+	border: none;
+	text-decoration: none;
+	background: none;
+	 	
+}
+
+#modalbackground {
+	background: rgba(255, 255, 255, 0.5);
+	visibility: hidden;
+}
+
+#login modal p {
+	font: white;
+}
+
+#loginmodal {
+	float: left;
+	background-color: grey;
+	padding: 10px;
+	border-color: black;
+	z-index: 10;
+	position: relative;
+	left: 45%;
+	color: ghostwhite;
+	visibility: hidden;
+}
+
+#registermodal {
+	float: right;
+	background-color: grey;
+	padding: 10px;
+	border-color: black;
+	z-index: -1;
+	position: relative;
+	left: 10%;
+	height: auto;
+	color: ghostwhite;
+	visibility: hidden;
+}
+
+
 /* Always set the map height explicitly to define the size of the div
 
       /* Always set the map height explicitly to define the size of the div
@@ -415,96 +506,13 @@ $transition-delay: 0.05s;
 	}
 }
 
-
 footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-}
-
-footer p {
+	height: 60px;
+	/* Height of the footer */
+	;
+	text-align: center;
 	color: white;
-	font-family: 'Nunito Sans', sans-serif;
-	bottom: 0;
-}
-
-header h1 {
-	float: right;
-}
-
-header img {
-	height: 68px;
-	width: auto;
-	position: relative;
-	float: right;
-	padding-right: 20px;
-	padding-bottom: 5px;
-	padding-top: 5px;
-}
-
-#headertitle {
-	left: 20%;
-	position: relative;
-}
-
-/*Modal CSS and set up*/
-
-
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size
-	*/
-	    background-color: white;
-    height: 50%;
-}
-
-/* The Close Button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-#modaltitles{
-text-align: center;
-}
-#registermodal{
-	float: right;
-
-}
-
-#loginmodal{
-	float: left;
-
-}
-.modal-content span{
-	visibility: hidden;
-}
-#mymodal{
-	background-color: white;
 }

@@ -7,25 +7,46 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<title>Lucas </title>
-	<link rel="stylesheet" type="text/css" href="../static/CSS/example.css" />
-	<link rel="stylesheet" type="text/css" href="../static/CSS/T2CSSLB.css"> </head>
+	<title>Luca </title>
+	<link rel="stylesheet" type="text/css" href="../../static/CSS/example.css" />
+	<link rel="stylesheet" type="text/css" href="../../static/CSS/T2CSSLB.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../../static/JS/jquery.min.js"></script>
+	<script type="text/javascript" src="../../static/JS/jquery.jInvertScroll.js"></script>
+	<script type="text/javascript" src="../../static/JS/game.js"></script>
+	<script type="text/javascript" src="../../static/JS/purejavascript.js"></script>
 
+	<script>
+		var username = "{{username}}";
+		var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		var story = "nairobi";
+	</script>
+</head>
 <body id=body style="height: 6000px;">
+<div class="KW_progressContainer">
+		<div class="KW_progressBar">
+</div>
+
+	</div>
 	<div class="container">
 		<div class="horizon scroll" style="left: 0px;"> </div>
 		<input id="toggle" type="checkbox" />
 		<label class="toggle-container" for="toggle"> <span class="button button-toggle"></span> </label>
 		<nav class="nav"> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Home</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Map</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">About Project</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">DIY/Games</a> </nav>
 	</div>
+
+
+
 	<!--
     <div class="arrow arrow-1"></div>
     <div class="arrow arrow-2"></div>
 -->
+
 	<div class="horizon scroll"> <img class="background" width="9000px" height="100%" src="../static/Images/Background_Lucas.png" alt="" /> </div>
 	<div class="front scroll"> <img class="lucas" src="../static/Images/lucas.png" alt="" />
 	
-	
+<article>
+
 	
 		<p class="text1">Hello! My name is Luca and this is my story</p> <img class="part2" src="../static/Images/part2.png" alt="" />
 		
@@ -94,27 +115,36 @@
   function setDisplay (target, str) {
     document.getElementById(target).style.display = str;
   }
+
+
 </script>
+
 	
 		</div>
 		
 		<p class="text5">The money I raised doing this meant I could also buy books for schools that could afford them. These books would help teach other children about endangered animals, like they had for me, and inspire the next bunch of animal and conservation activists. It might seem like a mountain to climb but beimg an animal activist is easy as recycling paper and cartons.</p>
-		
-		
+
+
 		<div class="question3">
 	<p id="Q3">Have you learned more about the endangered animals and harmful products in your community? <br/>
 	<br/>
-	 
-	
+
+
 	</p>
-	<button id="clickMeYes3" onclick="show('commentYes3'); hide('clickMeYes3'); hide('Q3'); hide('clickMeNo3')" alt="click me">       Yes I have!</button>
+	<button id="clickMeYes3" story= "nairobi" onclick="show('commentYes3'); hide('clickMeYes3'); hide('Q3'); hide('clickMeNo3')" alt="click me">       Yes I have!</button>
 
 <div id="commentYes3" style="display:none;"> Draw a map of your community. Highlight the areas where these animals live? Draw attention to the threats to their habitats?</div>
 
 
-<button id="clickMeNo3" onclick="show('commentNo3'); hide('clickMeNo3'); hide('Q3'); hide('clickMeYes3')" alt="click me">I don't think so!</button>
+<button id="clickMeNo3" story= "nairobi" onclick="show('commentNo3'); hide('clickMeNo3'); hide('Q3'); hide('clickMeYes3')" alt="click me">I don't think so!</button>
 
-<div id="commentNo3" style="display:none;"> Make a list of all the animals in your community. Research the threats to their wellbeing and habitats. Link them together to visualise the environmental dangers in your comminity</div>
+<div id="commentNo3" style="display:none;"> Make a list of all the animals in your community. Research the threats to their wellbeing and habitats. Link them together to visualise the environmental dangers in your community</div>
+
+{% if completion %}
+			<!--enter in call for action-->
+{% endif %}
+
+</article>
 
 <script>
   function show (toBlock){
@@ -126,14 +156,13 @@
   function setDisplay (target, str) {
     document.getElementById(target).style.display = str;
   }
+
 </script>
-	
+
 		</div>
 	</div>
-	
-	
-	<script type="text/javascript" src="../static/JS/jquery.min.js"></script>
-	<script type="text/javascript" src="../static/JS/jquery.jInvertScroll.js"></script>
+
+
 	<script type="text/javascript">
 		(function ($) {
 			$.jInvertScroll(['.scroll'], // an array containing the selector(s) for the elements you want to animate
@@ -146,6 +175,12 @@
 		}(jQuery));
 		//jQuery to collapse the navbar on scroll
 		$(window).scroll(function () {
+			var wintop = $(window).scrollTop(), docheight = $('html').height(), winheight = $(window).height();
+			console.log(wintop);
+			var totalScroll = (wintop/(docheight-winheight))*100;
+			var totalScroll_percent= totalScroll+"%";
+			console.log("total scroll" + totalScroll_percent);
+			$(".KW_progressBar").css('width', totalScroll_percent);
 			if ($(".navbar").offset().top > 50) {
 				$(".navbar-fixed-top").addClass("top-nav-collapse");
 			}
@@ -154,6 +189,7 @@
 			}
 		});
 	</script>
+
 </body>
 
 </html>

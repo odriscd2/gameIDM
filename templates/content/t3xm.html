@@ -11,11 +11,23 @@
     <title>Story</title>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-<style>
+    <!--[if lt IE 9]><![endif]-->
+    <link rel="stylesheet" type="text/css" href="../../static/CSS/example.css" />
+	<link rel="stylesheet" type="text/css" href="../../static/CSS/T2CSSLB.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script type="text/javascript" src="../../static/JS/game.js"></script>
+
+
+
+    <script>
+		var username = "{{username}}";
+		var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		var story = "colorado";
+	</script>
+
+    <style>
 	
 	        body {
             background-image: url(tier3pic/Xiuhtezcatl%20Martinez-%20%20Earth%20Guardianspng.png);
@@ -400,13 +412,24 @@
             background: rgba(215, 44, 44, 0.7);
             transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
         }
-	
+
+
 	</style>
+
 </head>
 <!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
 
+
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-    <!-- Navigation -->
+
+<!--progress-->
+<div class="KW_progressContainer">
+		<div class="KW_progressBar">
+</div>
+
+	</div>
+<!-- Navigation -->
+
     <div class="container">
         <input id="toggle" type="checkbox" />
         <label class="toggle-container" for="toggle"> <span class="button button-toggle"></span> </label>
@@ -422,6 +445,9 @@
 My name is Xiuhtezcatl Martinez- and this is my story. My first name comes from the Aztec language. It’s pronounced ‘Shoe-Tez- Caht’. From a young age I began to find books in school and do research about the effects of our everyday on the climate. 
 When I was six I started to warn people of the dangers of climate change. I began a campaign to remove pesticides from local parks. I was inspired by being able to make a difference in my community. I decided to tackle more issues in my community. I campaigned to stop fracking in my state and then joined with a group of young activists to sue the government for failing to protect the environment for future generations. 
 My story has seen me move from being a local activist to a regional activist. I try to teach young people about the environment and why it is worth fighting to protect.
+        	<button id="clickMeYes3" alt="click me"> Call for action 1</button>
+            <button id="clickMeNo3" alt="click me">Call for action 2 </button>
+
         </div>
     </section>
 </body>
