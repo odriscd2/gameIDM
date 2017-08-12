@@ -1,4 +1,4 @@
-        // This example displays a marker at the center of Australia.
+   // This example displays a marker at the center of Australia.
         // When the user clicks the marker, an info window opens.
         function initMap() {
             //Humanitarian crisis
@@ -27,8 +27,8 @@
             var nairobi = {
                 lat: -1.28333
                 , lng: 36.81667
-            }; 
-			
+            };
+
 			var colorado = {
                 lat: 38.83388
                 , lng: -104.82136
@@ -55,13 +55,13 @@
                 , lng: 18.42322
             };
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 1.5
+                zoom: 2
                 , minZoom: 2
                 , maxZoom: 2
                 , draggable: false
                 , disableDefaultUI: true
                 , center: {
-                    lat: 28.4826
+                    lat: 0
                     , lng: 0
                 }
                 , styles: [
@@ -195,7 +195,7 @@
             }
           ]
             });
-			
+
 			//begin gamification add on code
 
 
@@ -546,6 +546,29 @@
             return infowindow_capetown
                 }
 
+     //colorado info window
+    function marker12_popup(level){
+
+            var contentString_colorado = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h1 id="firstHeading" class="firstHeading"></h1>' +
+            '<div id="bodyContent">' +
+            '<p><b>Colorado</b> ' +
+            '' +
+            '</p>' +
+            '<p>' +
+            '</div>' +
+            '</div>';
+            var infowindow_colorado = new google.maps.InfoWindow({
+                content: contentString_colorado,
+                });
+
+
+            return infowindow_colorado
+                }
+
+
       //assign infowindow so can be called later
       infowindow_yemen = marker1_popup(level);
       infowindow_sudan = marker2_popup(level);
@@ -558,6 +581,8 @@
       infowindow_dehli = marker9_popup(level);
       infowindow_newjersey = marker10_popup(level);
       infowindow_capetown = marker11_popup(level);
+      infowindow_colorado = marker12_popup(level);
+
 
      //variable to set marker as lock
     var lock = {
@@ -714,8 +739,8 @@
                 return circleinequality
             }
 
-        }  
-			
+        }
+
 	function marker12(level){
 
           if (level=="level1"){
@@ -730,70 +755,11 @@
 
         }
 
-			
-            //Infowindow text Yemen
-            var contentString_yemen = '<div id="Yemen">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading"></h1>' + '<div id="bodyContent">' + '<p><b>Yemen</b> ' + '' + '</p>' + '<p>' + '</div>' + '</div>';
-            var infowindow_yemen = new google.maps.InfoWindow({
-                content: contentString_yemen
-            , });
-            //Infowindow text Sudan
-            var contentString_sudan = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading"></h1>' + '<div id="bodyContent">' + '<p><b>South Sudan</b> ' + '' + '</p>' + '<p>' + '</div>' + '</div>';
-            var infowindow_sudan = new google.maps.InfoWindow({
-                content: contentString_sudan
-            , });
-            //Infowindow text Somalia
-            var contentString_somalia = '<div id="Somalia">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading"></h1>' + '<div id="bodyContent">' + '<p><b>Somalia</b> ' + '' + '</p>' + '<p>' + '</div>' + '</div>';
-            var infowindow_somalia = new google.maps.InfoWindow({
-                content: contentString_somalia
-            , });
-            //Infowindow text Syria
-            var contentString_syria = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading"></h1>' + '<div id="bodyContent">' + '<p><b>Syria</b> ' + '' + '</p>' + '<p>' + '</div>' + '</div>';
-            var infowindow_syria = new google.maps.InfoWindow({
-                content: contentString_syria
-            , });
-            //Infowindow text Zimbabwe
-            var contentString_zimbabwe = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading"></h1>' + '<div id="bodyContent">' + '<p><b>Zimbabwe</b> ' + '' + '</p>' + '<p>' + '</div>' + '</div>';
-            var infowindow_zimbabwe = new google.maps.InfoWindow({
-                content: contentString_zimbabwe
-            , });
-            //Infowindow text Nairobi
-            var contentString_nairobi = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading"></h1>' + '<div id="bodyContent">' + '<p><b>Nairobi</b> ' + '' + '</p>' + '<p>' + '</div>' + '</div>';
-            var infowindow_nairobi = new google.maps.InfoWindow({
-                content: contentString_nairobi
-            , });
-            //Infowindow text Mumbai
-            var contentString_mumbai = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading"></h1>' + '<div id="bodyContent">' + '<p><b>Mumbai</b> ' + '' + '</p>' + '<p>' + '</div>' + '</div>';
-            var infowindow_mumbai = new google.maps.InfoWindow({
-                content: contentString_mumbai
-            , });
-            //Infowindow text Denpasar
-            var contentString_denpasar = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading"></h1>' + '<div id="bodyContent">' + '<p><b>Denpasar</b> ' + '' + '</p>' + '<p>' + '</div>' + '</div>';
-            var infowindow_denpasar = new google.maps.InfoWindow({
-                content: contentString_denpasar
-            , });
-            //Infowindow text Dehli
-            var contentString_dehli = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading"></h1>' + '<div id="bodyContent">' + '<p><b>Dehli</b> ' + '' + '</p>' + '<p>' + '</div>' + '</div>';
-            var infowindow_dehli = new google.maps.InfoWindow({
-                content: contentString_dehli
-            , });
-            //Infowindow text New Jersey
-            var contentString_newjersey = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading"></h1>' + '<div id="bodyContent">' + '<p><b>New Jersey</b> ' + '' + '</p>' + '<p>' + '</div>' + '</div>';
-            var infowindow_newjesrsey = new google.maps.InfoWindow({
-                content: contentString_newjersey
-            , });
-            //Infowindow text Cape Town
-            var contentString_capetown = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading"></h1>' + '<div id="bodyContent">' + '<p><b>Cape Town</b> ' + '' + '</p>' + '<p>' + '</div>' + '</div>';
-            var infowindow_capetown = new google.maps.InfoWindow({
-                content: contentString_capetown
-            , });  
-			
-			//Infowindow text Cape Town
-            var contentString_colorado = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading"></h1>' + '<div id="bodyContent">' + '<p><b>Colorado</b> ' + '' + '</p>' + '<p>' + '</div>' + '</div>';
-            var infowindow_colorado = new google.maps.InfoWindow({
-                content: contentString_colorado
-            , });
-			
-			
+
+
+
+
+
             //Marker style humanitarian crisis
             var circlehumcrisis = {
                 path: google.maps.SymbolPath.CIRCLE
@@ -952,8 +918,8 @@
                 soundenvironment.pause(map, marker6);
             });
 			 new google.maps.event.addListener(marker6, "click", function () {
-                window.open('luca.html');  });
-			
+                window.location.replace('render_content/luca.html','_self');  });
+
             //Mumbai
             var marker7 = new google.maps.Marker({
                 position: mumbai
@@ -1019,13 +985,13 @@
                 , title: 'New Jersey'
             });
             marker10.addListener('mouseover', function () {
-                infowindow_newjesrsey.open(map, marker10);
+                infowindow_newjersey.open(map, marker10);
             });
             marker10.addListener('mouseout', function () {
-                infowindow_newjesrsey.close(map, marker10);
+                infowindow_newjersey.close(map, marker10);
             });
             marker10.addListener('mouseout', function () {
-                infowindow_newjesrsey.close(map, marker10);
+                infowindow_newjersey.close(map, marker10);
             });
             marker10.addListener('mouseover', function () {
                 soundinequality.play(map, marker10);
@@ -1075,5 +1041,5 @@
                 soundenvironment.pause(map, marker12);
             });
 			 new google.maps.event.addListener(marker12, "click", function () {
-                window.open('t3xm.html');  });
+                window.location.replace('render_content/t3xm.html');  });
         }

@@ -34,7 +34,7 @@
 		<!-- Trigger/Open The Modal -->
 		
 		<ul>
-  <li><a href="infowindow.html"><img src="../static/Images/icons-02.png" class="loginimg"></a></li>
+  <li><a href="infowindow.html"><img src="../static/Images/icons-01.png" class="loginimg"></a></li>
   <li><input type="image" src="../static/Images/icons-02.png" name="myBtn" id="myBtn" class="loginimg"></li>
   <li><a href="contact.asp"><img src="../static/Images/icons-03.png"class="loginimg"></a></li>
   <li><a href="about.asp"><img src="../static/Images/icons-04.png" class="loginimg"></a></li>
@@ -42,7 +42,7 @@
 		
 
 		
-		  <img class="logo" src="../static/Images/Header.png" alt="global-activist-logo"> </header>
+		  <img class="logo" src="../static/Images/icons-01.png" alt="global-activist-logo"> </header>
 		  
 		  
 		  
@@ -69,11 +69,26 @@
 		<p>Discover your world. Inspire your world.</p>
 <a class="buttono" href="{{ url_for('create_sharespace') }}"> Create your sharespace! </a>
 
-        <a class="buttono" href="{{ url_for('sharespace_admin_login') }}"> Enter your sharespace! </a>
+        <a class="buttono" href="{{ url_for('sharespace', classname=classname) }}"> Enter your sharespace! </a>
+
+        <form method="post" action="/delete_account"><button type="submit" value="delete_account" class="btn btn-primary">Delete Account</button> </form>
 
 		<form action="\logout" method="post">
 			<input type="submit" value="Logout"> </form>
 	</footer>
+         <script>
+
+//function to resize on mouse in and out
+function bigImg(x) {
+    x.style.height = "300px";
+    x.style.width = "300px";
+}
+
+function normalImg(x) {
+    x.style.height = "100px";
+    x.style.width = "100px";
+}
+</script>
       {% endblock %}
     </div>
   </body>
