@@ -3,6 +3,8 @@ from flask_mail import Mail, Message
 from flask import send_from_directory, render_template, redirect, url_for, request, g, session
 from itsdangerous import URLSafeTimedSerializer
 from flask import abort, flash
+import werkzeug
+from werkzeug import secure_filename
 
 # database
 db = sqlite3.connect('mydb.db')
@@ -24,6 +26,15 @@ app.config.update(
     RECOVER_KEY = "recoverkey"
 )
 mail = Mail(app)
+
+
+
+app.config['ALLOWED_EXTENSIONS'] = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
+
 
 ts = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
@@ -199,7 +210,6 @@ def index():
         return flask.render_template('infowindow.html', badges=badges, badge_list=badge_list, length=length,
                                     points=200, level='level1') # return index and relevant variables
 
-
 @app.route('/render_content/<template>', methods=['GET'])
 def render_content(template):
     if 'username' in flask.session:
@@ -246,14 +256,12 @@ def game():
 
     return completion
 
-
 @app.route('/register', methods=['POST'])
 def register():
     error=None
     if flask.request.method == 'POST':
         username = flask.request.form['username']
         password = flask.request.form['password']
-        name = flask.request.form['name']
         email = flask.request.form['email']
         role = flask.request.form['role']
 
@@ -270,9 +278,9 @@ def register():
             error = "An account with this email address already exists"
 
         else:
-            cur.execute("INSERT INTO users( username, password, name,email, role, email_confirmed) "
-                        "VALUES('%s','%s', '%s', '%s', '%s', 'FALSE')"
-                        % (username, hash_password, name, hash_email, role))
+            cur.execute("INSERT INTO users( username, password, email, role, email_confirmed) "
+                        "VALUES('%s','%s', '%s', '%s', 'FALSE')"
+                        % (username, hash_password,  hash_email, role))
             db.commit()
 
 
@@ -499,6 +507,7 @@ def create_sharespace():
                     cur.execute("UPDATE sharespace_users SET classname='%s' WHERE username='%s'"
                                 %(classname, username))
                     db.commit()
+                    os.makedirs('static/classfolders/%s' %classname)
                     return flask.redirect(url_for('sharespace', classname=classname))
         else:
             error= "You must be logged in to create a sharespace"
@@ -506,7 +515,6 @@ def create_sharespace():
 
 
     return flask.render_template('sharespace-setup.html')
-
 
 @app.route('/join_sharespace', methods=["GET", "POST"])
 def join_sharespace():
@@ -540,24 +548,75 @@ def join_sharespace():
         error="You must be logged in to register to a sharespace"
         return flask.redirect(url_for('login', error=error))
 
-
 @app.route('/sharespace/<classname>')
 def sharespace(classname):
     if 'username' in session:
-
-
-
         username=flask.session['username']
         cur.execute("SELECT classname FROM sharespace_users where username='%s'" %username)
-        classname=cur.fetchone()
+        classrow=cur.fetchone()
+        classname=classrow[0]
+        file_names = os.listdir('./static/classfolders/%s' %classname)
+        cur.execute('''SELECT file_name, username, classname, date_uploaded, confirmed FROM sharespace_files''')
+        file_list= cur.fetchall()
+        length= len(file_list)
+        print(file_names)
+        print(file_list)
         sharespace_url = url_for(
             'sharespace',
             classname=classname,
             _external=True
         )
-        return render_template("sharespace.html", sharespace_url=sharespace_url)
+        return render_template("sharespace.html", sharespace_url=sharespace_url,
+                               classname=classname, length=length, file_names=file_names,
+                               file_list=file_list)
     else:
         return redirect(url_for('login'))
+
+@app.route('/upload_to_sharespace', methods=["POST"])
+def upload_to_sharespace():
+    if flask.request.method == "POST":
+        username = flask.session['username']
+        cur.execute("SELECT classname from sharespace_users where username = '%s'" % username)
+        classrow = cur.fetchone()
+        classname = classrow[0]
+
+        file = flask.request.files["sharefile"]
+        file.save('static/classfolders/'+classname+'/' + file.filename )
+
+        filename = file.filename
+        print (filename)
+
+        date_uploaded = datetime.date.today().strftime('%d-%m-%Y')
+        cur.execute("INSERT INTO sharespace_files( username, file_name, date_uploaded, classname, confirmed) "
+                    "VALUES('%s','%s', '%s', '%s', 'FALSE')" % (username, filename,  classname, date_uploaded))
+
+        return redirect(url_for('sharespace',
+                                filename=filename, classname=classname))
+
+@app.route('/delete_upload', methods=["POST"])
+def delete_upload():
+    if 'username' in flask.session:
+        username= flask.session['username']
+        cur.execute("SELECT role from sharespace_users where username = '%s'" %username)
+        rowrole= cur.fetchone()
+        role=rowrole[0]
+        cur.execute("SELECT classname from sharespace_users where username = '%s'" % username)
+        classrow= cur.fetchone()
+        classname=classrow[0]
+        cur.execute("SELECT file_name from sharespace_files where username= '%s'" %username)
+        rowfile=cur.fetchone()
+        filename=rowfile[0]
+
+        if role == "Teacher":
+            os.remove(os.path.join('./static/classfolders/'+classname+'/'+ filename))
+            cur.execute("DELETE from sharespace_files where file_name='%s'" % filename)
+            db.commit()
+            return redirect(url_for('sharespace', classname=classname))
+
+
+
+
+
 
 
 app.secret_key = "RQuo1HhBvjsxQj0StcNYhQ6zoYyGYUVX"
