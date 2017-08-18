@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Luca </title>
+	<link rel="stylesheet" type="text/css" href="../../static/CSS/example.css" />
+	<link rel="stylesheet" type="text/css" href="../../static/CSS/T2CSSLB.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../../static/JS/jquery.min.js"></script>
+	<script type="text/javascript" src="../../static/JS/jquery.jInvertScroll.js"></script>
+	<script type="text/javascript" src="../../static/JS/game.js"></script>
+	<script type="text/javascript" src="../../static/JS/purejavascript.js"></script>
+
+	<script>
+		var username = "{{username}}";
+		var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		var story = "nairobi";
+	</script>
+</head>
+<body id=body style="height: 6000px;">
+<div class="KW_progressContainer">
+		<div class="KW_progressBar">
+</div>
+
+	</div>
+	<div class="container">
+		<div class="horizon scroll" style="left: 0px;"> </div>
+		<input id="toggle" type="checkbox" />
+		<label class="toggle-container" for="toggle"> <span class="button button-toggle"></span> </label>
+		<nav class="nav"> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Home</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Map</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">About Project</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">DIY/Games</a> </nav>
+	</div>
+
+
+
+	<!--
+    <div class="arrow arrow-1"></div>
+    <div class="arrow arrow-2"></div>
+-->
+
+	<div class="horizon scroll"> <img class="background" width="9000px" height="100%" src="../static/Images/Background_Lucas.png" alt="" /> </div>
+	<div class="front scroll"> <img class="lucas" src="../static/Images/lucas.png" alt="" />
+
+<article>
+
+
+		<p class="text1">Hello! My name is Luca and this is my story</p> <img class="part2" src="../static/Images/part2.png" alt="" />
+
+
+
+		<p class="text2">When me and my parents moved to Nairobi, the capital of Kenya, I was reading books about andangered animals. So many of the animals people associate with Africa live here: cheetahs, lions, zebras and elephants.</p> <img class="part3" src="../static/Images/part3.png" alt="" />
+
+
+
+		<p class="text3">While reading, I discovered that all these animals were endangered and could extinct in a few years. The forests all around Kenya are being cut down to make way for big farms. This means that the habitats of all these animals are being destroyed by humans.</p>
+
+
+<div class="question1">
+	<p id="Q1">Can you think of any endangered animals in your neighbourhood?</p>
+	<button id="clickMeYes" onclick="show('commentYes'); hide('clickMeYes'); hide('Q1'); hide('clickMeNo')" alt="click me">Yes I know some!</button>
+
+<div id="commentYes" style="display:none;"> What kind of habitats do these animals have? <br/>How are we affecting these kinds of habitats?  </div>
+
+
+<button id="clickMeNo" onclick="show('commentNo'); hide('clickMeNo'); hide('Q1'); hide('clickMeYes')" alt="click me">I can't think of any right now!</button>
+
+<div id="commentNo" style="display:none;"> Make a list of the animals in your neighbourhood. What kind of habitats do they have? What impact do we have on these habitats? </div>
+
+<script>
+  function show (toBlock){
+    setDisplay(toBlock, 'block');
+  }
+  function hide (toNone) {
+    setDisplay(toNone, 'none');
+  }
+  function setDisplay (target, str) {
+    document.getElementById(target).style.display = str;
+  }
+</script>
+
+		</div>
+		<img class="part4" src="../static/Images/part4.png" alt="" />
+
+
+
+		<p class="text4">I began to think what simple things I could do to protect these animals and their habitats.</p>
+
+
+		<div class="question2">
+	<p id="Q2">Make a list of the everyday items you could collect and recycle to help the environment. Are these items really important in your day to day life? <br/>
+	<br/>
+
+
+	</p>
+	<button id="clickMeYes2" onclick="show('commentYes2'); hide('clickMeYes2'); hide('Q2'); hide('clickMeNo2')" alt="click me">Yes they are!</button>
+
+<div id="commentYes2" style="display:none;"> What ways could you reduce your waste? Are there any eco-friendly alternatives to these items? Do any of these items negatively affect animal habitats?</div>
+
+
+<button id="clickMeNo2" onclick="show('commentNo2'); hide('clickMeNo2'); hide('Q2'); hide('clickMeYes2')" alt="click me">I don't think so!</button>
+
+<div id="commentNo2" style="display:none;"> What steps could you take to ensure that other people choose eco-friendly alternatives? How could you, like Luca, encourage people to recycle or reduce their impact on the planet?</div>
+
+<script>
+  function show (toBlock){
+    setDisplay(toBlock, 'block');
+  }
+  function hide (toNone) {
+    setDisplay(toNone, 'none');
+  }
+  function setDisplay (target, str) {
+    document.getElementById(target).style.display = str;
+  }
+
+
+</script>
+
+
+		</div>
+
+		<p class="text5">The money I raised doing this meant I could also buy books for schools that could afford them. These books would help teach other children about endangered animals, like they had for me, and inspire the next bunch of animal and conservation activists. It might seem like a mountain to climb but beimg an animal activist is easy as recycling paper and cartons.</p>
+
+
+		<div class="question3">
+	<p id="Q3">Have you learned more about the endangered animals and harmful products in your community? <br/>
+	<br/>
+
+
+	</p>
+	<button id="clickMeYes3" story= "nairobi" onclick="show('commentYes3'); hide('clickMeYes3'); hide('Q3'); hide('clickMeNo3')" alt="click me">       Yes I have!</button>
+
+<div id="commentYes3" style="display:none;"> Draw a map of your community. Highlight the areas where these animals live? Draw attention to the threats to their habitats?</div>
+
+
+<button id="clickMeNo3" story= "nairobi" onclick="show('commentNo3'); hide('clickMeNo3'); hide('Q3'); hide('clickMeYes3')" alt="click me">I don't think so!</button>
+
+<div id="commentNo3" style="display:none;"> Make a list of all the animals in your community. Research the threats to their wellbeing and habitats. Link them together to visualise the environmental dangers in your community</div>
+
+{% if completion %}
+			<!--enter in call for action-->
+{% endif %}
+
+</article>
+
+<script>
+  function show (toBlock){
+    setDisplay(toBlock, 'block');
+  }
+  function hide (toNone) {
+    setDisplay(toNone, 'none');
+  }
+  function setDisplay (target, str) {
+    document.getElementById(target).style.display = str;
+  }
+
+</script>
+
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		(function ($) {
+			$.jInvertScroll(['.scroll'], // an array containing the selector(s) for the elements you want to animate
+				{
+					height: 6000, // optional: define the height the user can scroll, otherwise the overall length will be taken as scrollable height
+					onScroll: function (percent) { //optional: callback function that will be called when the user scrolls down, useful for animating other things on the page
+						console.log(percent);
+					}
+				});
+		}(jQuery));
+		//jQuery to collapse the navbar on scroll
+		$(window).scroll(function () {
+			var wintop = $(window).scrollTop(), docheight = $('html').height(), winheight = $(window).height();
+			console.log(wintop);
+			var totalScroll = (wintop/(docheight-winheight))*100;
+			var totalScroll_percent= totalScroll+"%";
+			console.log("total scroll" + totalScroll_percent);
+			$(".KW_progressBar").css('width', totalScroll_percent);
+			if ($(".navbar").offset().top > 50) {
+				$(".navbar-fixed-top").addClass("top-nav-collapse");
+			}
+			else {
+				$(".navbar-fixed-top").removeClass("top-nav-collapse");
+			}
+		});
+	</script>
+
+</body>
+
+</html>

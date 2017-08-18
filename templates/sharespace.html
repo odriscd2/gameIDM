@@ -1,10 +1,47 @@
 {% extends "layout.html" %}
+<style>
+
+</style>
 {% block body %}
 <h1> Image App </h1>
 
-<p>Welcome to your profile page {{name}} <br> </p>
+<p>Welcome to your profile page {{username}} <br> </p>
 
-<p>Worked {{username}} {{classname}}</p>
+<p>This is the share space for {{classname}}</p>
+<div id="imagesshare">
+{% for file_name in file_names %}
+        {% for row in file_list %}
+            {% if file_name == row[0] %}
+
+                <figure>
+                    <img src="{{url_for('static', filename ='../static/classfolders/'+classname+'/'+ file_name)}}" />
+                    <figcaption> <b>TITLE:</b> {{row[0]}}  <b>Uploaded by:</b> {{row[1]}} <br>  <b>Date Uploaded:</b> {{row[2]}} <b>Classname:</b> {{row[3]}}
+                </figcaption>
+                    <form method="post" action="/delete_upload"><button type="submit" value="delete_account" class="btn btn-primary">Delete Upload</button> </form>
+                </figure>
+            {% endif %}
+        {% endfor %}
+{% endfor %}
+
+</div>
+
+
+ <h1>Upload</h1>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+
+
+<form name="uploadform" action="/upload_to_sharespace" method="post" enctype="multipart/form-data">
+
+    <p><input type="file" name="sharefile" ></p>
+    <p><input type="submit" value="Upload File"  id="uploadbutton"></p>
+
+
+</form>
+
+
+
 
 
 {% endblock %}

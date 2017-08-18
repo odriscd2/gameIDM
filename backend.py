@@ -159,6 +159,16 @@ def page_not_found(e):
 @app.route('/')
 def index():
     if 'username' in flask.session:
+        return redirect(url_for('map_page'))
+
+    else:
+        return render_template("earth_black.html")
+
+
+
+@app.route('/map', methods=["GET"])
+def map_page():
+    if 'username' in flask.session:
         username=flask.session['username']
         cur.execute("SELECT classname FROM sharespace_users WHERE username = '%s'" %username)
         classname = cur.fetchone()
@@ -179,19 +189,19 @@ def index():
             pointslist = cur.fetchone()
             points=pointslist[0]
             print(points)
-            if int(points) < 300:
+            if int(points) < 350:
                 level = "level1"
                 cur.execute('''UPDATE badges SET level = 'level1'
                         WHERE username ="''' + username + '"')
                 db.commit()
                 print(level)
-            elif int(points) >= 300 and points < 700:
+            elif int(points) >= 350 and points < 800:
                 level = "level2"
                 print(level)
                 cur.execute('''UPDATE badges SET level = 'level2'
                                     WHERE username ="''' + username + '"')
                 db.commit()
-            elif int(points) >= 700:
+            elif int(points) >= 800:
                 level = "level3"
                 print(level)
                 cur.execute('''UPDATE badges SET level = 'level3'
@@ -208,7 +218,7 @@ def index():
 
 
         return flask.render_template('infowindow.html', badges=badges, badge_list=badge_list, length=length,
-                                    points=200, level='level1') # return index and relevant variables
+                                    points=200, level='level1') # return map_page and relevant variables
 
 @app.route('/render_content/<template>', methods=['GET'])
 def render_content(template):
@@ -356,7 +366,7 @@ def login():
            error = "You must confirm your email address"
         else:
             flask.session['username'] = flask.request.form['username']
-            return flask.redirect(flask.url_for('index'))
+            return flask.redirect(flask.url_for('map_page'))
 
     return flask.render_template('login.html', error=error)
 
@@ -364,7 +374,7 @@ def login():
 def logout():
     flask.session.pop('username', None)
     flash("Log out successful")
-    return flask.redirect(flask.url_for('index'))
+    return flask.redirect(flask.url_for('map_page'))
 
 @app.route ('/reset', methods=['GET','POST'])
 def reset():
@@ -389,7 +399,7 @@ def reset():
 
             send_email(email, subject, html)
 
-            return redirect(url_for('index'))
+            return redirect(url_for('map_page'))
 
         else:
             error= "This username and password do not match"
@@ -474,7 +484,7 @@ def delete_account():
                 cur.execute("SELECT username, points FROM badges")
                 results = cur.fetchall()
                 print(results)
-                return redirect(url_for('index'))
+                return redirect(url_for('map_page'))
 
 
         else:
@@ -493,7 +503,7 @@ def create_sharespace():
             row = cur.fetchone()
             if row[0] == "Student":
                 error = "You'll have to wait for your teacher to set one up"
-                return redirect(url_for('index', error=error))
+                return redirect(url_for('map_page', error=error))
             elif row[0] == "Teacher":
                 classname=flask.request.form['classname']
                 sharespace_password=flask.request.form['sharespace_password']

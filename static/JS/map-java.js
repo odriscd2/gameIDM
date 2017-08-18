@@ -2,26 +2,26 @@
         // When the user clicks the marker, an info window opens.
         function initMap() {
             //Humanitarian crisis
-            var yemen = {
-                lat: 15.35472
-                , lng: 44.20667
+            var swatvalley = {
+                lat: 35.4920
+                , lng: 72.5205
             };
-            var sudan = {
-                lat: 9.53342
-                , lng: 31.66049
+            var losangeles = {
+                lat: 34.0439
+                , lng: -118.2424
             };
-            var somalia = {
-                lat: 1.71594
-                , lng: 44.77166
+            var ottawa = {
+                lat: 47.4215
+                , lng: -75.6972
             };
-            //Refugees
-            var syria = {
-                lat: 36.20124
-                , lng: 37.16117
+
+            var redwoodcity = {
+                lat: 37.4852
+                , lng: -122.2364
             };
-            var zimbabwe = {
-                lat: -19.45
-                , lng: 29.81667
+            var newhampshire = {
+                lat: 43.1939
+                , lng: -71.5724
             };
             //Environment
             var nairobi = {
@@ -29,31 +29,62 @@
                 , lng: 36.81667
             };
 
-			var colorado = {
+         var colorado = {
                 lat: 38.83388
                 , lng: -104.82136
             };
             var mumbai = {
-                lat: 19.07283
-                , lng: 72.88261
+                lat: 19.0760
+                , lng: 72.8777
             };
-            var denpasar = {
+            var bali = {
                 lat: -8.650000
                 , lng: 115.216667
             };
-            //Inequality
+
             var dehli = {
-                lat: 28.65381
-                , lng: 77.22897
+                lat: 39.7392
+                , lng: -104.9903
             };
+//Social Inequality
             var newjersey = {
-                lat: 39.833851
-                , lng: -74.871826
+                lat: 38.7986
+                , lng: -74.2391
             };
-            var capetown = {
-                lat: -33.92584
-                , lng: 18.42322
+            var Campo = {
+                lat: 32.6076
+                , lng: -116.4697
             };
+            var rajasthan = {
+                lat: 27.0238
+                , lng: 74.2179
+            };
+            var southdakota = {
+                lat: 47.7563
+                , lng: -101.2004
+            };
+
+//refugees
+            var berlin = {
+                lat: 52.5200
+                , lng: 13.4050
+            };
+            var daraa = {
+                lat: 32.6264
+                , lng: 36.1035
+            };
+            var somalia = {
+                lat: 5.1521
+                , lng: 46.1996
+            };
+            var mosney = {
+                lat: 53.6604
+                , lng: -6.2409
+            };
+
+
+
+
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 2
                 , minZoom: 2
@@ -61,57 +92,56 @@
                 , draggable: false
                 , disableDefaultUI: true
                 , center: {
-                    lat: 0
+                    lat: 36
                     , lng: 0
                 }
                 , styles: [
                     {
                         elementType: 'geometry'
                         , stylers: [{
-                            color: '#458B00'
+                            color: '#ebe3cd'
                         }]
                     }
                     , {
                         elementType: 'labels.text.stroke'
                         , stylers: [{
-                            color: '#00000000'
-                            , display: 'none'
+                             "visibility": "off"
                         }]
                     }
                     , {
                         elementType: 'labels.text.fill'
                         , stylers: [{
-                            color: '#00000000'
-                            , display: 'none'
-                        }]
+                            "visibility": "off"
+                        }
+                    ]
                     },
 
                     {
                         featureType: 'administrative.locality'
                         , elementType: 'labels.text.fill'
                         , stylers: [{
-                            color: '#397628'
+                            "visibility": "off"
                         }]
             }
                     , {
                         featureType: 'poi'
                         , elementType: 'labels.text.fill'
                         , stylers: [{
-                            color: '#00000000'
+                            "visibility": "off"
                         }]
             }
                     , {
                         featureType: 'poi.park'
                         , elementType: 'geometry'
                         , stylers: [{
-                            color: '#00000000'
+                            color: '#263c3f'
                         }]
             }
                     , {
                         featureType: 'poi.park'
                         , elementType: 'labels.text.fill'
                         , stylers: [{
-                            color: '#84E0B7'
+                            "visibility": "off"
                         }]
             }
                     , {
@@ -132,7 +162,7 @@
                         featureType: 'road'
                         , elementType: 'labels.text.fill'
                         , stylers: [{
-                            color: '#616161'
+                            "visibility": "off"
                         }]
             }
                     , {
@@ -153,7 +183,7 @@
                         featureType: 'road.highway'
                         , elementType: 'labels.text.fill'
                         , stylers: [{
-                            color: '#FFC300'
+                             "visibility": "off"
                         }]
             }
                     , {
@@ -167,43 +197,43 @@
                         featureType: 'transit.station'
                         , elementType: 'labels.text.fill'
                         , stylers: [{
-                            color: '#616161'
+                            "visibility": "off"
                         }]
             }
                     , {
                         featureType: 'water'
                         , elementType: 'geometry'
                         , stylers: [{
-                            color: '#3d91df'
+                            color: '#B7D9E2'
                         }]
             }
                     , {
                         featureType: 'water'
                         , elementType: 'labels.text.fill'
                         , stylers: [{
-                            color: '#515c6d'
-                            , display: 'none'
+//                            color: '#515c6d'
+//                            , display: 'none'
+                            "visibility": "off"
                         }]
             }
                     , {
                         featureType: 'water'
                         , elementType: 'labels.text.stroke'
                         , stylers: [{
-                            color: '#7CBFD6'
-                            , display: 'none'
+                            "visibility": "off"
                         }]
             }
           ]
             });
 
-			//begin gamification add on code
+         //begin gamification add on code
 
 
-    //Infowindow text Yemen
+    //Infowindow text Swat Valley
 
         function marker1_popup(level){
             if (level=="level1") {
-                var contentString_yemen = '<div id="div-main-infoWindow">'+
+                var contentString_swatvalley = '<div id="div-main-infoWindow">'+
                     '<div id="siteNotice">'+
                     '</div>'+
                     '<h1 id="firstHeading" class="firstHeading">LOCKED</h1>'+
@@ -215,35 +245,35 @@
                     '</div>'+
                     '</div>';
 
-                var infowindow_yemen = new google.maps.InfoWindow({
-                  content: contentString_yemen,
+                var infowindow_swatvalley = new google.maps.InfoWindow({
+                  content: contentString_swatvalley,
                 });
                 }
             else {
-                var contentString_yemen = '<div id="div-main-infoWindow">'+
+                var contentString_swatvalley = '<div id="div-main-infoWindow">'+
                     '<div id="siteNotice">'+
                     '</div>'+
-                    '<h1 id="firstHeading" class="firstHeading">Yemen</h1>'+
+                    '<h1 id="firstHeading" class="firstHeading">Swat Valley</h1>'+
                     '<div id="bodyContent">'+
-                    '<p><b>Yemen</b>, '+
+                    '<p><b>Swat Valley</b>, '+
                     ''+
                     '</p>'+
                     '<p>'+
                     '</div>'+
                     '</div>';
 
-               var infowindow_yemen = new google.maps.InfoWindow({
-                  content: contentString_yemen,
+               var infowindow_swatvalley = new google.maps.InfoWindow({
+                  content: contentString_swatvalley,
                 });
                 }
-            return infowindow_yemen
+            return infowindow_swatvalley
             }
 
-    //Infowindow text sudan
+    //Infowindow text losangeles
 
         function marker2_popup(level){
             if (level=="level1") {
-                var contentString_sudan = '<div id="content">'+
+                var contentString_losangeles = '<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
                     '<h1 id="firstHeading" class="firstHeading">LOCKED</h1>'+
@@ -254,61 +284,61 @@
                     '<p>'+
                     '</div>'+
                     '</div>';
-                  var infowindow_sudan = new google.maps.InfoWindow({
-                  content: contentString_sudan,
+                  var infowindow_losangeles = new google.maps.InfoWindow({
+                  content: contentString_losangeles,
                 });
                 }
             else{
-                var contentString_sudan = '<div id="content">'+
+                var contentString_losangeles = '<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
-                    '<h1 id="firstHeading" class="firstHeading">South Sudan</h1>'+
+                    '<h1 id="firstHeading" class="firstHeading">South Losangeles</h1>'+
                     '<div id="bodyContent">'+
-                    '<p><b>South Sudan</b>, '+
+                    '<p><b>South Losangeles</b>, '+
                     ''+
                     '</p>'+
                     '<p>'+
                     '</div>'+
                     '</div>';
 
-                var infowindow_sudan = new google.maps.InfoWindow({
-                  content: contentString_sudan,
+                var infowindow_losangeles = new google.maps.InfoWindow({
+                  content: contentString_losangeles,
                 });
 
                 }
-            return infowindow_sudan
+            return infowindow_losangeles
                 }
 
-    //Infowindow text Somalia
+    //Infowindow text Ottawa
 
         function marker3_popup(level){
 
-                var contentString_somalia = '<div id="div-main-infoWindow">'+
+                var contentString_ottawa = '<div id="div-main-infoWindow">'+
                     '<div id="siteNotice">'+
                     '</div>'+
-                    '<h1 id="firstHeading" class="firstHeading">Somalia</h1>'+
+                    '<h1 id="firstHeading" class="firstHeading">Ottawa</h1>'+
                     '<div id="bodyContent">'+
-                    '<p><b>Somalia</b>, '+
+                    '<p><b>Ottawa</b>, '+
                     ''+
                     '</p>'+
                     '<p>'+
                     '</div>'+
                     '</div>';
 
-                var infowindow_somalia = new google.maps.InfoWindow({
-                    content: contentString_somalia,
+                var infowindow_ottawa = new google.maps.InfoWindow({
+                    content: contentString_ottawa,
                     maxWidth: 291
                 });
-/*                google.maps.event.addListener(infowindow_somalia, 'domready', function () {
+/*                google.maps.event.addListener(infowindow_ottawa, 'domready', function () {
                 $('#div-main-infoWindow').closest('.gm-style-iw').parent().addClass('custom-iw');
                 });*/
 
-            return infowindow_somalia
+            return infowindow_ottawa
                 }
 
         function marker4_popup(level){
             if (level=="level1") {
-                var contentString_syria = '<div id="content">'+
+                var contentString_redwoodcity = '<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
                     '<h1 id="firstHeading" class="firstHeading">LOCKED</h1>'+
@@ -319,35 +349,35 @@
                     '<p>'+
                     '</div>'+
                     '</div>';
-                var infowindow_syria = new google.maps.InfoWindow({
-                  content: contentString_syria,
+                var infowindow_redwoodcity = new google.maps.InfoWindow({
+                  content: contentString_redwoodcity,
                 });
                 }
             else{
-               var contentString_syria = '<div id="content">'+
+               var contentString_redwoodcity = '<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
-                    '<h1 id="firstHeading" class="firstHeading">Syria</h1>'+
+                    '<h1 id="firstHeading" class="firstHeading">Redwoodcity</h1>'+
                     '<div id="bodyContent">'+
-                    '<p><b>Syria</b>, '+
+                    '<p><b>Redwoodcity</b>, '+
                     ''+
                     '</p>'+
                     '<p>'+
                     '</div>'+
                     '</div>';
-               var infowindow_syria = new google.maps.InfoWindow({
-                  content: contentString_syria,
+               var infowindow_redwoodcity = new google.maps.InfoWindow({
+                  content: contentString_redwoodcity,
                 });
 
                 }
-            return infowindow_syria
+            return infowindow_redwoodcity
                 }
 
-//Infowindow text Zimbabwe
+//Infowindow text Newhampshire
 
     function marker5_popup(level){
             if (level=="level1" || level=="level2") {
-                var contentString_zimbabwe = '<div id="content">'+
+                var contentString_newhampshire = '<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
                     '<h1 id="firstHeading" class="firstHeading">LOCKED</h1>'+
@@ -358,28 +388,28 @@
                     '<p>'+
                     '</div>'+
                     '</div>';
-                var infowindow_zimbabwe = new google.maps.InfoWindow({
-                  content: contentString_zimbabwe,
+                var infowindow_newhampshire = new google.maps.InfoWindow({
+                  content: contentString_newhampshire,
                 });
                 }
             else{
-                var contentString_zimbabwe = '<div id="content">'+
+                var contentString_newhampshire = '<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
-                    '<h1 id="firstHeading" class="firstHeading">Zimbabwe</h1>'+
+                    '<h1 id="firstHeading" class="firstHeading">Newhampshire</h1>'+
                     '<div id="bodyContent">'+
-                    '<p><b>Zimbabwe</b>, '+
+                    '<p><b>Newhampshire</b>, '+
                     ''+
                     '</p>'+
                     '<p>'+
                     '</div>'+
                     '</div>';
-                var infowindow_zimbabwe = new google.maps.InfoWindow({
-                content: contentString_zimbabwe,
+                var infowindow_newhampshire = new google.maps.InfoWindow({
+                content: contentString_newhampshire,
                 });
 
                 }
-            return infowindow_zimbabwe
+            return infowindow_newhampshire
                 }
 
     //Infowindow text Nairobi
@@ -441,26 +471,26 @@
             return infowindow_mumbai
                 }
 
-    //Infowindow text Denpasar
+    //Infowindow text Bali
     function marker8_popup(level){
 
-            var contentString_denpasar = '<div id="content">'+
+            var contentString_bali = '<div id="content">'+
                 '<div id="siteNotice">'+
                 '</div>'+
-                '<h1 id="firstHeading" class="firstHeading">Denpasar</h1>'+
+                '<h1 id="firstHeading" class="firstHeading">Bali</h1>'+
                 '<div id="bodyContent">'+
-                '<p><b>Denpasar</b>, '+
+                '<p><b>Bali</b>, '+
                 ''+
                 '</p>'+
                 '<p>'+
                 '</div>'+
                 '</div>';
-            var infowindow_denpasar = new google.maps.InfoWindow({
-                content: contentString_denpasar,
+            var infowindow_bali = new google.maps.InfoWindow({
+                content: contentString_bali,
                  });
 
 
-            return infowindow_denpasar
+            return infowindow_bali
                 }
 
     //Infowindow text Dehli
@@ -524,26 +554,26 @@
             return infowindow_newjersey
                 }
 
-    //Infowindow text Cape Town
+    //Infowindow text Campo
     function marker11_popup(level){
 
-            var contentString_capetown = '<div id="content">'+
+            var contentString_Campo = '<div id="content">'+
                 '<div id="siteNotice">'+
                 '</div>'+
-                '<h1 id="firstHeading" class="firstHeading">Cape Town</h1>'+
+                '<h1 id="firstHeading" class="firstHeading">Campo</h1>'+
                 '<div id="bodyContent">'+
-                '<p><b>Cape Town</b>, '+
+                '<p><b>Campo</b>, '+
                 ''+
                 '</p>'+
                 '<p>'+
                 '</div>'+
                 '</div>';
-            var infowindow_capetown = new google.maps.InfoWindow({
-                content: contentString_capetown,
+            var infowindow_Campo = new google.maps.InfoWindow({
+                content: contentString_Campo,
                 });
 
 
-            return infowindow_capetown
+            return infowindow_Campo
                 }
 
      //colorado info window
@@ -567,21 +597,152 @@
 
             return infowindow_colorado
                 }
+    function marker13_popup(level){
+
+            var contentString_rajasthan = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h1 id="firstHeading" class="firstHeading"></h1>' +
+            '<div id="bodyContent">' +
+            '<p><b>Rajasthan</b> ' +
+            '' +
+            '</p>' +
+            '<p>' +
+            '</div>' +
+            '</div>';
+            var infowindow_rajasthan = new google.maps.InfoWindow({
+                content: contentString_rajasthan,
+                });
+
+
+            return infowindow_rajasthan
+                }
+
+    function marker14_popup(level){
+
+            var contentString_southdakota = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h1 id="firstHeading" class="firstHeading"></h1>' +
+            '<div id="bodyContent">' +
+            '<p><b>South Dakota</b> ' +
+            '' +
+            '</p>' +
+            '<p>' +
+            '</div>' +
+            '</div>';
+            var infowindow_southdakota = new google.maps.InfoWindow({
+                content: contentString_southdakota,
+                });
+
+
+            return infowindow_southdakota
+                }
+
+    function marker15_popup(level){
+
+            var contentString_berlin = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h1 id="firstHeading" class="firstHeading"></h1>' +
+            '<div id="bodyContent">' +
+            '<p><b>Berlin</b> ' +
+            '' +
+            '</p>' +
+            '<p>' +
+            '</div>' +
+            '</div>';
+            var infowindow_berlin = new google.maps.InfoWindow({
+                content: contentString_berlin,
+                });
+
+
+            return infowindow_berlin                }
+
+    function marker16_popup(level){
+
+            var contentString_daraa = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h1 id="firstHeading" class="firstHeading"></h1>' +
+            '<div id="bodyContent">' +
+            '<p><b>Daraa</b> ' +
+            '' +
+            '</p>' +
+            '<p>' +
+            '</div>' +
+            '</div>';
+            var infowindow_daraa = new google.maps.InfoWindow({
+                content: contentString_daraa,
+                });
+
+
+            return infowindow_daraa                }
+
+    function marker17_popup(level){
+
+            var contentString_somalia = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h1 id="firstHeading" class="firstHeading"></h1>' +
+            '<div id="bodyContent">' +
+            '<p><b>Somalia</b> ' +
+            '' +
+            '</p>' +
+            '<p>' +
+            '</div>' +
+            '</div>';
+            var infowindow_somalia = new google.maps.InfoWindow({
+                content: contentString_somalia,
+                });
+
+
+            return infowindow_somalia                }
+
+
+    function marker18_popup(level){
+
+            var contentString_mosney = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h1 id="firstHeading" class="firstHeading"></h1>' +
+            '<div id="bodyContent">' +
+            '<p><b>Mosney</b> ' +
+            '' +
+            '</p>' +
+            '<p>' +
+            '</div>' +
+            '</div>';
+            var infowindow_mosney = new google.maps.InfoWindow({
+                content: contentString_mosney,
+                });
+
+
+            return infowindow_mosney             }
+
+
 
 
       //assign infowindow so can be called later
-      infowindow_yemen = marker1_popup(level);
-      infowindow_sudan = marker2_popup(level);
-      infowindow_somalia = marker3_popup(level);
-      infowindow_syria = marker4_popup(level);
-      infowindow_zimbabwe = marker5_popup(level);
+      infowindow_swatvalley = marker1_popup(level);
+      infowindow_losangeles = marker2_popup(level);
+      infowindow_ottawa = marker3_popup(level);
+      infowindow_redwoodcity = marker4_popup(level);
+      infowindow_newhampshire = marker5_popup(level);
       infowindow_nairobi = marker6_popup(level);
       infowindow_mumbai = marker7_popup(level);
-      infowindow_denpasar = marker8_popup(level);
+      infowindow_bali = marker8_popup(level);
       infowindow_dehli = marker9_popup(level);
       infowindow_newjersey = marker10_popup(level);
-      infowindow_capetown = marker11_popup(level);
+      infowindow_Campo = marker11_popup(level);
       infowindow_colorado = marker12_popup(level);
+      infowindow_rajasthan = marker13_popup(level);
+      infowindow_southdakota = marker14_popup(level);
+      infowindow_berlin=marker15_popup(level);
+      infowindow_daraa=marker16_popup(level);
+      infowindow_somalia=marker17_popup(level);
+      infowindow_mosney=marker18_popup(level);
+
 
 
      //variable to set marker as lock
@@ -620,13 +781,13 @@
     function marker3(level){
 
           if (level=="level1"){
-                return circlerefugees
+                return circlehumcrisis
             }
           else if (level=="level2"){
-                return circlerefugees
+                return circlehumcrisis
             }
           else if (level=="level3"){
-                return circlerefugees
+                return circlehumcrisis
             }
 
         }
@@ -636,10 +797,10 @@
                 return lock
             }
           else if (level=="level2"){
-                return circlerefugees
+                return circlehumcrisis
             }
           else if (level=="level3"){
-                return circlerefugees
+                return circlehumcrisis
             }
 
         }
@@ -652,7 +813,7 @@
                 return lock
             }
           else if (level=="level3"){
-                return circlerefugees
+                return circlehumcrisis
             }
 
         }
@@ -741,10 +902,10 @@
 
         }
 
-	function marker12(level){
+   function marker12(level){
 
           if (level=="level1"){
-                return circleenvironment
+                return circleinequality
             }
           else if (level=="level2"){
                 return circleinequality
@@ -754,6 +915,90 @@
             }
 
         }
+   function marker13(level){
+
+          if (level=="level1"){
+                return circleinequality
+            }
+          else if (level=="level2"){
+                return circleinequality
+            }
+          else if (level=="level3"){
+                return circleinequality
+            }
+
+        }
+
+   function marker14(level){
+
+          if (level=="level1"){
+                return circleinequality
+            }
+          else if (level=="level2"){
+                return circleinequality
+            }
+          else if (level=="level3"){
+                return circleinequality
+            }
+
+        }
+
+   function marker15(level){
+
+          if (level=="level1"){
+                return circlerefugees
+            }
+          else if (level=="level2"){
+                return circlerefugees
+            }
+          else if (level=="level3"){
+                return circlerefugees
+            }
+
+        }
+
+   function marker16(level){
+
+          if (level=="level1"){
+                return circlerefugees
+            }
+          else if (level=="level2"){
+                return circlerefugees
+            }
+          else if (level=="level3"){
+                return circlerefugees
+            }
+
+        }
+
+   function marker17(level){
+
+          if (level=="level1"){
+                return circlerefugees
+            }
+          else if (level=="level2"){
+                return circlerefugees
+            }
+          else if (level=="level3"){
+                return circlerefugees
+            }
+
+        }
+
+   function marker18(level){
+
+          if (level=="level1"){
+                return circlerefugees
+            }
+          else if (level=="level2"){
+                return circlerefugees
+            }
+          else if (level=="level3"){
+                return circlerefugees
+            }
+
+        }
+
 
 
 
@@ -793,25 +1038,25 @@
             //Marker style inequality
             var circleinequality = {
                 path: google.maps.SymbolPath.CIRCLE
-                , fillColor: '#FF00FF	'
+                , fillColor: '#FF00FF  '
                 , fillOpacity: 0.4
                 , scale: 10
-                , strokeColor: '#FF00FF	'
+                , strokeColor: '#FF00FF    '
                 , strokeWeight: 14
                 , strokeOpacity: 0.4
             , };
-            //Yemen
+            //Swat Valley
             var marker1 = new google.maps.Marker({
-                position: yemen,
-				 icon: marker1(level)
+                position: swatvalley,
+             icon: marker1(level)
                 , map: map
-                , title: 'Yemen'
+                , title: 'Swat Valley'
             });
             marker1.addListener('mouseover', function () {
-                infowindow_yemen.open(map, marker1);
+                infowindow_swatvalley.open(map, marker1);
             });
             marker1.addListener('mouseout', function () {
-                infowindow_yemen.close(map, marker1);
+                infowindow_swatvalley.close(map, marker1);
             });
             marker1.addListener('mouseover', function () {
                 soundhcrisis.play(map, marker1);
@@ -822,18 +1067,18 @@
             new google.maps.event.addListener(marker1, "click", function () {
                 window.open('file:///Users/elenaorlova/Google%20%D0%94%D0%B8%D1%81%D0%BA/sa_html_css/Saleem.html');
             });
-            //Sudan
+            //Losangeles
             var marker2 = new google.maps.Marker({
-                position: sudan
+                position: losangeles
                 , icon: marker2(level)
                 , map: map
-                , title: 'South Sudan'
+                , title: 'South Losangeles'
             });
             marker2.addListener('mouseover', function () {
-                infowindow_sudan.open(map, marker2);
+                infowindow_losangeles.open(map, marker2);
             });
             marker2.addListener('mouseout', function () {
-                infowindow_sudan.close(map, marker2);
+                infowindow_losangeles.close(map, marker2);
             });
             marker2.addListener('mouseover', function () {
                 soundhcrisis.play(map, marker2);
@@ -841,18 +1086,18 @@
             marker2.addListener('mouseout', function () {
                 soundhcrisis.pause(map, marker2);
             });
-            //Somalia
+            //Ottawa
             var marker3 = new google.maps.Marker({
-                position: somalia
+                position: ottawa
                 , icon: marker3(level)
                 , map: map
-                , title: 'Somalia'
+                , title: 'Ottawa'
             });
             marker3.addListener('mouseover', function () {
-                infowindow_somalia.open(map, marker3);
+                infowindow_ottawa.open(map, marker3);
             });
             marker3.addListener('mouseout', function () {
-                infowindow_somalia.close(map, marker3);
+                infowindow_ottawa.close(map, marker3);
             });
             marker3.addListener('mouseover', function () {
                 soundhcrisis.play(map, marker3);
@@ -860,18 +1105,18 @@
             marker3.addListener('mouseout', function () {
                 soundhcrisis.pause(map, marker3);
             });
-            //Syria
+            //Redwoodcity
             var marker4 = new google.maps.Marker({
-                position: syria,
+                position: redwoodcity,
                    icon: marker4(level)
                 , map: map
-                , title: 'Syria'
+                , title: 'Redwoodcity'
             });
             marker4.addListener('mouseover', function () {
-                infowindow_syria.open(map, marker4);
+                infowindow_redwoodcity.open(map, marker4);
             });
             marker4.addListener('mouseout', function () {
-                infowindow_syria.close(map, marker4);
+                infowindow_redwoodcity.close(map, marker4);
             });
             marker4.addListener('mouseover', function () {
                 soundrefugees.play(map, marker4);
@@ -879,18 +1124,18 @@
             marker4.addListener('mouseout', function () {
                 soundrefugees.pause(map, marker4);
             });
-            //Zimbabwe
+            //Newhampshire
             var marker5 = new google.maps.Marker({
-                position: zimbabwe
+                position: newhampshire
                 , icon: marker5(level)
                 , map: map
-                , title: 'Zimbabwe'
+                , title: 'Newhampshire'
             });
             marker5.addListener('mouseover', function () {
-                infowindow_zimbabwe.open(map, marker5);
+                infowindow_newhampshire.open(map, marker5);
             });
             marker5.addListener('mouseout', function () {
-                infowindow_zimbabwe.close(map, marker5);
+                infowindow_newhampshire.close(map, marker5);
             });
             marker5.addListener('mouseover', function () {
                 soundrefugees.play(map, marker5);
@@ -917,7 +1162,7 @@
             marker6.addListener('mouseout', function () {
                 soundenvironment.pause(map, marker6);
             });
-			 new google.maps.event.addListener(marker6, "click", function () {
+          new google.maps.event.addListener(marker6, "click", function () {
                 window.location.replace('render_content/luca.html','_self');  });
 
             //Mumbai
@@ -939,18 +1184,18 @@
             marker7.addListener('mouseout', function () {
                 soundenvironment.pause(map, marker7);
             });
-            //Denpasar
+            //Bali
             var marker8 = new google.maps.Marker({
-                position: denpasar
+                position: bali
                 , icon: marker8(level)
                 , map: map
-                , title: 'Denpasar'
+                , title: 'Bali'
             });
             marker8.addListener('mouseover', function () {
-                infowindow_denpasar.open(map, marker8);
+                infowindow_bali.open(map, marker8);
             });
             marker8.addListener('mouseout', function () {
-                infowindow_denpasar.close(map, marker8);
+                infowindow_bali.close(map, marker8);
             });
             marker8.addListener('mouseover', function () {
                 soundenvironment.play(map, marker8);
@@ -1002,18 +1247,18 @@
             new google.maps.event.addListener(marker10, "click", function () {
                 window.open('file:///Users/elenaorlova/Google%20%D0%94%D0%B8%D1%81%D0%BA/sa_html_css/jInvertScroll/examples/index.htm');
             });
-            //Cape Town
+            //Campo
             var marker11 = new google.maps.Marker({
-                position: capetown
+                position: Campo
                 , icon: marker11(level)
                 , map: map
-                , title: 'Cape Town'
+                , title: 'Campo'
             });
             marker11.addListener('mouseover', function () {
-                infowindow_capetown.open(map, marker11);
+                infowindow_Campo.open(map, marker11);
             });
             marker11.addListener('mouseout', function () {
-                infowindow_capetown.close(map, marker11);
+                infowindow_Campo.close(map, marker11);
             });
             marker11.addListener('mouseover', function () {
                 soundinequality.play(map, marker11);
@@ -1021,7 +1266,7 @@
             marker11.addListener('mouseout', function () {
                 soundinequality.pause(map, marker11);
             });
-		            //Colorado
+                  //Colorado
             var marker12 = new google.maps.Marker({
                 position: colorado
                 , icon: marker12(level)
@@ -1040,6 +1285,126 @@
             marker12.addListener('mouseout', function () {
                 soundenvironment.pause(map, marker12);
             });
-			 new google.maps.event.addListener(marker12, "click", function () {
+          new google.maps.event.addListener(marker12, "click", function () {
                 window.location.replace('render_content/t3xm.html');  });
+//Campo
+            var marker13 = new google.maps.Marker({
+                position: rajasthan
+                , icon: marker13(level)
+                , map: map
+                , title: 'Rajasthan'
+            });
+            marker13.addListener('mouseover', function () {
+                infowindow_rajasthan.open(map, marker13);
+            });
+            marker13.addListener('mouseout', function () {
+                infowindow_rajasthan.close(map, marker13);
+            });
+            marker13.addListener('mouseover', function () {
+                soundinequality.play(map, marker13);
+            });
+            marker13.addListener('mouseout', function () {
+                soundinequality.pause(map, marker13);
+            });
+
+//South Dakota
+            var marker14 = new google.maps.Marker({
+                position: southdakota
+                , icon: marker14(level)
+                , map: map
+                , title: 'South Dakota'
+            });
+            marker14.addListener('mouseover', function () {
+                infowindow_southdakota.open(map, marker14);
+            });
+            marker14.addListener('mouseout', function () {
+                infowindow_southdakota.close(map, marker14);
+            });
+            marker14.addListener('mouseover', function () {
+                soundinequality.play(map, marker14);
+            });
+            marker14.addListener('mouseout', function () {
+                soundinequality.pause(map, marker14);
+            });
+
+//Berlin
+            var marker15 = new google.maps.Marker({
+                position: berlin
+                , icon: marker15(level)
+                , map: map
+                , title: 'Berlin'
+            });
+            marker15.addListener('mouseover', function () {
+                infowindow_berlin.open(map, marker15);
+            });
+            marker15.addListener('mouseout', function () {
+                infowindow_berlin.close(map, marker15);
+            });
+            marker15.addListener('mouseover', function () {
+                soundinequality.play(map, marker15);
+            });
+            marker15.addListener('mouseout', function () {
+                soundinequality.pause(map, marker15);
+            });
+
+//Daraa
+            var marker16 = new google.maps.Marker({
+                position: daraa
+                , icon: marker16(level)
+                , map: map
+                , title: 'Daraa'
+            });
+            marker16.addListener('mouseover', function () {
+                infowindow_daraa.open(map, marker16);
+            });
+            marker16.addListener('mouseout', function () {
+                infowindow_daraa.close(map, marker16);
+            });
+            marker16.addListener('mouseover', function () {
+                soundinequality.play(map, marker16);
+            });
+            marker16.addListener('mouseout', function () {
+                soundinequality.pause(map, marker16);
+            });
+
+
+            var marker17 = new google.maps.Marker({
+                position: somalia
+                , icon: marker17(level)
+                , map: map
+                , title: 'Somalia'
+            });
+            marker17.addListener('mouseover', function () {
+                infowindow_somalia.open(map, marker17);
+            });
+            marker17.addListener('mouseout', function () {
+                infowindow_somalia.close(map, marker17);
+            });
+            marker17.addListener('mouseover', function () {
+                soundinequality.play(map, marker17);
+            });
+            marker17.addListener('mouseout', function () {
+                soundinequality.pause(map, marker17);
+            });
+            var marker18 = new google.maps.Marker({
+                position: mosney
+                , icon: marker18(level)
+                , map: map
+                , title: 'Mosney'
+            });
+            marker18.addListener('mouseover', function () {
+                infowindow_mosney.open(map, marker18);
+            });
+            marker18.addListener('mouseout', function () {
+                infowindow_mosney.close(map, marker18);
+            });
+            marker18.addListener('mouseover', function () {
+                soundinequality.play(map, marker18);
+            });
+            marker18.addListener('mouseout', function () {
+                soundinequality.pause(map, marker18);
+            });
+
         }
+
+

@@ -6,10 +6,14 @@
     <p class=error><strong>Error:</strong> {{ error }}
   {% endif %}
 
-<div id="registerForm">
+		<p id="Question">If you are under 13 you must have parental permission to join Activisme</p>
+		<button id="clickMeYes" onclick="show('registerForm'); hide('clickMeYes'); hide('Question')" alt="click me yes">I am over 13</button>
+
+
+	<div id="registerForm" style="display:none;">
 				<h3>Sign Up for Global Activist</h3>
 				<form method="post" action="/register" name="regForm">
-                    <p>Select your role:</p>
+	<p>Select your role:</p>
 
 						<input type="radio" id="Teacher" name="role" value="Teacher" > Teacher
 						<input type="radio" id="Student" name="role" value="Student" > Student
@@ -30,5 +34,15 @@
 					
 
 </div>
-
+<script>
+  function show (toBlock){
+    setDisplay(toBlock, 'block');
+  }
+  function hide (toNone) {
+    setDisplay(toNone, 'none');
+  }
+  function setDisplay (target, str) {
+    document.getElementById(target).style.display = str;
+  }
+</script>
 {% endblock %}

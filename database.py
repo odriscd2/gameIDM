@@ -5,7 +5,6 @@ cur.execute('''CREATE TABLE IF NOT EXISTS users
 (
 username varchar(20)	unique	not	null,
 password	varchar(100),
-name varchhar(50),
 email varchar(60),
 role varchar (50),
 email_confirmed varchar (10)
@@ -37,7 +36,8 @@ cur.execute('''CREATE TABLE IF NOT EXISTS sharespace_files
 username varchar(20),
 classname varchar(20),
 file_name varchar(20),
-date_uploaded varchar(20))
+date_uploaded varchar(20),
+confirmed varchar(20))
 ''')
 
 db.commit()

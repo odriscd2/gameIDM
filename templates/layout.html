@@ -3,10 +3,11 @@
 
 <head>
     {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/style.css') }}">
+
 	<script src="{{ url_for('static', filename='../static/JS/map-java.js')}}"></script>
 	<script src="{{ url_for('static', filename='../static/JS/modal-java.js')}}"></script>
     <script src="{{ url_for('static', filename='../static/JS/validatepassword.js')}}"></script>
+
 
     <title>{% block title %}{% endblock %} Global Activist </title>
    		
@@ -26,24 +27,15 @@
 
 	</head>
 <body>
-  
-  
-  
-  <header id="header">
-		<h1 style="display:none;">Global Activist</h1>
-		<!-- Trigger/Open The Modal -->
-		
-		<ul>
-  <li><a href="infowindow.html"><img src="../static/Images/icons-01.png" class="loginimg"></a></li>
-  <li><input type="image" src="../static/Images/icons-02.png" name="myBtn" id="myBtn" class="loginimg"></li>
-  <li><a href="contact.asp"><img src="../static/Images/icons-03.png"class="loginimg"></a></li>
-  <li><a href="about.asp"><img src="../static/Images/icons-04.png" class="loginimg"></a></li>
-</ul>
-		
 
-		
-		  <img class="logo" src="../static/Images/icons-01.png" alt="global-activist-logo"> </header>
-		  
+
+
+  <header id="header">
+      <h1 style="display:none;">Activisme</h1>
+		<!-- Trigger/Open The Modal -->
+
+</header>
+
 		  
 		  
 		  
@@ -62,20 +54,10 @@
 {% block body %}{% endblock %}
 
     
-     
+
      <div id="footer">
       {% block footer %}
-	<footer>
-		<p>Discover your world. Inspire your world.</p>
-<a class="buttono" href="{{ url_for('create_sharespace') }}"> Create your sharespace! </a>
 
-        <a class="buttono" href="{{ url_for('sharespace', classname=classname) }}"> Enter your sharespace! </a>
-
-        <form method="post" action="/delete_account"><button type="submit" value="delete_account" class="btn btn-primary">Delete Account</button> </form>
-
-		<form action="\logout" method="post">
-			<input type="submit" value="Logout"> </form>
-	</footer>
          <script>
 
 //function to resize on mouse in and out

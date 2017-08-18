@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
-{% block body %}
 
+{% block body %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/style.css') }}">
 <!-- Navigation -->
 <!--
     <div id="container" class="container">
@@ -9,6 +10,17 @@
 		<label class="toggle-container" for="toggle"> <span class="button button-toggle"></span> </label>
 		<nav class="nav"> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Home</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Map</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">About Project</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">DIY/Games</a> </nav>
 </div>-->
+
+<header>
+	<ul>
+  <li><button class="buttono" href="{{ url_for('create_sharespace') }}"> Create your sharespace! </button></li>
+		<li><button type="image"  name="myBtn" id="myBtn" >Login</button></li>
+  <li><button class="buttono" href="{{ url_for('sharespace', classname=classname) }}"> Enter your sharespace! </button></li>
+  <li><form action="\logout" method="post">
+	  <input type="submit" value="Logout"> </form></li></ul>
+	<h1>Activisme</h1>
+</header>
+
 	<div id="map"></div>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWdCRYR6k-5WVxvZodvqOIAUwBFVfuvno&callback=initMap">
 	</script>
@@ -44,6 +56,7 @@
 						<input type="radio" id="teacher" name="role" value="Teacher"  required > Teacher
 						<input type="radio" id="student" name="role" value="Student"  required> Student
 						<br>
+						<p><input type="date" id="date" onblur="getAge()"></p>
 						<p>
 						<input type="text" name="username" placeholder="Username" required> </p>
 					<p>
@@ -51,8 +64,8 @@
 					<p>
 						<input type="password" placeholder="Password" id="password" name="password" required>
 						<input type="password" placeholder="Confirm Password" id="confirm_password" required> </p>
-					<p>
-						<input type="text" name="name" placeholder="Name" required> </p>
+
+
 
 					<button type="submit" value="register" class="btn btn-primary">Register</button>
 
