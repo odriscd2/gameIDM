@@ -3,8 +3,6 @@ from flask_mail import Mail, Message
 from flask import send_from_directory, render_template, redirect, url_for, request, g, session
 from itsdangerous import URLSafeTimedSerializer
 from flask import abort, flash
-import werkzeug
-from werkzeug import secure_filename
 
 # database
 db = sqlite3.connect('mydb.db')
@@ -27,14 +25,10 @@ app.config.update(
 )
 mail = Mail(app)
 
-
-
 app.config['ALLOWED_EXTENSIONS'] = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
-
-
 
 ts = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
@@ -97,12 +91,12 @@ def validate_join_sharespace(classname, sharespace_password):
     completion = False
     with db:
         cur = db.cursor()
-        cur.execute("SELECT classname, sharespace_password FROM sharespace_users")
+        cur.execute("SELECT sharespace_password FROM sharespace_users")
         rows = cur.fetchall()
         for row in rows:
             dbUser = row[0]
             dbPass = row[1]
-            print(row[0], row[1])
+            print("we are", row[0], row[1])
             if dbUser == classname:
                 print(dbPass)
                 completion = check_password(dbPass, sharespace_password)
@@ -155,6 +149,10 @@ def send_email(email, subject, html):
 def page_not_found(e):
     return render_template('404.html'), 404
 
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
 # creating routes & static folders for badges
 @app.route('/')
 def index():
@@ -164,52 +162,67 @@ def index():
     else:
         return render_template("earth_black.html")
 
-
-
 @app.route('/map', methods=["GET"])
 def map_page():
     if 'username' in flask.session:
         username=flask.session['username']
         cur.execute("SELECT classname FROM sharespace_users WHERE username = '%s'" %username)
-        classname = cur.fetchone()
-        if classname is None:
-            error="You must set up a sharespace"
-            return redirect(url_for('create_sharespace', error=error))
+        classrow = cur.fetchone()
+        classname = classrow[0]
+        cur.execute("SELECT role from users where username = '%s'" %username)
+        rolerow= cur.fetchone()
+        role= rolerow[0]
+
+
+        if classname is None and role == 'Teacher':
+                return redirect(url_for('create_sharespace', classname=classname))
+
+        elif classname is None and role == 'Student':
+            return redirect(url_for('join_sharespace', classname=classname))
+
         else:
-            # badges = os.listdir('./static')
+                # badges = os.listdir('./static')
 
-            cur.execute('''SELECT badge_id FROM badges WHERE username = "%s" ''' % username)
-            badge_list = cur.fetchone()
-            badges=badge_list[0]
-            length = len(badge_list)
-            # print(length)
-            print(badges)
-            print(badge_list)
-            cur.execute('''SELECT points FROM badges WHERE username = "%s" ''' % username)
-            pointslist = cur.fetchone()
-            points=pointslist[0]
-            print(points)
-            if int(points) < 350:
-                level = "level1"
-                cur.execute('''UPDATE badges SET level = 'level1'
-                        WHERE username ="''' + username + '"')
-                db.commit()
-                print(level)
-            elif int(points) >= 350 and points < 800:
-                level = "level2"
-                print(level)
-                cur.execute('''UPDATE badges SET level = 'level2'
-                                    WHERE username ="''' + username + '"')
-                db.commit()
-            elif int(points) >= 800:
-                level = "level3"
-                print(level)
-                cur.execute('''UPDATE badges SET level = 'level3'
-                                    WHERE username ="''' + username + '"')
-                db.commit()
+                print("studnet this far")
+                cur.execute('''SELECT badge_id FROM badges WHERE username = "%s" ''' % username)
+                badge_list = cur.fetchone()
+                badges=badge_list[0]
+                length = len(badge_list)
+                # print(length)
+                print(badges)
+                print(badge_list)
 
-            return flask.render_template("infowindow.html", name=flask.session['username'],badges=badges, badge_list=badge_list, length=length,
-                                         points=points, level=level, classname=classname)
+                cur.execute('''SELECT points FROM badges WHERE username = "%s" ''' % username)
+                pointslist = cur.fetchone()
+                points=pointslist[0]
+                print(points)
+
+
+                cur.execute("SELECT username, classname, role from sharespace_users where username='%s'" %username)
+                rows=cur.fetchall()
+                for row in rows:
+                    print (row[0], row[1], row[2])
+                if int(points) < 350:
+                    level = "level1"
+                    cur.execute('''UPDATE badges SET level = 'level1'
+                            WHERE username ="''' + username + '"')
+                    db.commit()
+                    print(level)
+                elif int(points) >= 350 and points < 800:
+                    level = "level2"
+                    print(level)
+                    cur.execute('''UPDATE badges SET level = 'level2'
+                                        WHERE username ="''' + username + '"')
+                    db.commit()
+                elif int(points) >= 800:
+                    level = "level3"
+                    print(level)
+                    cur.execute('''UPDATE badges SET level = 'level3'
+                                        WHERE username ="''' + username + '"')
+                    db.commit()
+
+        return flask.render_template("infowindow.html", name=flask.session['username'],badges=badges, badge_list=badge_list, length=length,
+                                             points=points, level=level, classname=classname)
 
     else:
         badges = 'Local Activist'
@@ -315,7 +328,7 @@ def register():
                             % username)
                 db.commit()
                 cur.execute("INSERT INTO sharespace_users (username, role) VALUES('%s', '%s')"
-                            %(username, role))
+                            % (username, role))
                 db.commit()
 
             elif role== 'Teacher':
@@ -323,7 +336,7 @@ def register():
                     "INSERT INTO badges (username, badge_id, points, level) VALUES('%s', 'Teacher', 2000, 'level3')" % username)
                 db.commit()
                 cur.execute("INSERT INTO sharespace_users (username, role) VALUES('%s', '%s')"
-                            %(username, role))
+                            % (username, role))
                 db.commit()
 
             return flask.render_template('registered.html', error=error)
@@ -499,12 +512,14 @@ def create_sharespace():
     if flask.request.method == "POST":
         if 'username' in flask.session:
             username = flask.session['username']
-            cur.execute("SELECT role FROM sharespace_users WHERE username = '%s'" %username)
+            cur.execute("SELECT role FROM users WHERE username = '%s'" %username)
             row = cur.fetchone()
-            if row[0] == "Student":
+            role= row[0]
+            print ('debug', role)
+            if role == "Student":
                 error = "You'll have to wait for your teacher to set one up"
                 return redirect(url_for('map_page', error=error))
-            elif row[0] == "Teacher":
+            elif role == "Teacher":
                 classname=flask.request.form['classname']
                 sharespace_password=flask.request.form['sharespace_password']
                 hash_sharespace_password= hashlib.md5(sharespace_password.encode()).hexdigest()
@@ -513,9 +528,10 @@ def create_sharespace():
                 if classname_exists:
                     error="This name already exists. Choose another"
                 else:
-                    cur.execute("SELECT username from sharespace_users")
-                    cur.execute("UPDATE sharespace_users SET classname='%s' WHERE username='%s'"
-                                %(classname, username))
+                    cur.execute("UPDATE sharespace_users SET classname='%s' "
+                                " WHERE username = '%s'" %(classname,  username))
+                    db.commit()
+                    cur.execute("INSERT INTO sharespace_setup(classname, sharespace_password) VALUES ('%s', '%s')" %(classname, hash_sharespace_password))
                     db.commit()
                     os.makedirs('static/classfolders/%s' %classname)
                     return flask.redirect(url_for('sharespace', classname=classname))
@@ -532,53 +548,60 @@ def join_sharespace():
     if 'username' in flask.session:
         if flask.request.method == "POST":
             username = flask.session['username']
-            cur.execute("SELECT password from users where username = '%s'" %username)
-            password=cur.fetchone()
+            print("debug", username)
             classname= flask.request.form['classname']
             sharespace_password=flask.request.form['sharespace_password']
+            cur.execute("SELECT role from users where username='%s'" %username)
+            rowrole= cur.fetchone()
+            role= rowrole[0]
             cur.execute("SELECT classname from sharespace_users where username = '%s'" %username)
-            user_exists= cur.fetchone()
-            completion= validate_join_sharespace(classname, sharespace_password)
+            classrow = cur.fetchone()
+            print ('classrow', classrow[0])
+            cur.execute("SELECT classname, sharespace_password from sharespace_setup")
+            rows=cur.fetchall()
+            for row in rows:
+                dbuser=row[0]
+                dbpass=row[1]
+                if dbuser == classname:
+                    completion= check_password(dbpass, sharespace_password)
+                    if completion:
+                        cur.execute("UPDATE sharespace_users SET classname= '%s' WHERE username = '%s'" %(classname, username))
+                        db.commit()
+                        return redirect(url_for('sharespace', classname=classname,error=error))
 
-            if completion == False:
-                error= "Your sharespace details are incorrect"
-            elif user_exists:
-                error= "You have already registered to this sharespace"
-                redirect(url_for('sharespace_login', error=error))
-            else:
+        return flask.render_template("join-sharespace.html")
 
-                confirmed=validate(username, password)
-                if confirmed:
-                    hash_sharespace_password = hashlib.md5(sharespace_password.encode()).hexdigest()
-                    cur.execute("UPDATE sharespace_users SET classname ='%s' sharespace_password='%s' WHERE username='%s'"
-                                %(classname, hash_sharespace_password, username))
-                    db.commit()
-                    return flask.redirect(url_for('sharespace', classname=classname))
-    else:
-        error="You must be logged in to register to a sharespace"
-        return flask.redirect(url_for('login', error=error))
 
 @app.route('/sharespace/<classname>')
 def sharespace(classname):
-    if 'username' in session:
+    error=None
+    if 'username' in session and classname is not None:
         username=flask.session['username']
         cur.execute("SELECT classname FROM sharespace_users where username='%s'" %username)
         classrow=cur.fetchone()
         classname=classrow[0]
         file_names = os.listdir('./static/classfolders/%s' %classname)
-        cur.execute('''SELECT file_name, username, classname, date_uploaded, confirmed FROM sharespace_files''')
+        cur.execute('''SELECT file_name, username, classname, date_uploaded, confirmed, role FROM sharespace_files''')
         file_list= cur.fetchall()
-        length= len(file_list)
-        print(file_names)
-        print(file_list)
-        sharespace_url = url_for(
-            'sharespace',
-            classname=classname,
-            _external=True
-        )
-        return render_template("sharespace.html", sharespace_url=sharespace_url,
+        cur.execute("SELECT role FROM users WHERE username = '%s'" %username)
+        rowrole=cur.fetchone()
+        if rowrole[0] is None:
+            error="There is no role"
+        else:
+            role= rowrole[0]
+
+            length= len(file_list)
+            print(file_names)
+            print(file_list)
+            sharespace_url = url_for(
+                'sharespace',
+                classname=classname,
+                _external=True
+            )
+
+            return render_template("sharespace.html", sharespace_url=sharespace_url,
                                classname=classname, length=length, file_names=file_names,
-                               file_list=file_list)
+                               file_list=file_list, username=username, error=error, role=role)
     else:
         return redirect(url_for('login'))
 
@@ -589,7 +612,9 @@ def upload_to_sharespace():
         cur.execute("SELECT classname from sharespace_users where username = '%s'" % username)
         classrow = cur.fetchone()
         classname = classrow[0]
-
+        cur.execute("SELECT role from sharespace_users where username= '%s'" %username)
+        rowrole=cur.fetchone()
+        role= rowrole[0]
         file = flask.request.files["sharefile"]
         file.save('static/classfolders/'+classname+'/' + file.filename )
 
@@ -597,8 +622,8 @@ def upload_to_sharespace():
         print (filename)
 
         date_uploaded = datetime.date.today().strftime('%d-%m-%Y')
-        cur.execute("INSERT INTO sharespace_files( username, file_name, date_uploaded, classname, confirmed) "
-                    "VALUES('%s','%s', '%s', '%s', 'FALSE')" % (username, filename,  classname, date_uploaded))
+        cur.execute("INSERT INTO sharespace_files( username, file_name, date_uploaded, classname, confirmed, role) "
+                    "VALUES('%s','%s', '%s', '%s', 'FALSE', '%s')" % (username, filename,  classname, date_uploaded, role))
 
         return redirect(url_for('sharespace',
                                 filename=filename, classname=classname))
@@ -613,17 +638,36 @@ def delete_upload():
         cur.execute("SELECT classname from sharespace_users where username = '%s'" % username)
         classrow= cur.fetchone()
         classname=classrow[0]
-        cur.execute("SELECT file_name from sharespace_files where username= '%s'" %username)
-        rowfile=cur.fetchone()
-        filename=rowfile[0]
-
+        filename= flask.request.form["filename"]
+        print('this is debug DOD', filename)
         if role == "Teacher":
             os.remove(os.path.join('./static/classfolders/'+classname+'/'+ filename))
             cur.execute("DELETE from sharespace_files where file_name='%s'" % filename)
             db.commit()
             return redirect(url_for('sharespace', classname=classname))
 
+@app.route('/moderate_upload', methods=["POST"])
+def moderate_upload():
+    if 'username' in flask.session:
+        username= flask.session['username']
+        cur.execute("SELECT role from sharespace_users where username = '%s'" %username)
+        rowrole= cur.fetchone()
+        role=rowrole[0]
+        cur.execute("SELECT classname from sharespace_users where username = '%s'" % username)
+        classrow= cur.fetchone()
+        classname=classrow[0]
+        filename = flask.request.form["filename"]
+        print('this is debug DOD moderate', filename)
 
+
+        if role == "Teacher":
+            cur.execute("UPDATE sharespace_files SET confirmed= 'TRUE' where file_name = '%s'" %filename)
+            db.commit()
+            return redirect(url_for('sharespace', classname=classname))
+
+        else:
+            error="Looks like you can't do that"
+            return redirect(url_for('sharespace', classname=classname))
 
 
 

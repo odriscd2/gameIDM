@@ -13,11 +13,18 @@
 
 <header>
 	<ul>
-  <li><button class="buttono" href="{{ url_for('create_sharespace') }}"> Create your sharespace! </button></li>
+
 		<li><button type="image"  name="myBtn" id="myBtn" >Login</button></li>
-  <li><button class="buttono" href="{{ url_for('sharespace', classname=classname) }}"> Enter your sharespace! </button></li>
+		<li><button class="buttono"><a class="ctalink" href="{{url_for('map_page')}}">Map</a></button></li>
+		{% if session['username'] %}
+
+		<li><button class="buttono"> <a href="{{ url_for('create_sharespace') }}">Create your sharespace!</a> </button></li>
+
+		<li><button class="buttono"><a href="{{ url_for('sharespace', classname=classname) }}"> Enter your sharespace!</a> </button></li>
+		<li><button class="buttono"><a href="{{ url_for('join_sharespace', classname=classname) }}"> Join A Sharespace!</a> </button></li>
   <li><form action="\logout" method="post">
 	  <input type="submit" value="Logout"> </form></li></ul>
+	{% endif %}
 	<h1>Activisme</h1>
 </header>
 
@@ -56,7 +63,7 @@
 						<input type="radio" id="teacher" name="role" value="Teacher"  required > Teacher
 						<input type="radio" id="student" name="role" value="Student"  required> Student
 						<br>
-						<p><input type="date" id="date" onblur="getAge()"></p>
+
 						<p>
 						<input type="text" name="username" placeholder="Username" required> </p>
 					<p>

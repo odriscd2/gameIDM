@@ -15,8 +15,24 @@
 
                     <p>Create a password so your students can acess their own sharespace!
                         Your own account password will be the administrator password<br/>
-                    <input type="password" name="sharespace_password" placeholder="Sharespace Password" required> </p>
+                    <input type="password" name="sharespace_password" placeholder="Sharespace Password" required>
+                    <input type="password" placeholder="Confirm Password" id="confirm_password" required> </p>
                     <button type="submit" value="register">Register</button>
 				</form>
 </div>
+<script>
+var password = document.getElementById("password")
+			, confirm_password = document.getElementById("confirm_password");
+
+		function validatePassword() {
+			if (password.value != confirm_password.value) {
+				confirm_password.setCustomValidity("Woops! Looks like the passwords don't match");
+			}
+			else {
+				confirm_password.setCustomValidity('');
+			}
+		}
+		password.onchange = validatePassword;
+		confirm_password.onkeyup = validatePassword;
+</script>
 {% endblock %}

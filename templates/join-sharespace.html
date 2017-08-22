@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{%block body %}
+<h1>Register</h1>
+<h2>Fill in your details</h2>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+
+<div id="registerForm">
+      {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+				<h3>Sign Up for Global Activist</h3>
+				<form method="post" action="/join_sharespace" name="ShareSpaceForm">
+          <p>Type in your teacher's Classname<br/>
+
+						<input type="text" name="classname" placeholder="Class Name" required> </p>
+
+                    <p>Type in the secret password your teacher gave you!
+                        <br/>
+                    <input type="password" name="sharespace_password" placeholder="Sharespace Password" required> </p>
+                    <input type="password" placeholder="Confirm Password" id="confirm_password" required>
+                    <button type="submit" value="register">Register</button>
+				</form>
+</div>
+<script>
+var password = document.getElementById("password")
+			, confirm_password = document.getElementById("confirm_password");
+
+		function validatePassword() {
+			if (password.value != confirm_password.value) {
+				confirm_password.setCustomValidity("Woops! Looks like the passwords don't match");
+			}
+			else {
+				confirm_password.setCustomValidity('');
+			}
+		}
+		password.onchange = validatePassword;
+		confirm_password.onkeyup = validatePassword;
+</script>
+{% endblock %}
