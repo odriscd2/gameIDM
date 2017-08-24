@@ -87,11 +87,62 @@
 <form name="uploadform" action="/upload_to_sharespace" method="post" enctype="multipart/form-data">
 
     <p><input type="file" name="sharefile" required></p>
+    <input type="radio" id="environmental" name="category" value="environmental"  required > Environmental Crises
+    <input type="radio" id="humanitarian-crisis" name="category" value="humanitariancrisis"  required> Humanitarian Crises
+    <input type="radio" id="social-inequality" name="category" value="socialinequality"  required > Social Inequality
+    <input type="radio" id="refugees" name="category" value="refugeecrisis"  required> Refugees
     <p><input type="submit" value="Upload File"  id="uploadbutton"></p>
 
 
 </form>
 
+
+<div id="blog-upload-space">
+    <h3>Blog Posts</h3>
+    <form name="blogupload" action="/blog_post" method="post" enctype="multipart/form-data" id="blogupload">
+    <input type="radio" id="environmental" name="category" value="environmental"  required > Environmental Crises
+    <input type="radio" id="humanitarian-crisis" name="category" value="humanitariancrisis"  required> Humanitarian Crises
+    <input type="radio" id="social-inequality" name="category" value="socialinequality"  required > Social Inequality
+    <input type="radio" id="refugees" name="category" value="refugeecrisis"  required> Refugees
+    <input type="text" name="blog_title" placeholder="Title">
+    <textarea rows="4" cols="50" name="blog_post" form="blogupload" placeholder="Write your post here"></textarea>
+    <input type="submit" value="Post To Blog" >
+    </form>
+</div>
+
+<div id="blog-display-space">
+
+{%for row in blog_list %}
+    {% if role == 'Teacher' %}
+
+
+    <p>Title: {{row[2]}}</p>
+
+    <p>{{row[3]}}</p>
+
+    <p>Status: {{row[5]}}</p>
+
+    <form method="post" action="/delete_blog_post"><button type="submit" value="delete_blog_post" class="btn btn-primary">Delete Upload</button>
+    <input type="hidden" name="blog_post" value="{{row[3]}}">
+    </form>
+
+    <form method="post" action="/moderate_blog_post"><button type="submit" value="moderate_blog_post" class="btn btn-primary">Confirm Upload</button>
+    <input type="hidden" name="blog_post" value="{{row[3]}}">
+    </form>
+        {% endif %}
+
+
+    {% if role == 'Student' %}
+        {% if row[5] == 'TRUE' %}
+            <p>Title: {{row[2]}}</p>
+            <p>{{row[3]}}</p>
+        {% endif %}
+    {% endif %}
+
+
+{% endfor %}
+
+</div>
 
 
 

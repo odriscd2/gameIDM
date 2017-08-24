@@ -35,17 +35,29 @@ classname varchar (20),
 role varchar (20))
 ''')
 
-cur.execute('''CREATE TABLE IF NOT EXISTS sharespace_files
+cur.execute('''CREATE TABLE IF NOT EXISTS sharespace_images
 (
 username varchar(20),
 classname varchar(20),
 file_name varchar(20),
 date_uploaded varchar(20),
 confirmed varchar(20),
-role varchar (20))
+role varchar (20),
+category varchar(20))
 
 ''')
 
 db.commit()
 
+cur.execute('''CREATE TABLE IF NOT EXISTS sharespace_blog_posts(
+username varchar(20),
+classname varchar(20),
+blog_title varchar(20),
+blog_post varchar(500),
+date_uploaded varchar(20),
+confirmed varchar (20),
+role varchar(20),
+category varchar(30))''')
+
+db.commit()
 

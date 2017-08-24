@@ -487,7 +487,7 @@ def delete_account():
             if userexists:
                 cur.execute("DELETE from sharespace_users where username='%s'" %username)
                 db.commit()
-                cur.execute("DELETE from sharespace_files where username='%s'" %username)
+                cur.execute("DELETE from sharespace_images where username='%s'" %username)
                 db.commit()
                 cur.execute("DELETE from users where username='%s'" %username)
                 db.commit()
@@ -581,8 +581,11 @@ def sharespace(classname):
         classrow=cur.fetchone()
         classname=classrow[0]
         file_names = os.listdir('./static/classfolders/%s' %classname)
-        cur.execute('''SELECT file_name, username, classname, date_uploaded, confirmed, role FROM sharespace_files''')
+        cur.execute('''SELECT file_name, username, classname, date_uploaded, confirmed, role FROM sharespace_images''')
         file_list= cur.fetchall()
+        cur.execute('''SELECT username, classname, blog_title, blog_post, date_uploaded, confirmed, role, category FROM
+        sharespace_blog_posts''')
+        blog_list=cur.fetchall()
         cur.execute("SELECT role FROM users WHERE username = '%s'" %username)
         rowrole=cur.fetchone()
         if rowrole[0] is None:
@@ -601,7 +604,7 @@ def sharespace(classname):
 
             return render_template("sharespace.html", sharespace_url=sharespace_url,
                                classname=classname, length=length, file_names=file_names,
-                               file_list=file_list, username=username, error=error, role=role)
+                               file_list=file_list, username=username, error=error, role=role, blog_list=blog_list)
     else:
         return redirect(url_for('login'))
 
@@ -612,18 +615,18 @@ def upload_to_sharespace():
         cur.execute("SELECT classname from sharespace_users where username = '%s'" % username)
         classrow = cur.fetchone()
         classname = classrow[0]
+        category = flask.request.form["category"]
         cur.execute("SELECT role from sharespace_users where username= '%s'" %username)
         rowrole=cur.fetchone()
         role= rowrole[0]
         file = flask.request.files["sharefile"]
         file.save('static/classfolders/'+classname+'/' + file.filename )
-
         filename = file.filename
         print (filename)
 
         date_uploaded = datetime.date.today().strftime('%d-%m-%Y')
-        cur.execute("INSERT INTO sharespace_files( username, file_name, date_uploaded, classname, confirmed, role) "
-                    "VALUES('%s','%s', '%s', '%s', 'FALSE', '%s')" % (username, filename,  classname, date_uploaded, role))
+        cur.execute("INSERT INTO sharespace_images( username, file_name, date_uploaded, classname, confirmed, role, category) "
+                    "VALUES('%s','%s', '%s', '%s', 'FALSE', '%s', '%s')" % (username, filename,  classname, date_uploaded, role, category))
 
         return redirect(url_for('sharespace',
                                 filename=filename, classname=classname))
@@ -642,7 +645,7 @@ def delete_upload():
         print('this is debug DOD', filename)
         if role == "Teacher":
             os.remove(os.path.join('./static/classfolders/'+classname+'/'+ filename))
-            cur.execute("DELETE from sharespace_files where file_name='%s'" % filename)
+            cur.execute("DELETE from sharespace_images where file_name='%s'" % filename)
             db.commit()
             return redirect(url_for('sharespace', classname=classname))
 
@@ -661,7 +664,7 @@ def moderate_upload():
 
 
         if role == "Teacher":
-            cur.execute("UPDATE sharespace_files SET confirmed= 'TRUE' where file_name = '%s'" %filename)
+            cur.execute("UPDATE sharespace_images SET confirmed= 'TRUE' where file_name = '%s'" %filename)
             db.commit()
             return redirect(url_for('sharespace', classname=classname))
 
@@ -669,7 +672,73 @@ def moderate_upload():
             error="Looks like you can't do that"
             return redirect(url_for('sharespace', classname=classname))
 
+@app.route('/blog_post', methods=["POST"])
+def blog_post():
+    if flask.request.method == "POST":
+        username = flask.session['username']
+        cur.execute("SELECT classname from sharespace_users where username = '%s'" % username)
+        classrow = cur.fetchone()
+        classname = classrow[0]
+        cur.execute("SELECT role from sharespace_users where username= '%s'" %username)
+        rowrole=cur.fetchone()
+        role= rowrole[0]
+        blog_title=flask.request.form['blog_title']
+        blog_post=flask.request.form['blog_post']
+        date_uploaded = datetime.date.today().strftime('%d-%m-%Y')
+        category=flask.request.form['category']
 
+
+        cur.execute("INSERT INTO sharespace_blog_posts (username, classname, blog_title, blog_post,"
+                    "date_uploaded, confirmed, role, category) VALUES('%s','%s','%s','%s', '%s', 'FALSE', '%s','%s')"
+                    %(username, classname, blog_title, blog_post, date_uploaded, role, category))
+
+        db.commit()
+
+        return redirect(url_for('sharespace',
+                                 classname=classname))
+
+@app.route('/moderate_blog_post', methods=["POST"])
+def moderate_blog_post():
+    if 'username' in flask.session:
+        username= flask.session['username']
+        cur.execute("SELECT role from sharespace_users where username = '%s'" %username)
+        rowrole= cur.fetchone()
+        role=rowrole[0]
+        cur.execute("SELECT classname from sharespace_users where username = '%s'" % username)
+        classrow= cur.fetchone()
+        classname=classrow[0]
+
+        blog_post= flask.request.form['blog_post']
+
+        if role == "Teacher":
+            cur.execute("UPDATE sharespace_blog_posts SET confirmed= 'TRUE' where  blog_post ='%s'" % blog_post)
+            db.commit()
+            return redirect(url_for('sharespace', classname=classname))
+
+        else:
+            error="Looks like you can't do that"
+            return redirect(url_for('sharespace', classname=classname))
+
+@app.route('/delete_blog_post', methods=["POST"])
+def delete_blog_post():
+    if 'username' in flask.session:
+            username= flask.session['username']
+            cur.execute("SELECT role from sharespace_users where username = '%s'" %username)
+            rowrole= cur.fetchone()
+            role=rowrole[0]
+            cur.execute("SELECT classname from sharespace_users where username = '%s'" % username)
+            classrow= cur.fetchone()
+            classname=classrow[0]
+            blog_post= flask.request.form['blog_post']
+
+            if role == "Teacher":
+                cur.execute("DELETE from sharespace_blog_posts where blog_post='%s'" % blog_post)
+                db.commit()
+                return redirect(url_for('sharespace', classname=classname))
+
+            else:
+                error="Looks like you can't do that"
+                return redirect(url_for('sharespace', classname=classname))
 
 
 
