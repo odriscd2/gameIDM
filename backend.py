@@ -153,10 +153,17 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
+
+
+@app.errorhandler(410)
+def internal_server_error(e):
+    return render_template('410.html'), 410
 # creating routes & static folders for badges
 @app.route('/')
 def index():
-    if 'username' in flask.session:
+    skip=True
+    if skip == True:
+
         return redirect(url_for('map_page'))
 
     else:
@@ -376,7 +383,7 @@ def login():
 
 
         elif confirmed == False:
-           error = "You must confirm your email address"
+           error = "You must confirm your email"
         else:
             flask.session['username'] = flask.request.form['username']
             return flask.redirect(flask.url_for('map_page'))
@@ -386,7 +393,6 @@ def login():
 @app.route('/logout', methods=['POST'])
 def logout():
     flask.session.pop('username', None)
-    flash("Log out successful")
     return flask.redirect(flask.url_for('map_page'))
 
 @app.route ('/reset', methods=['GET','POST'])
@@ -473,7 +479,10 @@ def reset_email():
                 send_email(newEmail, subject, html)
 
                 return redirect(url_for('login'))
-    return render_template('update_email.html')
+
+        else:
+            error="Your login details are incorrect"
+    return render_template('update_email.html', error=error)
 
 @app.route('/delete_account', methods=["POST"])
 def delete_account():
@@ -501,10 +510,9 @@ def delete_account():
 
 
         else:
-            error= "You must sign in to delete your account"
+            error= "You must sign in"
             flask.render_template("login.html", error=error)
     return flask.render_template("delete-account.html", error=error)
-
 
 @app.route('/create_sharespace', methods= ["GET", "POST"])
 def create_sharespace():
@@ -534,43 +542,48 @@ def create_sharespace():
                     cur.execute("INSERT INTO sharespace_setup(classname, sharespace_password) VALUES ('%s', '%s')" %(classname, hash_sharespace_password))
                     db.commit()
                     os.makedirs('static/classfolders/%s' %classname)
-                    return flask.redirect(url_for('sharespace', classname=classname))
+                    return flask.redirect(url_for('sharespace', classname=classname, error=error))
         else:
             error= "You must be logged in to create a sharespace"
-            return flask.redirect(url_for('login'))
+            return flask.redirect(url_for('login', error=error))
 
 
-    return flask.render_template('sharespace-setup.html')
+    return flask.render_template('sharespace-setup.html',error=error)
 
 @app.route('/join_sharespace', methods=["GET", "POST"])
 def join_sharespace():
     error=None
     if 'username' in flask.session:
-        if flask.request.method == "POST":
-            username = flask.session['username']
-            print("debug", username)
-            classname= flask.request.form['classname']
-            sharespace_password=flask.request.form['sharespace_password']
-            cur.execute("SELECT role from users where username='%s'" %username)
-            rowrole= cur.fetchone()
-            role= rowrole[0]
-            cur.execute("SELECT classname from sharespace_users where username = '%s'" %username)
-            classrow = cur.fetchone()
-            print ('classrow', classrow[0])
-            cur.execute("SELECT classname, sharespace_password from sharespace_setup")
-            rows=cur.fetchall()
-            for row in rows:
-                dbuser=row[0]
-                dbpass=row[1]
-                if dbuser == classname:
-                    completion= check_password(dbpass, sharespace_password)
-                    if completion:
-                        cur.execute("UPDATE sharespace_users SET classname= '%s' WHERE username = '%s'" %(classname, username))
-                        db.commit()
-                        return redirect(url_for('sharespace', classname=classname,error=error))
+        username = flask.session['username']
+        cur.execute("SELECT role from users where username='%s'" % username)
+        rowrole = cur.fetchone()
+        role = rowrole[0]
+        if role == 'Teacher':
+            error = "Set up a sharespace instead"
+            return redirect(url_for('create_sharespace', error=error))
+        else:
+            if flask.request.method == "POST":
+                print("debug", username)
+                classname= flask.request.form['classname']
+                sharespace_password=flask.request.form['sharespace_password']
+                cur.execute("SELECT classname from sharespace_users where username = '%s'" %username)
+                classrow = cur.fetchone()
+                print ('classrow', classrow[0])
+                cur.execute("SELECT classname, sharespace_password from sharespace_setup")
+                rows=cur.fetchall()
+                for row in rows:
+                    dbuser=row[0]
+                    dbpass=row[1]
+                    if dbuser == classname:
+                        completion= check_password(dbpass, sharespace_password)
+                        if completion:
+                            cur.execute("UPDATE sharespace_users SET classname= '%s' WHERE username = '%s'" %(classname, username))
+                            db.commit()
+                            return redirect(url_for('sharespace', classname=classname,error=error))
+                        else:
+                            error="Incorrect classname or password"
 
-        return flask.render_template("join-sharespace.html")
-
+    return flask.render_template("join-sharespace.html", error=error)
 
 @app.route('/sharespace/<classname>')
 def sharespace(classname):
