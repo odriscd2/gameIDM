@@ -2,14 +2,7 @@
 
 {% block body %}
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/style.css') }}">
-<!-- Navigation -->
-<!--
-    <div id="container" class="container">
-		<div class="horizon scroll" style="left: 0px;"> </div>
-		<input id="toggle" type="checkbox" />
-		<label class="toggle-container" for="toggle"> <span class="button button-toggle"></span> </label>
-		<nav class="nav"> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Home</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Map</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">About Project</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">DIY/Games</a> </nav>
-</div>-->
+
 
 <header>
 	<ul>
@@ -55,28 +48,32 @@
 				<br/> 
 
 				</div>
-			<div id="registerForm">
+	<p id="Question">If you are under 13 you must have parental permission to join Activisme</p>
+		<button id="clickMeYes" onclick="show('registerForm'); hide('clickMeYes'); hide('Question')" alt="click me yes">I am over 13</button>
+
+
+	<div id="registerForm" style="display:none;">
 				<h3>Sign Up for Global Activist</h3>
 				<form method="post" action="/register" name="regForm">
-                    <p>Select your role:</p>
+	<p>Select your role:</p>
 
-						<input type="radio" id="teacher" name="role" value="Teacher"  required > Teacher
-						<input type="radio" id="student" name="role" value="Student"  required> Student
+						<input type="radio" id="Teacher" name="role" value="Teacher" > Teacher
+						<input type="radio" id="Student" name="role" value="Student" > Student
 						<br>
 
-						<p>
+					<p>
 						<input type="text" name="username" placeholder="Username" required> </p>
 					<p>
 						<input type="email" name="email" placeholder="Email" required> </p>
 					<p>
 						<input type="password" placeholder="Password" id="password" name="password" required>
 						<input type="password" placeholder="Confirm Password" id="confirm_password" required> </p>
+				
 
+					<button type="submit" value="register" class="btn btn-primary">Register</button></form>
 
+					
 
-					<button type="submit" value="register" class="btn btn-primary">Register</button>
-
-				</form>
 </div>
 <script>
   function show (toBlock){

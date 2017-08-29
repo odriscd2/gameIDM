@@ -1,26 +1,47 @@
 {% extends "layout.html" %}
 {%block body %}
+ 		<link href="../static/CSS/join-sharespace.css" rel="stylesheet">
+  <header class="header">
+  <input class="menu-btn" type="checkbox" id="menu-btn" />
+  <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+  <ul class="menu">
+    <li><a href="../map.html">MAP</a></li>
+    <li><a href="../about.html">RESOURCES</a></li>
+    <li><a href="../about.html">ABOUT</a></li>
+  </ul>
+ <img class="logoimg" src="../static/Images/logo1.png">  
+ <img class="socialbutton">
+    
+
+<a href="https://www.facebook.com/" target="blank" title="Facebook">
+<img class="socialbutton1" src="../static/Images/f2.png" border="0" onmouseover="this.src='../static/Images/f1.png'" onmouseout="this.src='../static/Images/f2.png'" />
+</a>
+
+<a href="https://www.twitter.com/" target="blank" title="Twitter">
+<img class="socialbutton2" src="../static/Images/t2.png" border="0" onmouseover="this.src='../static/Images/t1.png'" onmouseout="this.src='../static/Images/t2.png'"/>
+    </a>
+    </header>
+    <div id="header-reg">
 <h1>Register</h1>
-<h2>Fill in your details</h2>
+<h3>What is a sharespace</h3>
+	<p>A sharespace is a place where you can share your work and talk about what you've learnt!.</p>
   {% if error %}
     <p class=error><strong>Error:</strong> {{ error }}
   {% endif %}
-
+	</div>
 <div id="registerForm">
-      {% if error %}
-    <p class=error><strong>Error:</strong> {{ error }}
-  {% endif %}
-				<h3>Sign Up for Global Activist</h3>
+
+				<h3>Sign Up for your Sharespace</h3>
 				<form method="post" action="/join_sharespace" name="ShareSpaceForm">
           <p>Type in your teacher's Classname<br/>
 
-						<input type="text" name="classname" placeholder="Class Name" required> </p>
+						<input type="text" name="classname" placeholder="Class Name" required maxlength="20"> </p>
 
                     <p>Type in the secret password your teacher gave you!
                         <br/>
-                    <input type="password" name="sharespace_password" placeholder="Sharespace Password" required> </p>
+                    <input type="password" name="sharespace_password" placeholder="Sharespace Password" required maxlength="20"> </p><p>
                     <input type="password" placeholder="Confirm Password" id="confirm_password" required>
-                    <button type="submit" value="register">Register</button>
+					<button type="submit" value="register">Join A Sharespace</button></p>
 				</form>
 </div>
 <script>

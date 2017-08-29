@@ -1,39 +1,80 @@
 {% extends "layout.html" %}
 {%block body %}
-<h1>Register</h1>
-<h2>Fill in your details</h2>
-  {% if error %}
-    <p class=error><strong>Error:</strong> {{ error }}
-  {% endif %}
-
-		<p id="Question">If you are under 13 you must have parental permission to join Activisme</p>
-		<button id="clickMeYes" onclick="show('registerForm'); hide('clickMeYes'); hide('Question')" alt="click me yes">I am over 13</button>
+<link href="{{url_for('static', filename='../static/CSS/register.css')}}" rel="stylesheet">
 
 
-	<div id="registerForm" style="display:none;">
-				<h3>Sign Up for Global Activist</h3>
-				<form method="post" action="/register" name="regForm">
-	<p>Select your role:</p>
+	       <header class="header">
+  
+  <input class="menu-btn" type="checkbox" id="menu-btn" />
+  <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+  <ul class="menu">
+    <li><a href="{{url_for('map_page')}}">MAP</a></li>
+    <li><a href="../about.html">RESOURCES</a></li>
+    <li><a href="../about.html">ABOUT</a></li>
+  </ul>
+ <img class="logoimg" src="{{url_for('static', filename='../static/Images/logo1.png')}}">
+ <img class="socialbutton">
+    
+<!--<hr class="line2"/>-->
+<a href="https://www.facebook.com/" target="blank" title="Facebook">
+<img class="socialbutton1" src="{{url_for('static', filename='../static/Images/f2.png')}}" border="0"
+	 onmouseover="this.src='{{url_for('static', filename='../static/Images/f1.png')}}'"
+	 onmouseout="this.src='{{url_for('static', filename='../static/Images/f1.png')}}'" />
+</a>
 
-						<input type="radio" id="Teacher" name="role" value="Teacher" > Teacher
-						<input type="radio" id="Student" name="role" value="Student" > Student
-						<br>
+<a href="https://www.twitter.com/" target="blank" title="Twitter">
+<img class="socialbutton2" src="{{url_for('static', filename='../static/Images/t2.png')}}" border="0"
+	 onmouseover="this.src='{{url_for('static', filename='../static/Images/t1.png')}}'"
+	 onmouseout="this.src='{{url_for('static', filename='../static/Images/t2.png')}}'"/>
+    </a>
+    </header>
 
-					<p>
-						<input type="text" name="username" placeholder="Username" required> </p>
-					<p>
-						<input type="email" name="email" placeholder="Email" required> </p>
-					<p>
-						<input type="password" placeholder="Password" id="password" name="password" required>
-						<input type="password" placeholder="Confirm Password" id="confirm_password" required> </p>
-					<p>
-						<input type="text" name="name" placeholder="Name" required> </p>
+	<div id="header-reg">
+	<h1>Register</h1>
 
-						<button type="submit" value="register" class="btn btn-primary">Register</button>
+	 {% if error %}
+		<p class=error id="error"><strong>Error:</strong> {{ error }}
+	  {% endif %}
+	<div id="question13">
+			<p id="Question">If you are under 13 you must have parental permission to join Activisme</p>
+		<button id="clickMeYes" onclick="show('registerForm'); hide('clickMeYes'); hide('Question')" alt="click me yes">I am over 13</button></div>
+		</div>
 
-					
+		<div id="registerForm" style="display:none;">
 
-</div>
+					<form method="post" action="/register" name="regForm">
+		<p id="selectyourrole">Select your role:</p>
+	<label>
+							 <input type="radio" id="teacher" class="option-input radio" name="role" value="Teacher"  required />
+		Teacher
+	  </label>
+						 <label>
+							 <input type="radio" id="student" class="option-input radio" name="role" value="Student"  required />
+		Student
+	  </label>
+
+
+
+
+
+
+
+						<p>
+							<input type="text" name="username" placeholder="Username" class="question" required maxlength="20"> </p>
+						<p>
+							<input type="email" name="email" placeholder="Email" class="question" required> </p>
+						<p>
+							<input type="password" placeholder="Password" id="password" name="password" class="question" required maxlength="20">
+						</p><p>
+							<input type="password" placeholder="Confirm Password" id="confirm_password" class="question" required maxlength="20"> </p>
+
+
+						<button type="submit" value="register" class="btn btn-primary">Register</button></form>
+
+
+
+	</div>
+		
 <script>
   function show (toBlock){
     setDisplay(toBlock, 'block');
@@ -45,4 +86,21 @@
     document.getElementById(target).style.display = str;
   }
 </script>
+<script>
+var password = document.getElementById("password")
+			, confirm_password = document.getElementById("confirm_password");
+
+		function validatePassword() {
+			if (password.value != confirm_password.value) {
+				confirm_password.setCustomValidity("Woops! Looks like the passwords don't match");
+			}
+			else {
+				confirm_password.setCustomValidity('');
+			}
+		}
+		password.onchange = validatePassword;
+		confirm_password.onkeyup = validatePassword;
+</script>
+
+
 {% endblock %}

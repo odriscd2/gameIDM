@@ -1,22 +1,49 @@
+
+
 {% extends "layout.html" %}
 {%block body %}
-<h1>Register</h1>
-<h2>Fill in your details</h2>
-  {% if error %}
+<link rel="stylesheet" href="../static/CSS/sharespace-setup.css">
+	       <header class="header">
+  
+  <input class="menu-btn" type="checkbox" id="menu-btn" />
+  <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+  <ul class="menu">
+    <li><a href="../map.html">MAP</a></li>
+    <li><a href="../about.html">RESOURCES</a></li>
+    <li><a href="../about.html">ABOUT</a></li>
+  </ul>
+ <img class="logoimg" src="../static/Images/logo1.png">  
+ <img class="socialbutton">
+    
+
+<a href="https://www.facebook.com/" target="blank" title="Facebook">
+<img class="socialbutton1" src="../static/Images/f2.png" border="0" onmouseover="this.src='../static/Images/f1.png'" onmouseout="this.src='../static/Images/f2.png'" />
+</a>
+
+<a href="https://www.twitter.com/" target="blank" title="Twitter">
+<img class="socialbutton2" src="../static/Images/t2.png" border="0" onmouseover="this.src='../static/Images/t1.png'" onmouseout="this.src='../static/Images/t2.png'"/>
+    </a>
+    </header>
+    <div id="header-reg">
+<h1>Register your sharespace</h1>
+	<h3>What is a sharespace</h3>
+	<p>A sharespace is a place where your students can share their learning experiences. As a teacher you can assign them tasks, view their progress and foster a discursive space.</p>
+		</div>
+ {% if error %}
     <p class=error><strong>Error:</strong> {{ error }}
   {% endif %}
 
 <div id="registerForm">
 				<h3>Sign Up for Global Activist</h3>
-				<form method="post" action="/create_sharespace" name="ShareSpaceForm">
+				<form method="post" action="/create_sharespace" name="<ShareSpaceFo></ShareSpaceFo>rm">
           <p>Create a name for your class's own sharespace:<br/>
 
-						<input type="text" name="classname" placeholder="Class Name" required> </p>
+						<input type="text" name="classname" placeholder="Class Name" required maxlength="20"> </p>
 
-                    <p>Create a password so your students can acess their own sharespace!
-                        Your own account password will be the administrator password<br/>
-                    <input type="password" name="sharespace_password" placeholder="Sharespace Password" required>
-                    <input type="password" placeholder="Confirm Password" id="confirm_password" required> </p>
+                    <p>Create a password so your students can acess their sharespace!
+                       <br/>
+                 <p> <input type="password" name="sharespace_password" placeholder="Sharespace Password" id="sharespace_password" required maxlength="20"></p>
+                 <p><input type="password" placeholder="Confirm Password" id="confirm_password" required maxlength="20"> </p>
                     <button type="submit" value="register">Register</button>
 				</form>
 </div>
@@ -35,4 +62,5 @@ var password = document.getElementById("sharespace_password")
 		password.onchange = validatePassword;
 		confirm_password.onkeyup = validatePassword;
 </script>
+
 {% endblock %}

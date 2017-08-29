@@ -9,7 +9,7 @@
     <script src="{{ url_for('static', filename='../static/JS/validatepassword.js')}}"></script>
 
 
-    <title>{% block title %}{% endblock %} Global Activist </title>
+    <title>{% block title %}{% endblock %} Activisme </title>
    		
 	<script>
 		var badges = "{{badges}}";
@@ -20,11 +20,6 @@
 	
 	{% endblock %}
 
-
-
-
-
-
 	</head>
 <body>
 
@@ -32,8 +27,7 @@
 
   <header id="header">
       <h1 style="display:none;">Activisme</h1>
-		<!-- Trigger/Open The Modal -->
-
+	
 </header>
 
 		  
@@ -58,19 +52,7 @@
      <div id="footer">
       {% block footer %}
 
-         <script>
 
-//function to resize on mouse in and out
-function bigImg(x) {
-    x.style.height = "300px";
-    x.style.width = "300px";
-}
-
-function normalImg(x) {
-    x.style.height = "100px";
-    x.style.width = "100px";
-}
-</script>
       {% endblock %}
     </div>
   </body>

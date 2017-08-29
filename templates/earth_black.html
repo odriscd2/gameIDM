@@ -9,7 +9,7 @@
 {% block body %}
     <link rel="stylesheet" href="{{url_for('static', filename='../static/CSS/landing.css')}}">
     <audio id="background_audio" autoplay="autoplay">
-    <source src="{{url_for('static', filename='../static/Audio/10_EtherealSpace.wav')}} " />
+    <source src="{{url_for('static', filename='../static/Audio/ambient1.wav')}} " />
     </audio>
 
     <script src="{{url_for('static', filename='../static/JS/three.js')}}"></script>
@@ -18,22 +18,44 @@
     <script src="{{url_for('static', filename='../static/JS/stats.min.js')}}"></script>
 
 
+ <header class="header">
+  
+  <input class="menu-btn" type="checkbox" id="menu-btn" />
+  <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+  <ul class="menu">
+    <li><a href="../map.html">MAP</a></li>
+    <li><a href="../about.html">RESOURCES</a></li>
+    <li><a href="../about.html">ABOUT</a></li>
+  </ul>
+ <img class="logoimg" src="{{url_for('static', filename='../static/Images/logo1.png')}}">
+
+<hr class="line2"/>
+<a href="https://www.facebook.com/" target="blank" title="Facebook">
+<img class="socialbutton1" src="{{url_for('static', filename='../static/Images/f2.png')}}" border="0" onmouseover="src={{url_for('static', filename='../static/Images/f1.png')}}" onmouseout="src={{url_for('static', filename='../static/Images/f2.png')}}" />
+</a>
+
+<a href="https://www.twitter.com/" target="blank" title="Twitter">
+<img class="socialbutton2" src="{{url_for('static', filename='../static/Images/t2.png')}}" border="0" onmouseover="{{url_for('static', filename='../static/Images/t1.png')}}" onmouseout="{{url_for('static', filename='../static/Images/t2.png')}}" />
+    </a>
+</header>
 
 
+ <section class="container">
+  <div class="left-half">
+    <article>
 
-    <div class="container">
-        <input id="toggle" type="checkbox" />
-        <label class="toggle-container" for="toggle"> <span class="button button-toggle"></span> </label>
-        <nav class="nav"> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Home</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Map</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">About Project</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">DIY/Games</a> </nav>
-    </div>
-
-    <div style="position: absolute; top: 10px; width: 100%; text-align: center; ">
-        <section id="intro" class="intro-section">
-            <h1>ACTIVISME</h1>
-            <p>Learn about the biggest world’s problems and get involved in the process of solving them through social activism
-                <br> </section>
-    </div>
-    <div id="container">
+    <p class="introtext">learn about the world’s problems and 
+        get involved</p>
+    <hr class="line"/>
+    <section id="cta"> <a class="ctalink" href="{{url_for('map_page')}}">EXPLORE</a>
+            
+    </section>
+    </article>
+  </div>
+    
+  <div class="right-half">
+    <article>
+<div id="container">
 
         <script>
             var container, stats;
@@ -50,25 +72,28 @@
                 container = document.getElementById('container');
                 camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
                 //closer
-                camera.position.z = 500;
+                camera.position.z = 450;
+                camera.position.x = 20;
+                camera.position.y = 30;
                 scene = new THREE.Scene();
                 group = new THREE.Group();
                 scene.add(group);
                 // earth
                 var loader = new THREE.TextureLoader();
-                loader.load('../static/Textures/GLOBE.png', function (texture) {
-                    var geometry = new THREE.SphereGeometry(180, 32, 32);
+                loader.load("{{url_for('static', filename= '../static/Images/GLOBE.png')}}", function (texture) {
+                    var geometry = new THREE.SphereGeometry(140, 40, 40);
                     var material = new THREE.MeshBasicMaterial({
                         map: texture
                         , overdraw: 0.5
                     });
                     var mesh = new THREE.Mesh(geometry, material);
                     group.add(mesh);
+            
                 });
                 // shadow
                 var canvas = document.createElement('canvas');
-                canvas.width = 128;
-                canvas.height = 128;
+                canvas.width = 100;
+                canvas.height = 100;
                 var context = canvas.getContext('2d');
                 var gradient = context.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2);
                 gradient.addColorStop(0.1, '#34495e');
@@ -118,24 +143,32 @@
             }
 
             function render() {
-                camera.position.x += (mouseX - camera.position.x) * 0.05;
-                camera.position.y += (-mouseY - camera.position.y) * 0.05;
+//                camera.position.x += (mouseX - camera.position.x) * 0.05;
+//                camera.position.y += (-mouseY - camera.position.y) * 0.05;
                 camera.lookAt(scene.position);
                 group.rotation.y -= 0.003;
+                group.position.x =-186.8;
+                group.position.y = 0;
                 renderer.render(scene, camera);
             }
       
         </script> 
-             
-        <section id="cta"> <a class="ctalink" href="{{url_for('map_page')}}">Explore</a>
-        </section>
         </div>
-        <div class="mute">
-    <a href="#noscroll" id="mute"><img id="mutebutton" src="https://image.flaticon.com/icons/png/128/189/189653.png"></a>
-    </div>
-    </body>
-   <script>
-    var audio = document.getElementById('background_audio');
+    </article>
+  </div>
+</section>
+ 
+    <a onclick="mute(); changeImage(this)" id="mute">
+    <img src="{{url_for('static', filename='../static/Images/sound_off.png')}}" id="play" />
+    <img src="{{url_for('static', filename='../static/Images/sound_on.png')}}" id="pause" />
+            </a>
+    <script>
+        function mute() {}
+
+        function changeImage(obj) {
+        obj.classList.toggle('playing');
+        }
+        var audio = document.getElementById('background_audio');
 
             document.getElementById('mute').addEventListener('click', function (e)
                                                              {
@@ -143,5 +176,8 @@
                 audio.muted = !audio.muted;
                 e.preventDefault();
             }, false);
-   </script>        
+    </script>
+
+
+
 {% endblock %}

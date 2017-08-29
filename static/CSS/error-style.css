@@ -1,0 +1,157 @@
+body{
+			background-color: #34495e;
+			overflow: hidden;
+			font-family: arial;
+			color: antiquewhite;
+			
+		}
+
+
+
+
+				#error-img img{
+			width: 50%;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+		
+		#error-img h2{
+				position: fixed;
+			top: 15%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+		
+		h1 {
+			position: fixed;
+			left: 50%;
+			/* bring your own prefixes */
+			transform: translate(-50%, -50%);
+		}
+		
+		#error-img a {
+			position: fixed;
+			left: 50%;
+			/* bring your own prefixes */
+			transform: translate(-50%, -50%);
+			bottom: 5%;
+		}
+		
+
+		
+
+		
+		#buttonbottom{
+			position: fixed;
+			bottom: 10%;
+			left: 42.5%;
+				
+		
+			transform: translate(-50%, -50%);
+			
+			
+		}
+		
+	
+		
+		#buttonbottom a{
+			text-decoration: none;
+			font-size: 21px;
+			width: 200px;
+			height: 36px;
+			color: antiquewhite;
+			cursor: pointer;
+			display: block;
+			z-index: 1;
+			position: fixed;
+			border: 2px solid antiquewhite;
+			border-radius: 40px;
+			text-align: center;
+			margin: 0px;
+			padding-bottom: 0px;
+			padding-top: 10px;
+			text-align: center;
+			letter-spacing: 1px;
+		}
+		
+		#buttonbottom:hover {
+			color: #34495e;
+			background-color: antiquewhite;
+			text-shadow: ntwo;
+			border-color: antiquewhite;
+		}
+
+body{
+			background-color: #34495e;
+			overflow: hidden;
+			font-family: arial;
+			color: antiquewhite;
+			
+		}
+		
+		
+		#broken-heart{
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			height: 60%;
+	
+
+			
+		}
+
+
+		h1 {
+			position: fixed;
+			left: 50%;
+			/* bring your own prefixes */
+			transform: translate(-50%, -50%);
+		}
+		 h2{
+			position: fixed;
+			left:50%;
+			bottom: 75%;
+			 transform: translate(-50%, -50%);
+		}
+		
+				#buttonbottom{
+			position: fixed;
+			bottom: 10%;
+			left: 42.5%;
+				
+		
+			transform: translate(-50%, -50%);
+			
+			
+		}
+		
+		
+				#buttonbottom a{
+			text-decoration: none;
+			font-size: 21px;
+			width: 200px;
+			height: 36px;
+			color: antiquewhite;
+			cursor: pointer;
+			display: block;
+			z-index: 1;
+			position: fixed;
+			border: 2px solid antiquewhite;
+			border-radius: 40px;
+			text-align: center;
+			margin: 0px;
+			padding-bottom: 0px;
+			padding-top: 10px;
+			text-align: center;
+			letter-spacing: 1px;
+		}
+		
+		#buttonbottom:hover {
+			color: #34495e;
+			background-color: antiquewhite;
+			text-shadow: ntwo;
+			border-color: antiquewhite;
+		}

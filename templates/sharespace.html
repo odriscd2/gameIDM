@@ -1,152 +1,434 @@
-{% extends "layout.html" %}
-{% block body %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/style.css') }}">
-<!-- Navigation -->
-<!--
-    <div id="container" class="container">
-		<div class="horizon scroll" style="left: 0px;"> </div>
-		<input id="toggle" type="checkbox" />
-		<label class="toggle-container" for="toggle"> <span class="button button-toggle"></span> </label>
-		<nav class="nav"> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Home</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">Map</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">About Project</a> <a rel="nofollow" rel="noreferrer" class="nav-item" href="">DIY/Games</a> </nav>
-</div>-->
+<html>
+	<head>
+		<link type="text/css" href="{{url_for('static', filename='../static/CSS/new-sharespace.css')}}" rel="stylesheet">
 
-<header>
-	<ul>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	</head>
+	<body>
+	
+	  <header class="header">
+  
+  <input class="menu-btn" type="checkbox" id="menu-btn" />
+  <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+  <ul class="menu">
+    <li><a href="../map.html">MAP</a></li>
+    <li><a href="../about.html">RESOURCES</a></li>
+    <li><a href="../about.html">ABOUT</a></li>
+  </ul>
+ <img class="logoimg" src="../static/Images/logo1.png">  
+ <img class="socialbutton">
+    
+<!--<hr class="line2"/>-->
+<a href="https://www.facebook.com/" target="blank" title="Facebook">
+<img class="socialbutton1" src="../static/Images/f2.png" border="0" onmouseover="this.src='../static/Images/f1.png'" onmouseout="'../static/Images/f1.png'" />
+</a>
 
-		<li><button type="image"  name="myBtn" id="myBtn" >Login</button></li>
-		{% if session['username'] %}
+<a href="https://www.twitter.com/" target="blank" title="Twitter">
+<img class="socialbutton2" src="../static/Images/t2.png" border="0" onmouseover="this.src='../static/Images/t1.png'" onmouseout="this.src='../static/Images/t2.png'"/>
+    </a>
+ <!-- Trigger/Open The Modal -->
+<button id="myBtn">Upload</button>
+    </header>
 
-		<li><button class="buttono"> <a href="{{ url_for('create_sharespace') }}">Create your sharespace!</a> </button></li>
+			
+		<div class="columnContainer">
 
-		<li><button class="buttono"><a href="{{ url_for('sharespace', classname=classname) }}"> Enter your sharespace!</a> </button></li>
-		<li><button class="buttono"><a href="{{ url_for('join_sharespace', classname=classname) }}"> Join A Sharespace!</a> </button></li>
-  <li><form action="\logout" method="post">
-	  <input type="submit" value="Logout"> </form></li></ul>
-	{% endif %}
-	<h1>Activisme</h1>
-</header>
-
-<p>Welcome to your profile page {{username}} <br> </p>
-
-<p>This is the share space for {{classname}}</p>
-
-
-
-
-    <div id="imagesshare">
-
-{% if role == 'Teacher' %}
-<h3>Teacher Space</h3>
+			<section><h3>Humanitarian Crises</h3><div id="humanitarian" style="overflow-y: scroll;height: 500px" class="scrollbegone">{% if role == 'Teacher' %}
+		
         {% for row in file_list %}
+                           {% if row[6] == 'humanitariancrisis' %}
+                     
+                              <figure>
+ <figcaption><p>Username:{{row[1]}}</p></figcaption>
+              
+                                    <a>
+<img class="myImg" src="{{url_for('static', filename ='../static/classfolders/'+classname+'/'+ row[0])}}" alt="{{row[0]}}, Username:{{row[1]}}, Date Uploaded:{{row[2]}}" >
+</a>
+                           
+                          
+                           <figcaption>   <p>Title:{{row[0]}} <br>
+							   Date Uploaded:{{row[2]}}  </p>
+                    </figcaption> </figure>
 
+<!-- The Modal -->
+<div id="imgModal" class="picmodal">
 
-                        <figure>
-                        <img src="{{url_for('static', filename ='../static/classfolders/'+classname+'/'+ row[0])}}" />
-                        <figcaption> <b>TITLE:</b> {{row[0]}}  <b>Uploaded by:</b> {{row[1]}} <br>
-                            <b>Date Uploaded:</b> {{row[2]}} <b>Classname:</b> {{row[3]}} <b>Confirmed:</b>{{row[4]}}
-                    </figcaption>
-                    </figure>
-                    <form method="post" action="/delete_upload"><button type="submit" value="delete_account" class="btn btn-primary">Delete Upload</button>
-                    <input type="hidden" name="filename" value="{{row[0]}}">
-                    </form>
+  <!-- The Close Button -->
+  <span class="close" onclick="document.getElementById('imgModal').style.display='none'">&times;</span>
 
-                    <form method="post"action="/moderate_upload"><button type="submit" value="moderate_upload" class="btn btn-primary">Confirm Upload</button>
-                    <input type="hidden" name="filename" value="{{row[0]}}">
-                    </form>
+  <!-- Modal Content (The Image) -->
+  <img class="pic-modal-content" id="img01">
 
-
-        {% endfor %}
-
-{% endif %}
-
-{% if role == 'Student' %}
-<h3>Student Space</h3>
-        {% for row in file_list %}
-            {% if row[4] == 'TRUE' %}
-
-                        <figure>
-                        <img src="{{url_for('static', filename ='../static/classfolders/'+classname+'/'+ row[0])}}" />
-                        <figcaption> <b>TITLE:</b> {{row[0]}}  <b>Uploaded by:</b> {{row[1]}} <br>
-                            <b>Date Uploaded:</b> {{row[2]}} <b>Classname:</b> {{row[3]}}
-                    </figcaption>
-                    </figure>
-
-            {% endif %}
-
-        {% endfor %}
-
-{% endif %}
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
 </div>
+                    <ul id="button-list">
+                    <li><form method="post" action="/delete_upload" id="delete"><button type="submit" value="delete_account" class="btn btn-primary">Delete</button>
+                    <input type="hidden" name="filename" value="{{row[0]}}">
+						</form></li>
 
- <h1>Upload</h1>
-  {% if error %}
-    <p class=error><strong>Error:</strong> {{ error }}
-  {% endif %}
+                    <li><form method="post"action="/moderate_upload" id="moderate"><button type="submit"  value="confirm"  class="btn btn-primary">Confirm</button>
+						<input type="hidden" name="filename" value="{{row[0]}}">
+						</form></li>
+						{% endif %}
+				</ul>  
+				  {% endfor %}
 
+{% endif %}
+       {% if role == 'Student' %}
+		{% for row in file_list %}
+	   		{% if row[4] == 'TRUE' %}
+		   		{% if row[6] == 'humanitariancrisis' %}
+                                 
+                          <figure>
+ <figcaption><p>Username:{{row[1]}}</p></figcaption>
+              
+                                    <a>
+<img class="myImg" src="{{url_for('static', filename ='../static/classfolders/'+classname+'/'+ row[0])}}" alt="{{row[0]}}, Username:{{row[1]}}, Date Uploaded:{{row[2]}}" >
+</a>
+                           
+                          
+                           <figcaption>   <p>Title:{{row[0]}} <br>
+							   Date Uploaded:{{row[2]}}  </p>
+                    </figcaption> </figure>
 
-<form name="uploadform" action="/upload_to_sharespace" method="post" enctype="multipart/form-data">
+<!-- The Modal -->
+<div id="imgModal" class="picmodal">
+
+  <!-- The Close Button -->
+  <span class="close" onclick="document.getElementById('imgModal').style.display='none'">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="pic-modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>
+                    {% endif %}
+				
+			{% endif %}
+				{% endfor %}
+
+{% endif %}
+       
+       
+       </div></section>
+        <section><h3>Environmental Concerns</h3>
+			<div id="environmental" style="overflow-y: scroll;height: 500px" class="scrollbegone">
+			{% if role == 'Teacher' %}
+
+        {% for row in file_list %}
+                        {% if row[6]== "environmental" %}
+                           
+                          <figure>
+ <figcaption><p>Username:{{row[1]}}</p></figcaption>
+              
+                                    <a>
+<img class="myImg" src="{{url_for('static', filename ='../static/classfolders/'+classname+'/'+ row[0])}}" alt="{{row[0]}}, Username:{{row[1]}}, Date Uploaded:{{row[2]}}" >
+</a>
+                           
+                          
+                           <figcaption>   <p>Title:{{row[0]}} <br>
+							   Date Uploaded:{{row[2]}}  </p>
+                    </figcaption> </figure>
+<!-- The Modal -->
+<div id="imgModal" class="picmodal">
+
+  <!-- The Close Button -->
+  <span class="close" onclick="document.getElementById('imgModal').style.display='none'">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="pic-modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>
+                    <ul id="button-list">
+                    <li><form method="post" action="/delete_upload" id="delete"><button type="submit" value="delete_account" class="btn btn-primary">Delete</button>
+                    <input type="hidden" name="filename" value="{{row[0]}}">
+						</form></li>
+
+                    <li><form method="post"action="/moderate_upload" id="moderate"><button type="submit"  value="confirm"  class="btn btn-primary">Confirm</button>
+						<input type="hidden" name="filename" value="{{row[0]}}">
+						</form></li>{% endif %}
+				</ul>  
+			
+				            {% endfor %}
+
+{% endif %}
+                   {% if role == 'Student' %}
+		{% for row in file_list %}
+	   		{% if row[4] == 'TRUE' %}
+		   		{% if row[6] == 'environmental' %}
+                                 
+                         <figure>
+ <figcaption><p>Username:{{row[1]}}</p></figcaption>
+              
+                                    <a>
+<img class="myImg" src="{{url_for('static', filename ='../static/classfolders/'+classname+'/'+ row[0])}}" alt="{{row[0]}}, Username:{{row[1]}}, Date Uploaded:{{row[2]}}" >
+</a>
+                           
+                          
+                           <figcaption>   <p>Title:{{row[0]}} <br>
+							   Date Uploaded:{{row[2]}}  </p>
+                    </figcaption> </figure>
+
+<!-- The Modal -->
+<div id="imgModal" class="picmodal">
+
+  <!-- The Close Button -->
+  <span class="close" onclick="document.getElementById('imgModal').style.display='none'">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="pic-modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>
+                   {% endif %}
+				 
+				{% endif %}
+				{% endfor %}
+
+{% endif %}
+                    </div>
+        </section>
+			<section><h3>Refugees</h3><div id="refugees" style="overflow-y: scroll;height: 500px" class="scrollbegone">
+			
+			{% if role == 'Teacher' %}
+
+        {% for row in file_list %}
+                           {% if row[6] == 'refugeecrisis' %}
+                                 
+                      <figure>
+ <figcaption><p>Username:{{row[1]}}</p></figcaption>
+              
+                                    <a>
+<img class="myImg" src="{{url_for('static', filename ='../static/classfolders/'+classname+'/'+ row[0])}}" alt="{{row[0]}}, Username:{{row[1]}}, Date Uploaded:{{row[2]}}" >
+</a>
+                           
+                          
+                           <figcaption>   <p>Title:{{row[0]}} <br>
+							   Date Uploaded:{{row[2]}}  </p>
+                    </figcaption> </figure>
+<!-- The Modal -->
+<div id="imgModal" class="picmodal">
+
+  <!-- The Close Button -->
+  <span class="close" onclick="document.getElementById('imgModal').style.display='none'">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="pic-modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>
+                    <ul id="button-list">
+                    <li><form method="post" action="/delete_upload" id="delete"><button type="submit" value="delete_account" class="btn btn-primary">Delete</button>
+                    <input type="hidden" name="filename" value="{{row[0]}}">
+						</form></li>
+
+                    <li><form method="post"action="/moderate_upload" id="moderate"><button type="submit"  value="confirm"  class="btn btn-primary">Confirm</button>
+						<input type="hidden" name="filename" value="{{row[0]}}">
+						</form></li>{% endif %}
+				</ul>  
+			
+				{% endfor %}
+
+{% endif %}
+		
+	{% if role == 'Student' %}
+		{% for row in file_list %}
+	   		{% if row[4] == 'TRUE' %}
+		   		{% if row[6] == 'refugeecrisis' %}
+                                 
+                              <figure>
+ <figcaption><p>Username:{{row[1]}}</p></figcaption>
+              
+                                    <a>
+<img class="myImg" src="{{url_for('static', filename ='../static/classfolders/'+classname+'/'+ row[0])}}" alt="{{row[0]}}, Username:{{row[1]}}, Date Uploaded:{{row[2]}}" >
+</a>
+                           
+                          
+                           <figcaption>   <p>Title:{{row[0]}} <br>
+							   Date Uploaded:{{row[2]}}  </p>
+                    </figcaption> </figure>
+
+<!-- The Modal -->
+<div id="imgModal" class="picmodal">
+
+  <!-- The Close Button -->
+  <span class="close" onclick="document.getElementById('imgModal').style.display='none'">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="pic-modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>
+   {% endif %}
+				{% endif %}
+				{% endfor %}
+
+{% endif %}
+			</div></section>
+			<section><h3>Social Inequality</h3><div id="socialineq" style="overflow-y: scroll;height: 500px" class="scrollbegone">
+			{% if role == 'Teacher' %}
+
+        {% for row in file_list %}
+                            {% if row[6] == 'socialinequality' %}
+                                 
+       <figure>
+ <figcaption><p>Username:{{row[1]}}</p></figcaption>
+              
+                                    <a>
+<img class="myImg" src="{{url_for('static', filename ='../static/classfolders/'+classname+'/'+ row[0])}}" alt="{{row[0]}}, Username:{{row[1]}}, Date Uploaded:{{row[2]}}" >
+</a>
+                           
+                          
+                           <figcaption>   <p>Title:{{row[0]}} <br>
+							   Date Uploaded:{{row[2]}}  </p>
+                    </figcaption> </figure>
+<!-- The Modal -->
+<div id="imgModal" class="picmodal">
+
+  <!-- The Close Button -->
+  <span class="close" onclick="document.getElementById('imgModal').style.display='none'">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="pic-modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>
+                    <ul id="button-list">
+                    <li><form method="post" action="/delete_upload" id="delete"><button type="submit" value="delete_account" class="btn btn-primary">Delete</button>
+                    <input type="hidden" name="filename" value="{{row[0]}}">
+						</form></li>
+
+                    <li><form method="post"action="/moderate_upload" id="moderate"><button type="submit"  value="confirm"  class="btn btn-primary">Confirm</button>
+						<input type="hidden" name="filename" value="{{row[0]}}">
+						</form></li>{% endif %}
+				</ul>  
+
+				{% endfor %}
+
+{% endif %}
+		{% if role == 'Student' %}
+		{% for row in file_list %}
+	   		{% if row[4] == 'TRUE' %}
+		   		{% if row[6] == 'socialinequality' %}
+<figure>
+ <figcaption><p>Username:{{row[1]}}</p></figcaption>
+              
+                                    <a>
+<img class="myImg" src="{{url_for('static', filename ='../static/classfolders/'+classname+'/'+ row[0])}}" alt="{{row[0]}}, Username:{{row[1]}}, Date Uploaded:{{row[2]}}" >
+</a>
+                           
+                          
+                           <figcaption>   <p>Title:{{row[0]}} <br>
+							   Date Uploaded:{{row[2]}}  </p>
+                    </figcaption> </figure>
+<!-- The Modal -->
+<div id="imgModal" class="picmodal">
+
+  <!-- The Close Button -->
+  <span class="close" onclick="document.getElementById('imgModal').style.display='none'">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="pic-modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>
+                    {% endif %}
+				
+				{% endif %}
+				{% endfor %}
+
+{% endif %}
+			</div></section>
+			
+
+    </div>
+    
+    <!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div id="uploadmodal">
+        <form name="uploadform" action="/upload_to_sharespace" method="post" enctype="multipart/form-data">
+        
+     
 
     <p><input type="file" name="sharefile" required></p>
-    <input type="radio" id="environmental" name="category" value="environmental"  required > Environmental Crises
-    <input type="radio" id="humanitarian-crisis" name="category" value="humanitariancrisis"  required> Humanitarian Crises
-    <input type="radio" id="social-inequality" name="category" value="socialinequality"  required > Social Inequality
-    <input type="radio" id="refugees" name="category" value="refugeecrisis"  required> Refugees
+			<label><input type="radio" id="environmental" name="category" value="environmental"  required class="option-input radio"> Environmental Crises</label>
+			<label><input type="radio" id="humanitarian-crisis" name="category" value="humanitariancrisis"  required class="option-input radio"> Humanitarian Crises</label>
+			<label><input type="radio" id="social-inequality" name="category" value="socialinequality"  required class="option-input radio"> Social Inequality</label>
+			<label><input type="radio" id="refugees" name="category" value="refugeecrisis"  required class="option-input radio"> Refugees</label>
     <p><input type="submit" value="Upload File"  id="uploadbutton"></p>
 
 
 </form>
-
-
-<div id="blog-upload-space">
-    <h3>Blog Posts</h3>
-    <form name="blogupload" action="/blog_post" method="post" enctype="multipart/form-data" id="blogupload">
-    <input type="radio" id="environmental" name="category" value="environmental"  required > Environmental Crises
-    <input type="radio" id="humanitarian-crisis" name="category" value="humanitariancrisis"  required> Humanitarian Crises
-    <input type="radio" id="social-inequality" name="category" value="socialinequality"  required > Social Inequality
-    <input type="radio" id="refugees" name="category" value="refugeecrisis"  required> Refugees
-    <input type="text" name="blog_title" placeholder="Title">
-    <textarea rows="4" cols="50" name="blog_post" form="blogupload" placeholder="Write your post here"></textarea>
-    <input type="submit" value="Post To Blog" >
-    </form>
-</div>
-
-<div id="blog-display-space">
-
-{%for row in blog_list %}
-    {% if role == 'Teacher' %}
-
-
-    <p>Title: {{row[2]}}</p>
-
-    <p>{{row[3]}}</p>
-
-    <p>Status: {{row[5]}}</p>
-
-    <form method="post" action="/delete_blog_post"><button type="submit" value="delete_blog_post" class="btn btn-primary">Delete Upload</button>
-    <input type="hidden" name="blog_post" value="{{row[3]}}">
-    </form>
-
-    <form method="post" action="/moderate_blog_post"><button type="submit" value="moderate_blog_post" class="btn btn-primary">Confirm Upload</button>
-    <input type="hidden" name="blog_post" value="{{row[3]}}">
-    </form>
-        {% endif %}
-
-
-    {% if role == 'Student' %}
-        {% if row[5] == 'TRUE' %}
-            <p>Title: {{row[2]}}</p>
-            <p>{{row[3]}}</p>
-        {% endif %}
-    {% endif %}
-
-
-{% endfor %}
+    
+    </div>
+  </div>
 
 </div>
+    
+	<script>
+// Get the modal
+var modallog = document.getElementById('myModal');
 
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
 
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
 
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+    modallog.style.display = "block";
+}
 
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modallog.style.display = "none";
+}
 
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modallog) {
+        modallog.style.display = "none";
+    }
+}
+</script>
+<script>
+		var modal = document.getElementById('imgModal');
 
-{% endblock %}
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = $('.myImg');
+var modalImg = $("#img01");
+var captionText = document.getElementById("caption");
+$('.myImg').click(function(){
+    modal.style.display = "block";
+    var newSrc = this.src;
+    modalImg.attr('src', newSrc);
+    captionText.innerHTML = this.alt;
+});
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+		</script>	
+	</body>
+	
+</html> 
+       
+       

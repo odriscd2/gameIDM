@@ -286,7 +286,7 @@ def game():
 
     return completion
 
-@app.route('/register', methods=['POST'])
+@app.route('/register', methods=['GET','POST'])
 def register():
     error=None
     if flask.request.method == 'POST':
@@ -594,13 +594,14 @@ def sharespace(classname):
         classrow=cur.fetchone()
         classname=classrow[0]
         file_names = os.listdir('./static/classfolders/%s' %classname)
-        cur.execute('''SELECT file_name, username, classname, date_uploaded, confirmed, role FROM sharespace_images''')
+        cur.execute('''SELECT file_name, username, classname, date_uploaded, confirmed, role, category FROM sharespace_images''')
         file_list= cur.fetchall()
         cur.execute('''SELECT username, classname, blog_title, blog_post, date_uploaded, confirmed, role, category FROM
         sharespace_blog_posts''')
         blog_list=cur.fetchall()
         cur.execute("SELECT role FROM users WHERE username = '%s'" %username)
         rowrole=cur.fetchone()
+
         if rowrole[0] is None:
             error="There is no role"
         else:
@@ -640,7 +641,7 @@ def upload_to_sharespace():
         date_uploaded = datetime.date.today().strftime('%d-%m-%Y')
         cur.execute("INSERT INTO sharespace_images( username, file_name, date_uploaded, classname, confirmed, role, category) "
                     "VALUES('%s','%s', '%s', '%s', 'FALSE', '%s', '%s')" % (username, filename,  classname, date_uploaded, role, category))
-
+        print ("ATTENTION",category)
         return redirect(url_for('sharespace',
                                 filename=filename, classname=classname))
 
@@ -752,8 +753,6 @@ def delete_blog_post():
             else:
                 error="Looks like you can't do that"
                 return redirect(url_for('sharespace', classname=classname))
-
-
 
 app.secret_key = "RQuo1HhBvjsxQj0StcNYhQ6zoYyGYUVX"
 

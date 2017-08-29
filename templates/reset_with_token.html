@@ -3,12 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <link href="../static/CSS/reset-with.css" rel="stylesheet">
 </head>
 <body>
+	       <header class="header">
+  
+  <input class="menu-btn" type="checkbox" id="menu-btn" />
+  <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+  <ul class="menu">
+    <li><a href="../map.html">MAP</a></li>
+    <li><a href="../about.html">RESOURCES</a></li>
+    <li><a href="../about.html">ABOUT</a></li>
+  </ul>
+ <img class="logoimg" src="../static/Images/logo1.png">  
+ <img class="socialbutton">
+    
+<!--<hr class="line2"/>-->
+<a href="https://www.facebook.com/" target="blank" title="Facebook">
+<img class="socialbutton1" src="../static/Images/f2.png" border="0" onmouseover="this.src='../static/Images/f1.png'" onmouseout="this.src='../static/Images/f2.png'" />
+</a>
+
+<a href="https://www.twitter.com/" target="blank" title="Twitter">
+<img class="socialbutton2" src="../static/Images/t2.png" border="0" onmouseover="this.src='../static/Images/t1.png'" onmouseout="this.src='../static/Images/t2.png'"/>
+    </a>
+    </header>
+
+<div id="header-reg">
+	<h1>Reset your password</h1>
+</div>
+<div id="resetForm">
 <form action="{{ url_for ('reset_with_token', token=token)}}" method="POST">
-    <p> New Password: <input type="password" name="newpassword" required> </p>
-    <p><input type="submit" value="Reset"> </p>
+    <p> New Password: <input type="password" name="newpassword" required id="password"> </p>
+    <p>Confirm New Password: <input type="password" name="confirm_password" id="confirm_password"></p>
+	<button type="submit" value="Reset">Reset</button>
 
 </form>
+	</div>
+<script>
+var password = document.getElementById("password")
+			, confirm_password = document.getElementById("confirm_password");
+
+		function validatePassword() {
+			if (password.value != confirm_password.value) {
+				confirm_password.setCustomValidity("Woops! Looks like the passwords don't match");
+			}
+			else {
+				confirm_password.setCustomValidity('');
+			}
+		}
+		password.onchange = validatePassword;
+		confirm_password.onkeyup = validatePassword;
+</script>
+
 </body>
 </html>

@@ -1,0 +1,35 @@
+		body{
+			background-color: #34495e;
+			color: antiquewhite;
+			font-family: arial;
+		}
+
+
+		#header-reg{
+			position: fixed;
+			top: 20%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+		}
+
+		#reg-image{
+			position: fixed;
+			left: 50%;
+			top:60%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+
+		}
+
+		#reg-image img{
+			height: 40%;
+		}
+		   .logoimg {
+
+       margin-left: -30.5px;
+       margin-top: 1px;
+       width: 210.5px;
+       height: 148.75px;
+       z-index: 100;
+   }

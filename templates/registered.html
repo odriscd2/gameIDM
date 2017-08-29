@@ -1,9 +1,20 @@
-{% extends "layout.html" %}
-{% block body %}
-<h1>Almost there</h1>
+<html>
+<head>
+<title>Activisme</title>	
+<link rel="stylesheet" href="{{url_for('static',filename='../static/CSS/registered.css')}}">
+</head>
+
+ <img class="logoimg" src="../static/Images/logo1.png">
+<div id="header-reg">
+<h1>Almost there!</h1>
 <h2>An email was sent to you! </h2>
 <p>Click the link inside it to finish your registration</p>
 <br/>
-<p></p>
+	</div>
+	
+	<div id="reg-image">
+		
+		<img src="../static/Images/plane.png">
+	</div>
 
-{% endblock %}
+</html>
